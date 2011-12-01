@@ -11,14 +11,14 @@ package bgpp2011;
  * is an enum class. The purpose of this class is to contain information about
  * what type a given vehicle is.
  */
-public class VehicleTypes
+public class VehicleType
 {
     
     private int id;
     private String name;
     private double price;
     
-    public VehicleTypes(int id, String name, double price)
+    public VehicleType(int id, String name, double price)
     {
         this.id = id;
         this.name = name;

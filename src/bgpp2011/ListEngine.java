@@ -21,7 +21,7 @@ public class ListEngine
 {
     
     
-    private ArrayList<VehicleTypes> types;
+    private ArrayList<VehicleType> types;
     private ArrayList<Vehicle> vehicle;
     private ArrayList<Customer> customer;
     private ArrayList<Reservation> reservation;
@@ -36,14 +36,14 @@ public class ListEngine
         }
     
     
-    private ArrayList<VehicleTypes> makeListTypes(ResultSet r)
+    private ArrayList<VehicleType> makeListTypes(ResultSet r)
     {
-        ArrayList<VehicleTypes> returnlist = new ArrayList<VehicleTypes>();
+        ArrayList<VehicleType> returnlist = new ArrayList<VehicleType>();
         try{     
         
           while(r.next())
           {
-            VehicleTypes tmp = new VehicleTypes(r.getInt("id"),r.getString("name"),r.getDouble("price"));
+            VehicleType tmp = new VehicleType(r.getInt("id"),r.getString("name"),r.getDouble("price"));
                                               
             returnlist.add(tmp);
             r.next();
@@ -60,9 +60,9 @@ public class ListEngine
         
     }
     
-    private ArrayList makeListVehicles(ResultSet r)
+    private ArrayList<Vehicle> makeListVehicles(ResultSet r)
     {
-         ArrayList returnlist = new ArrayList<Vehicle>();
+         ArrayList<Vehicle> returnlist = new ArrayList<Vehicle>();
           try{     
         
           while(r.next())
@@ -85,9 +85,9 @@ public class ListEngine
           }
     }
     
-    private ArrayList makeListCustomer(ResultSet r)
+    private ArrayList<Customer> makeListCustomer(ResultSet r)
     {
-         ArrayList returnlist = new ArrayList<Customer>();
+         ArrayList<Customer> returnlist = new ArrayList<Customer>();
         try{     
         
           while(r.next())
@@ -110,9 +110,9 @@ public class ListEngine
           }
     }
     
-    private ArrayList makeListReservation(ResultSet r)
+    private ArrayList<Reservation> makeListReservation(ResultSet r)
     {
-         ArrayList returnlist = new ArrayList<Reservation>();
+         ArrayList<Reservation> returnlist = new ArrayList<Reservation>();
         try{     
         
           while(r.next())
@@ -138,23 +138,23 @@ public class ListEngine
           }
     }
     
-    public ArrayList getTypes()
+    public ArrayList<VehicleType> getTypes()
     {
         return types;
     }
     
-    public ArrayList getVehicles()
+    public ArrayList<Vehicle> getVehicles()
     {
         
         return vehicle;
     }
     
-    public ArrayList getCustomers()
+    public ArrayList<Customer> getCustomers()
     {
         return customer;
     }
     
-    public ArrayList getReservations()
+    public ArrayList<Reservation> getReservations()
     {
         return reservation;
     }
