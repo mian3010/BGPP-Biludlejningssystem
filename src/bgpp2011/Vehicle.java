@@ -11,14 +11,14 @@ package bgpp2011;
 public class Vehicle{
      
     private int id;
-    private VehicleTypes vehicletype;
+    private VehicleType vehicletype;
     private String make;   
     private String model;
     private int year; 
    
     private boolean rentable;
     
-    public Vehicle(int id, String make, String model, int year, VehicleTypes type)
+    public Vehicle(int id, String make, String model, int year, VehicleType type)
     {
         vehicletype = type;
         this.make = make;
@@ -28,7 +28,7 @@ public class Vehicle{
         rentable = true;
     }
     
-    public VehicleTypes getType()
+    public VehicleType getType()
     {
         return vehicletype;
     }
