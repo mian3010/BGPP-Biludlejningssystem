@@ -8,17 +8,17 @@ package bgpp2011;
  * It contains a vehicleType object in a field. This object specifies the price
  * and the type.
  */
-public class Vehicle implements Data {
+public class Vehicle{
      
     private int id;
-    private VehicleType vehicletype;
+    private VehicleTypes vehicletype;
     private String make;   
     private String model;
     private int year; 
    
     private boolean rentable;
     
-    public Vehicle(int id, String make, String model, int year, VehicleType type)
+    public Vehicle(int id, String make, String model, int year, VehicleTypes type)
     {
         vehicletype = type;
         this.make = make;
@@ -28,7 +28,7 @@ public class Vehicle implements Data {
         rentable = true;
     }
     
-    public VehicleType getType()
+    public VehicleTypes getType()
     {
         return vehicletype;
     }

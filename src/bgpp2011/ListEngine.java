@@ -13,33 +13,37 @@ import java.util.ArrayList;
  * @author tokejensen
  * The list engine takes a resultset as an argument in its construktor. It has a method
  * makeList(). That takes the resulset as an argument and returns an ArrayList with the data of the resultset.
- * The responsobility of this class is to be a bridge between the sql data from the
+ * The responsobility of this class is to be a bridge between the SQL data from the
  * database, and the javacode of the GUI.
  * 
  */
-public class ListEngine {
+public class ListEngine
+{
     
     
-    private ArrayList<VehicleType> types;
+    private ArrayList<VehicleTypes> types;
     private ArrayList<Vehicle> vehicle;
     private ArrayList<Customer> customer;
     private ArrayList<Reservation> reservation;
     
-    public ListEngine()
+    public ListEngine(ResultSet t, ResultSet v, ResultSet c, ResultSet r)
     {
-        
+        makeListTypes(t);
+        makeListVehicles(v);
+        makeListCustomer(c);
+        makeListReservation(r);
       
         }
     
     
-    private ArrayList makeListTypes(ResultSet r)
+    private ArrayList<VehicleTypes> makeListTypes(ResultSet r)
     {
-        ArrayList returnlist = new ArrayList<Types>();
+        ArrayList<VehicleTypes> returnlist = new ArrayList<VehicleTypes>();
         try{     
         
           while(r.next())
           {
-            VehicleType tmp = new VehicleType(r.getInt("id"),r.getString("name"),r.getDouble("price"));
+            VehicleTypes tmp = new VehicleTypes(r.getInt("id"),r.getString("name"),r.getDouble("price"));
                                               
             returnlist.add(tmp);
             r.next();
