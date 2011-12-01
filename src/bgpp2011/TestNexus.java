@@ -61,8 +61,8 @@ public class TestNexus {
      {
          DataBaseCom db = new DataBaseCom();
         
-         VehicleType t = new VehicleType(0, Types.FOURDOOR);
-         Vehicle v1 = new Vehicle(0,"toyo", "lol", 1990. t);
+         VehicleType t = new VehicleType(0, "hej", 200);
+         Vehicle v1 = new Vehicle(0,"toyo", "lol", 1990, t);
          db.update(Commands.createVehicle(v1));
          db.close();
      }
@@ -76,8 +76,8 @@ public class TestNexus {
      {
          DataBaseCom db = new DataBaseCom();
          
-         VehicleType t = new VehicleType(0, Types.FOURDOOR);
-         Vehicle v1 = new Vehicle(0,"toyotaaa", "lol", 1990.t);
+         VehicleType t = new VehicleType(0, "hej", 200);
+         Vehicle v1 = new Vehicle(0,"toyotaaa", "lol", 1990, t);
          db.update(Commands.updateVehicle(v1));
          db.close();
      }

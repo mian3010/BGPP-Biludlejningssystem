@@ -25,13 +25,10 @@ public class Nexus {
 	     * Closes down the database. Should be used in the GUI for closing 
 	     * connection and in testing.
 	     */
-	    {
-	        
-	    }
 	    
 	    public void closeDatabase()
 	    {
-	        
+	        db.close();
 	    }
 	    
 	    /*

@@ -27,7 +27,7 @@ public class Controller {
      * as parameters. Then calls the makeList methoed from the engine and returns
      * the ArrayList.
      */
-    public ArrayList getVehicles()
+    /*public ArrayList getVehicles()
     {
         ResultSet r = nexus.getVehicles();
         ListEngine l = new ListEngine(r);
@@ -57,5 +57,5 @@ public class Controller {
         ListEngine l = new ListEngine(r);
         ArrayList returnlist = l.makeList();
         return returnlist;
-    }
+    }*/
 }
