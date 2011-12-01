@@ -13,7 +13,7 @@ package bgpp2011;
  * is to contain all information about a reservation.
  
  */
-public class Reservation implements Data {
+public class Reservation{
     
     private int id;
     private final Customer customer;

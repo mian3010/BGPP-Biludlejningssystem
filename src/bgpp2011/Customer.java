@@ -9,7 +9,7 @@ package bgpp2011;
  * @author tokejensen
  * Contains information about a customer. Name, phonenumber.....ect.
  */
-public class Customer implements Data {
+public class Customer{
     
     private int id;
     private String name;
