@@ -1,7 +1,4 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package bgpp2011;
 
 import org.junit.After;
@@ -9,15 +6,15 @@ import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
-import static org.junit.Assert.*;
+// import static org.junit.Assert.*;
 
 /**
  *
  * @author STAHL7
  */
-public class DropAllTables {
+public class TestDropAllTables {
     
-    public DropAllTables() {
+    public TestDropAllTables() {
     }
 
     @BeforeClass

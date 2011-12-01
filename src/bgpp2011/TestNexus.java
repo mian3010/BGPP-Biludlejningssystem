@@ -16,9 +16,9 @@ import static org.junit.Assert.*;
  *
  * @author STAHL7
  */
-public class NexusTest {
+public class TestNexus {
     
-    public NexusTest() {
+    public TestNexus() {
     }
 
     @BeforeClass
@@ -62,7 +62,7 @@ public class NexusTest {
          DataBaseCom db = new DataBaseCom();
         
          VehicleType t = new VehicleType(0, Types.FOURDOOR);
-         Vehicle v1 = new Vehicle(0, t, "toyo", "lol", 1990);
+         Vehicle v1 = new Vehicle(0,"toyo", "lol", 1990. t);
          db.update(Commands.createVehicle(v1));
          db.close();
      }
@@ -77,7 +77,7 @@ public class NexusTest {
          DataBaseCom db = new DataBaseCom();
          
          VehicleType t = new VehicleType(0, Types.FOURDOOR);
-         Vehicle v1 = new Vehicle(0, t, "toyotaaa", "lol", 1990);
+         Vehicle v1 = new Vehicle(0,"toyotaaa", "lol", 1990.t);
          db.update(Commands.updateVehicle(v1));
          db.close();
      }

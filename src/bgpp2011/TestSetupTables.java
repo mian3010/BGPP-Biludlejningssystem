@@ -1,9 +1,6 @@
 package bgpp2011;
 
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
+
 
 import org.junit.After;
 import org.junit.AfterClass;
@@ -16,9 +13,9 @@ import static org.junit.Assert.*;
  *
  * @author STAHL7
  */
-public class SetupAllTables {
+public class TestSetupTables {
     
-    public SetupAllTables() {
+    public TestSetupTables() {
     }
 
     @BeforeClass
