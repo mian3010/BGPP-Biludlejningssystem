@@ -2,6 +2,7 @@ package bgpp2011;
 import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
+
 import java.util.*;
 
 /**
@@ -29,8 +30,8 @@ public class FrontPageView extends View {
         gridLayout.setBorder(BorderFactory.createEmptyBorder(100,100,100,100));
         
         //Configuring the four buttons
-        ArrayList<JButton> buttons = new ArrayList();
-        ArrayList<View> views = new ArrayList();
+        ArrayList<JButton> buttons = new ArrayList<JButton>();
+        ArrayList<View> views = new ArrayList<View>();
         Dimension size = new Dimension(100,100);
         Font font = new Font("Arial", Font.BOLD, 15);
         
