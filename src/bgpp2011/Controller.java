@@ -11,9 +11,7 @@ public class Controller
 	/*
 	 * Controlleren must execute operations given by the user. It must do all the checking and ordering.
 	 * 
-	 */
-	
-	/*
+	 *
 	 * The checkreservation() method checks if there is an overlap with another reservation. It takes a
 	 * reservation as a parameter. First, it checks whether the startdate is before the enddate. Second,
 	 * It checks whether the Vehicle of the Reservations re is the same as i the ArrayList. Then it checks
@@ -49,7 +47,34 @@ public class Controller
          } 
 		return true;
 	}	
+	
 
+	public Vehicle findCar(VehicleType v, Date start, Date end)
+	{
+		ArrayList<Vehicle> tmp = new ArrayList<Vehicle>();
+		for(Vehicle ve : vehicles)
+			{  
+			   if(ve.getType() == v)
+			   	{
+				   tmp.add(ve);
+			   	}   
+			}
+				for(Reservation r : reservations)
+				{
+					Vehicle tmp1 = r.getVehicle();
+					if(!tmp.contains(tmp1))
+					{
+						return tmp1;
+					}
+				}
+				
+					for(Reservation r : reservations)
+					{
+						checkReservation(r);
+						return null;
+					}
+		
+	}
 		             
 	/*
 	 * Method, that makes a new reservation and adds it to the ArrayList called reservations.
@@ -67,6 +92,29 @@ public class Controller
 				return false;
 			}
 			
+	}
+	
+	public Reservation getReservation(int i)
+	{
+		if(i < reservations.size())
+		{
+		return reservations.get(i);
+		}
+		else {
+			throw new IllegalArgumentException("No reservations in that position!");
+		}
+	}
+	
+	public boolean changeReservation(int i, Reservation newR)
+	{
+		
+		if(checkReservation(newR))
+		  {
+			reservations.remove(i);
+			reservations.add(i,newR);
+			return true;
+		  }
+		    return false;
 	}
 	
 }
