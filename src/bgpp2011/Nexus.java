@@ -1,5 +1,6 @@
 package bgpp2011;
 import java.sql.*;
+import java.util.ArrayList;
 
 /*
  * This is the COMMAND CENTER / Nexus part of the database. This 
@@ -46,24 +47,37 @@ public class Nexus {
 	    {}
 	    
 	    /*
-	     * Getter methods. Returns data as ResultSets
-	     * 
+	     * The following methods returns ArrayLists containing the different types of objects 
+	     * used in the Controller for modifying, searching and sorting. 
+	     * These methods should be called at the loading of the program and ONLY there,
+	     * as they do not guarantee consistency of data if the database itself has been changed. 
+	     * Also the methods involves quite a bit of queries from the database but for now this seems
+	     * like an okay method.
+	     * @author msta & tbrj
 	     */
 	    
-	    public ResultSet getVehicles()
+	    public ArrayList<Vehicle> getVehicles() // Depends on the VehicleType as the objects are linked
 	    {
-	        return db.get(Commands.getVehicles());
+	        ResultSet r = db.get(Commands.getVehicles());
+	        ArrayList<VehicleType> vtlist = getTypes();
+	        return Commands.makeListVehicles(r, vtlist);
+	        
 	    }
-	    public ResultSet getReservations()
+	    public ArrayList<Reservation> getReservations() // Depends on Vehicles and Customer as the objects are also linked.
 	    {
-	        return db.get(Commands.getReservations());
+	        ResultSet r = db.get(Commands.getReservations());
+	        ArrayList<Vehicle> vlist = getVehicles();
+	        ArrayList<Customer> clist = getCostumers();
+	        return Commands.makeListReservation(r, clist, vlist);
+	        		
 	    }
-	    public ResultSet getTypes()
+	    public ArrayList<VehicleType> getTypes() // Independent results from the database.
 	    {
-	        return db.get(Commands.getTypes());
+	       return Commands.makeListTypes(db.get(Commands.getReservations()));
 	    }
-	    public ResultSet getCostumers()
+	    public ArrayList<Customer> getCostumers() // Same as above.
 	    {
-	        return db.get(Commands.getCustomers());
+	       return Commands.makeListCustomer(db.get(Commands.getCustomers()));
+	        
 	    }
 }

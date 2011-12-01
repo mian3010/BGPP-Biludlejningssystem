@@ -1,6 +1,8 @@
 package bgpp2011;
 import java.awt.*;
 import javax.swing.*;
+import javax.swing.table.*;
+
 import java.util.*;
 
 /**
@@ -45,17 +47,18 @@ public abstract class View
         
         return contentPane;
     }
-    public JTable createTable(int[] columnSizes, TableModel model)
+    public JTable createTable(String[] columnNames, Object[][] data, int[] columnSizes)
     {
-        JTable table = new JTable(model);
+        JTable table = new JTable(data, columnNames);
         for (int i = 0; i < columnSizes.length; i++)
         {
             table.getColumnModel().getColumn(i).setPreferredWidth(columnSizes[i]);
         }
         return table;
     }
-    public void addToTable(Object[] data, TableModel table)
+    public void addToTable(Object[] data, JTable table)
     {
-        
+        DefaultTableModel model = (DefaultTableModel)table.getModel();
+        model.addRow(data);
     }
 }
