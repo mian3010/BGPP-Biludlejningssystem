@@ -15,7 +15,7 @@ package bgpp2011;
  */
 public class Reservation{
     
-    private int id;
+	private int id;
     private final Customer customer;
     private final Vehicle vehicle;
     private Date startdate;

@@ -11,7 +11,7 @@ import java.util.ArrayList;
  * cumbersome manner but the idea is that you should be able to change database fairly easy if you edit this class
  * and the CONNECTION part of the 'data-delivering-system' (here called Nexus). This class need not be instantiated anywhere
  * as it because of its 'translate'-like nature can be replaced as long as the parameters are the same.
- * @authors mainly msta & tbrj
+ * @authors mainly msta & tbrj.
  */
 
 

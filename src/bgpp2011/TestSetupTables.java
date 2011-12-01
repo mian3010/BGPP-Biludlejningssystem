@@ -10,7 +10,7 @@ import org.junit.Test;
 import static org.junit.Assert.*;
 
 /**
- *
+ * This method sets up all the tables without any data.
  * @author STAHL7
  */
 public class TestSetupTables {
@@ -49,6 +49,8 @@ public class TestSetupTables {
               + "enddate TEXT, FOREIGN KEY" + "(customerID) REFERENCES "
               + "Customer (id), FOREIGN KEY" + "(vehicleID) "
               + "REFERENCES Vehicle (id))"),true);
+        
+       
     
     }
 }
