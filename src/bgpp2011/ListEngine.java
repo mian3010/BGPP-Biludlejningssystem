@@ -21,7 +21,7 @@ public class ListEngine
 {
     
     
-    private ArrayList<VehicleType> types;
+    private ArrayList<VehicleTypes> types;
     private ArrayList<Vehicle> vehicle;
     private ArrayList<Customer> customer;
     private ArrayList<Reservation> reservation;
@@ -36,9 +36,9 @@ public class ListEngine
         }
     
     
-    private ArrayList makeListTypes(ResultSet r)
+    private ArrayList<VehicleTypes> makeListTypes(ResultSet r)
     {
-        ArrayList returnlist = new ArrayList<VehicleTypes>();
+        ArrayList<VehicleTypes> returnlist = new ArrayList<VehicleTypes>();
         try{     
         
           while(r.next())
@@ -48,7 +48,7 @@ public class ListEngine
             returnlist.add(tmp);
             r.next();
           } 
-            ArrayList types = returnlist;
+            types = returnlist;
             return returnlist;  
           }
          
