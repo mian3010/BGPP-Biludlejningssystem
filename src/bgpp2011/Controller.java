@@ -47,7 +47,14 @@ public class Controller
          } 
 		return true;
 	}	
-	
+	/*
+	 * This code is very VERY abstract. It start out by making an arrayList containing the cars of
+	 *  a given type. Then it runs a for-each loop that checks if there is a car that has no reservations.
+	 *  If that is not the case, it runs a for-each loop, that creates a temporary reservation and runs
+	 *  the check reservation method on it. If it is true, it will return that car. If there is no car 
+	 *  avaliable. It will return null.
+	 * 
+	 */
 
 	public Vehicle findCar(VehicleType v, Date start, Date end)
 	{
@@ -62,19 +69,24 @@ public class Controller
 				for(Reservation r : reservations)
 				{
 					Vehicle tmp1 = r.getVehicle();
-					if(!tmp.contains(tmp1))
+						if(!tmp.contains(tmp1))
 					{
 						return tmp1;
 					}
 				}
 				
-					for(Reservation r : reservations)
+					for(Vehicle va : tmp)
 					{
-						checkReservation(r);
-						return null;
+						Customer tmpCustomer = new Customer(1,"tmp", 1, "tmp", "tmp");
+						Reservation res = new Reservation(0, tmpCustomer, va, start, end);
+						if(checkReservation(res)) 
+						{
+						return va;
+						}
 					}
+						return null;
 		
-	}
+	        }
 		             
 	/*
 	 * Method, that makes a new reservation and adds it to the ArrayList called reservations.
