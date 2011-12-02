@@ -39,14 +39,15 @@ public class Nexus {
 	    public Reservation createEntryReservation(Reservation r)
 	    {
 	    	ResultSet res = db.get(Commands.createReservation(r));
-	        try {
-	        	int id = res.getInt("id");
-		    	return new Reservation(id,r.getCustomer(),r.getVehicle(),new Date(r.getStartdate()),new Date(r.getEnddate()));
-	        }
-	        catch(SQLException exn) {
-	        	System.out.println("Database error while handing new reservation results.");
-	        	return null;
-	        }
+	    	int id = Commands.getDbID(res);
+	        	if(id != -1)
+	        	{
+	        		return new Reservation(id,r.getCustomer(),r.getVehicle(),new Date(r.getStartdate()),new Date(r.getEnddate()));
+	        	}
+	        	else 
+	        		return null;
+
+	        
 	    }
 	    
 	  

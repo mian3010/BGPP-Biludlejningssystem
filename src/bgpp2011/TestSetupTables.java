@@ -37,14 +37,14 @@ public class TestSetupTables {
     public void setupAllTables()
     {
         DataBaseCom db = new DataBaseCom();
-        assertEquals(db.update("CREATE TABLE VehicleType (id INT PRIMARY KEY,"
+        assertEquals(db.update("CREATE TABLE VehicleType (id INT PRIMARY KEY AUTO_INCREMENT,"
               + " name TEXT, price INT)"),true);    
-        assertEquals(db.update("CREATE TABLE Vehicle (id INT PRIMARY KEY, "
+        assertEquals(db.update("CREATE TABLE Vehicle (id INT PRIMARY KEY AUTO_INCREMENT, "
               + "make TEXT, "  + "model TEXT, year INT, typeID INT, "
               + "FOREIGN KEY (typeID)" + "REFERENCES VehicleType (id))"),true);
-        assertEquals(db.update("CREATE TABLE Customer (id INT PRIMARY KEY, "
+        assertEquals(db.update("CREATE TABLE Customer (id INT PRIMARY KEY AUTO_INCREMENT, "
               + "name TEXT," + "phone INT, address TEXT)"),true);
-        assertEquals(db.update("CREATE TABLE Reservation (id INT PRIMARY KEY,"
+        assertEquals(db.update("CREATE TABLE Reservation (id INT PRIMARY KEY AUTO_INCREMENT,"
               + " customerID INT," + " vehicleID INT, startdate TEXT, "
               + "enddate TEXT, FOREIGN KEY" + "(customerID) REFERENCES "
               + "Customer (id), FOREIGN KEY" + "(vehicleID) "

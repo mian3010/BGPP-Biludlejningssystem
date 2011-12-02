@@ -198,7 +198,16 @@ public class Commands {
 		          }     
 	        
 	    }
-	  	    
+  	    public static int getDbID(ResultSet r)
+  	    {
+  	    	try {
+  	    		return r.getInt("id");
+  	    	}
+  	    	catch(SQLException exn) {
+  	    		System.out.println("The system could not fetch the ID for the requested object:" + exn);
+  	    		return -1;
+  	    	}
+  	    }
 	    
 	    
 }

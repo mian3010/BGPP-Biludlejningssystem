@@ -29,7 +29,7 @@ public class DataBaseCom {
         catch (SQLException exn) {
             System.out.println("The database connection cannot be opened");
         }  catch (ClassNotFoundException exn) {
-            System.out.println("There was an error handling the openDB request.");
+            System.out.println("There was an error handling the openDB request." + exn);
         }
     }
     
