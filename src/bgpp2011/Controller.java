@@ -150,7 +150,7 @@ public class Controller
 		return null;
 	}
 	
-	public Customer createCustomer(String name, int phonenumber, String address, String bankaccount)
+/*public Customer createCustomer(String name, int phonenumber, String address, String bankaccount)
 	{
 		Customer c = new Customer(0, name, phonenumber, address, bankaccount);
 		Collection customerC = customers.values();
@@ -162,6 +162,7 @@ public class Controller
 					return null;
 				}
 			}
+			
 				try {
 					Customer returnC = nexus.createEntryCustomer(c);
 					return returnC;
@@ -169,8 +170,8 @@ public class Controller
 				catch(Exception e)
 					{
 					return null;
-					}
-	}
+					}				
+	}*/
 	
 	public Reservation getReservation(int i)
 	{
