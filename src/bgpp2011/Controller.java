@@ -8,6 +8,7 @@ public class Controller
 	private ArrayList<Vehicle> vehicles;
 	private ArrayList<Customer> customer;
 	private ArrayList<Reservation> reservations;
+	private Nexus nexus;
 	/*
 	 * Controlleren must execute operations given by the user. It must do all the checking and ordering.
 	 * 
@@ -18,6 +19,13 @@ public class Controller
 	 * whether the startdate is after the enddate, or if the enddate is before the startdate. If that is true,
 	 * the reservation is possible and it will return true.
 	 */
+	public Controller()
+	{
+		nexus = new Nexus();
+		reservations = new ArrayList<Reservation>();
+	}
+	
+	
 	public boolean checkReservation(Reservation re)
 	{
 		
@@ -92,19 +100,37 @@ public class Controller
 	 * Method, that makes a new reservation and adds it to the ArrayList called reservations.
 	 * It uses the checkReservations() method to see if it is possible to make the reservations.
 	 */
-	public boolean makeReservation(int id, Customer c, Vehicle v, Date start, Date end)
+	private Reservation makeReservation(Customer c, VehicleType t, Date start, Date end)
 	{
-		Reservation reservation = new Reservation(id, c, v, start, end);
-			if(checkReservation(reservation))
-			{
-				reservations.add(reservation);
-				return true;
-			}
-			else {
-				return false;
-			}
-			
+		if(findCar(t, start, end) == null)
+		{
+			return null;
+		}
+		else {
+			Vehicle tmp = findCar(t, start, end);
+			Reservation reservation = new Reservation(0, c, tmp, start, end);	
+			return reservation;
+						
+			}			
 	}
+	
+	public Reservation createReservation(Customer c, VehicleType t, Date start, Date end)
+	{
+		if(findCar(t, start, end) == null)
+				{
+			 		return null;
+				}
+		else {
+					if(Nexus.createEntryReservation(makeReservation(c, t, start, end) != null))
+					{
+					Reservation r = Nexus.createEntryReservation(makeReservation(c, t, start, end));
+					return r;
+					}
+				
+				}
+		return null;
+	}
+	
 	
 	public Reservation getReservation(int i)
 	{
@@ -127,6 +153,28 @@ public class Controller
 			return true;
 		  }
 		    return false;
+	}
+	
+	public String addReservation()
+	{
+		VehicleType vt = new VehicleType(4, "4door", 130);
+		Vehicle v = new Vehicle(1, "ford", "escort", 1990, vt);
+		Vehicle v2 = new Vehicle(2, "mazda", "626", 1999, vt);
+		Customer c1 = new Customer(1, "Poul Larsen", 37226455, "R¿devej 7, ", "2299-8287378834");
+		Customer c2 = new Customer(2, "Rudolph Martins", 67241594, "Alberts v¾nge 32, ", "2596-822343781234");
+		Date d1 = new Date("110623");
+		Date d2 = new Date("110328");
+		Reservation r1 = new Reservation(1, c1, v, d1, d2);
+		Reservation r2 = new Reservation(2, c2, v2, d1, d2);
+		reservations.add(r1);
+		reservations.add(r2);
+		String s = "";
+		for(Reservation r : reservations)
+		{
+			Vehicle veh = r.getVehicle();
+			s = s + "" + veh.getMake() + " " + veh.getModel();
+		}
+		return s;
 	}
 	
 }

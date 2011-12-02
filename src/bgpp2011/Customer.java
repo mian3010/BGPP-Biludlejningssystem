@@ -23,6 +23,7 @@ public class Customer{
         this.phonenumber = number;
         this.address = address;
         this.id = id;
+        this.bankaccount = account;
     }
     
     public String getName()
