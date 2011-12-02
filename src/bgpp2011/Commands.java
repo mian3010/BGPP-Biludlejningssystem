@@ -3,7 +3,7 @@ package bgpp2011;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
-
+import java.util.HashMap;
 /*
  * This class needs alot of explanation.
  * Basically this is class designed to keep every bit of SQL-syntax-related code separated from the class that 
@@ -22,25 +22,25 @@ public class Commands {
 		 */
 	    public static String createVehicle(Vehicle v)
 	    {
-	       return "INSERT INTO Vehicle VALUES (" + v.getId() + ", \"" + v.getMake() + 
+	       return "INSERT INTO Vehicle VALUES (null, \"" + v.getMake() + 
 	        "\", \"" + v.getModel() + "\"," + v.getYear() + ","
 	        +  v.getType().getId() + ");";
 	     
 	    }         
 	    public static String createType(VehicleType t)
 	    {
-	            return "INSERT INTO VehicleType VALUES (" + t.getId() + ",\"" 
+	            return "INSERT INTO VehicleType VALUES (null, \"" 
 	                    + t.getName() + "\"," + t.getPrice() + ");";
 	    }
 	    public static String createCustomer(Customer c)
 	    {
-	       return "INSERT INTO Customer VALUES (" + c.getId() + ",\"" + c.getName() 
+	       return "INSERT INTO Customer VALUES (null, \"" + c.getName() 
 	                + "\"," + c.getNumber() + ",\""  + c.getAddress() + "\");";   
 	    
 	    }
 	    public static String createReservation(Reservation r)
 	    {
-	          return "INSERT INTO Reservation VALUES("
+	          return "INSERT INTO Reservation VALUES(null,"
 	                    + r.getCustomer().getId() + "," + r.getVehicle().getId()
 	                    + ",\"" + r.getStartdate() + "\",\"" + r.getEnddate()
 	                            + "\");";
@@ -96,13 +96,13 @@ public class Commands {
 	              "\", price = " + t.getPrice() + " where id = " + t.getId();
 	    }
 	    /*
-	     * These methods are responsible for taking in ResultSets from the database and returning them as ArrayList, usable
+	     * These methods are responsible for taking in ResultSets from the database and returning them as HashMaps, usable
 	     * in the Nexus and especially for further use in the controller. This stage of the 'translation' concludes the Nexus' 
 	     * usability when opening the program.
 	     */
-	    public static ArrayList<Reservation> makeListReservation(ResultSet r, ArrayList<Customer> clist, ArrayList<Vehicle> vlist)
+	    public static HashMap<Integer, Reservation> makeMapReservation(ResultSet r, HashMap<Integer, Customer> cmap, HashMap<Integer, Vehicle> vmap)
 	    {
-	         ArrayList<Reservation> returnlist = new ArrayList<Reservation>();
+	         HashMap<Integer, Reservation> returnmap = new HashMap<Integer, Reservation>();
 	        try{     
 	        
 	          while(r.next())
@@ -111,38 +111,15 @@ public class Commands {
 	            int vid = r.getInt("VehicleId");
 	            Date startDate = new Date(r.getString("startdate"));
 	            Date endDate = new Date(r.getString("enddate"));
-	            Reservation tmp = new Reservation(r.getInt("id"),clist.get(cid), 
-	                              vlist.get(vid), startDate, endDate);
+	            int id = r.getInt("id");
+	            Reservation tmp = new Reservation(id,cmap.get(cid), 
+	                              vmap.get(vid), startDate, endDate);
 	                                              
-	            returnlist.add(tmp);
-	            r.next();
-	          } 
-	         
-	            return returnlist;  
-	          }
-	         
-	          catch(SQLException e)
-	          {
-	            System.out.println("Non valid resultset");
-	            return returnlist;
-	          }
-	    }
-	    public static ArrayList<Customer> makeListCustomer(ResultSet r)
-	    {
-	         ArrayList<Customer> returnlist = new ArrayList<Customer>();
-	        try{     
+	            returnmap.put(id,tmp);
 	        
-	          while(r.next())
-	          {
-	            Customer tmp = new Customer(r.getInt("id"),r.getString("name"),
-	                           r.getInt("phonenumber"), r.getString("address"),
-	                           r.getString("bankaccount"));
-	                                              
-	            returnlist.add(tmp);
-	            r.next();
 	          } 
-	           
-	            return returnlist;  
+	         
+	            return returnmap;  
 	          }
 	         
 	          catch(SQLException e)
@@ -151,44 +128,71 @@ public class Commands {
 	            return null;
 	          }
 	    }
-	    public static ArrayList<Vehicle> makeListVehicles(ResultSet r, ArrayList<VehicleType> types)
+	    public static HashMap<Integer, Customer> makeMapCustomer(ResultSet r)
 	    {
-	         ArrayList<Vehicle> returnlist = new ArrayList<Vehicle>();
-	          try{     
+	         HashMap<Integer, Customer> returnmap = new HashMap<Integer, Customer>();
+	        try{     
 	        
 	          while(r.next())
 	          {
-	            int id = r.getInt("typeId"); 
-	            Vehicle tmp = new Vehicle(r.getInt("id"), r.getString("make"),
-	                          r.getString("model"), r.getInt("year"),types.get(id));
+	        	 int id = r.getInt("id");
+	            Customer tmp = new Customer(id,r.getString("name"),
+	                           r.getInt("phonenumber"), r.getString("address"),
+	                           r.getString("bankaccount"));
 	                                              
-	            returnlist.add(tmp);
-	            r.next();
+	            returnmap.put(id,tmp);
+	            
 	          } 
-	          
-	            return returnlist;  
+	           
+	            return returnmap;  
 	          }
 	         
 	          catch(SQLException e)
 	          {
 	            System.out.println("Non valid resultset");
-	            return returnlist;
+	            return null;
 	          }
 	    }
-	    public static ArrayList<VehicleType> makeListTypes(ResultSet r)
+	    public static HashMap<Integer, Vehicle> makeMapVehicles(ResultSet r, HashMap<Integer, VehicleType> types)
+	    {
+	         HashMap<Integer, Vehicle> returnmap = new HashMap<Integer, Vehicle>();
+	          try{     
+	        
+	          while(r.next())
+	          {
+	        	int vid = r.getInt("id");
+	            int id = r.getInt("typeId"); 
+	            Vehicle tmp = new Vehicle(vid,r.getString("make"),
+	                          r.getString("model"), r.getInt("year"),types.get(id));
+	                                              
+	            returnmap.put(vid, tmp);
+	           
+	          } 
+	          
+	            return returnmap;  
+	          }
+	         
+	          catch(SQLException e)
+	          {
+	            System.out.println("Non valid resultset");
+	            return returnmap;
+	          }
+	    }
+	    public static HashMap<Integer, VehicleType> makeMapTypes(ResultSet r)
 	    {
 	    
-		        ArrayList<VehicleType> vtlist = new ArrayList<VehicleType>();
+		        HashMap<Integer, VehicleType> vtmap = new HashMap<Integer, VehicleType>();
 		        try{     
 		        
 		          while(r.next())
 		          {
-		            VehicleType v = new VehicleType(r.getInt("id"),r.getString("name"),r.getDouble("price"));
+		        	int id = r.getInt("id");
+		            VehicleType v = new VehicleType(id,r.getString("name"),r.getDouble("price"));
 		                                              
-		            vtlist.add(v);
-		            r.next();
+		            vtmap.put(id,v);
+		            
 		          }
-		            return vtlist;  
+		            return vtmap;  
 		          }
 		         
 		          catch(SQLException e)
@@ -201,9 +205,14 @@ public class Commands {
   	    public static int getDbID(ResultSet r)
   	    {
   	    	try {
-  	    		return r.getInt("id");
+  	    		if(r == null)
+  	    			System.out.println("getDBID fail.");
+  	    		r.next();
+  	    		
+  	    		return r.getInt(1);
   	    	}
   	    	catch(SQLException exn) {
+  	  
   	    		System.out.println("The system could not fetch the ID for the requested object:" + exn);
   	    		return -1;
   	    	}
