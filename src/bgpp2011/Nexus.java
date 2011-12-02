@@ -3,6 +3,7 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+
 /*
  * This is the COMMAND CENTER / Nexus part of the database. This 
  * class initialize the connection class and uses the syntax 
