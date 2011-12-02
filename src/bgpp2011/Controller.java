@@ -193,6 +193,7 @@ public boolean createCustomer(String name, int phonenumber, String address, Stri
 			try {
 				Vehicle returnV = nexus.createEntryVehicle(ve);
 				vehicles.put(returnV.getId(), ve);
+				return true;
 			}
 			catch(Exception e) {
 				return false;
