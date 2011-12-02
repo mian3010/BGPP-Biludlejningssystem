@@ -34,7 +34,7 @@ public class Controller
 				{
 					int startValue = re.getStartdate().compareTo(r.getEnddate());
 					int endValue = re.getEnddate().compareTo(r.getStartdate());
-					if(startValue < 0 && endValue > 0)
+						if(startValue < 0 && endValue > 0)
 						{
 							return false;
 			  
@@ -66,27 +66,27 @@ public class Controller
 				   tmp.add(ve);
 			   	}   
 			}
-				for(Reservation r : reservations)
-				{
+					for(Reservation r : reservations)
+					{
 					Vehicle tmp1 = r.getVehicle();
 						if(!tmp.contains(tmp1))
 					{
 						return tmp1;
 					}
-				}
+					}
 				
-					for(Vehicle va : tmp)
-					{
+						for(Vehicle va : tmp)
+						{
 						Customer tmpCustomer = new Customer(1,"tmp", 1, "tmp", "tmp");
 						Reservation res = new Reservation(0, tmpCustomer, va, start, end);
-						if(checkReservation(res)) 
-						{
-						return va;
+							if(checkReservation(res)) 
+							{
+								return va;
+							}
 						}
-					}
 						return null;
 		
-	        }
+	       }
 		             
 	/*
 	 * Method, that makes a new reservation and adds it to the ArrayList called reservations.
