@@ -4,7 +4,7 @@ package bgpp2011;
 import java.sql.*;
 /**
  * This is the basic databaseconnection. 
- * WARNING: This has not been tested yet!! We need the Model classes!
+ * This has been tested and is working (except get, still testing).
  * @author STAHL7
  */
 public class DataBaseCom {
@@ -78,7 +78,17 @@ public class DataBaseCom {
        }
             
     }
-    
+ /*   public ResultSet create(String query)
+    {
+    	try {
+    		if(dbStatement.executeUpdate(query, Statement.RETURN_GENERATED_KEYS) == 0)
+    		{
+    			System.out.println("No keys can be returned, this means an error.");
+    		}
+    		ResultSet r = dbStatement.getGeneratedKeys;
+    	}
+    }
+    */
     
     
     

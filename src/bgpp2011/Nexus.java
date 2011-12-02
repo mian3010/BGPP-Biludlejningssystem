@@ -36,10 +36,20 @@ public class Nexus {
 	     * Creator method. Updates db
 	     * Incomplete for now
 	     */
-	    public void createEntry(Customer c)
+	    public Reservation createEntryReservation(Reservation r)
 	    {
-	        db.update(Commands.createCustomer(c));
+	    	ResultSet res = db.get(Commands.createReservation(r));
+	        try {
+	        	int id = res.getInt("id");
+		    	return new Reservation(id,r.getCustomer(),r.getVehicle(),new Date(r.getStartdate()),new Date(r.getEnddate()));
+	        }
+	        catch(SQLException exn) {
+	        	System.out.println("Database error while handing new reservation results.");
+	        	return null;
+	        }
 	    }
+	    
+	  
 	    public void deleteEntry()
 	    {}
 	    

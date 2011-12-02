@@ -40,7 +40,7 @@ public class Commands {
 	    }
 	    public static String createReservation(Reservation r)
 	    {
-	          return "INSERT INTO Reservation VALUES(" 
+	          return "INSERT INTO Reservation VALUES("
 	                    + r.getCustomer().getId() + "," + r.getVehicle().getId()
 	                    + ",\"" + r.getStartdate() + "\",\"" + r.getEnddate()
 	                            + "\");";
