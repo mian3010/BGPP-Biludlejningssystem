@@ -129,7 +129,7 @@ public class Controller
 	}
 	
 	/*
-	 * This metod is called by the GUI and it checks if a reservation is avaliable, and return it 
+	 * This method is called by the GUI and it checks if a reservation is avaliable, and return it 
 	 * if it is. Else it resturns null.
 	 */
 	public Reservation createReservation(Customer c, VehicleType t, Date start, Date end)
