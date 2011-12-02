@@ -176,6 +176,10 @@ public boolean createCustomer(String name, int phonenumber, String address, Stri
 					return false;
 					}				
 	}
+	/*
+	 * Creates a new vehicle. It check if the type is correct and already in the system.
+	 * It sends a vehicle to the database which deligates an id to it. 
+	 */
 
 	public boolean createVehicle(String make, String model, int year, VehicleType v)
 	{
@@ -194,11 +198,39 @@ public boolean createCustomer(String name, int phonenumber, String address, Stri
 				Vehicle returnV = nexus.createEntryVehicle(ve);
 				vehicles.put(returnV.getId(), ve);
 				return true;
-			}
+				}
 			catch(Exception e) {
 				return false;
-			}
+				}
 		
+	}
+	/*
+	 * Method that creates a new vehicletype. It sends a type to Nexus, witch deligates an id to it.
+	 * It checks whether there is already a type with the same name in the system.
+	 */
+	public boolean createVehicleType(String name, double price)
+	{
+		VehicleType vee = new VehicleType(0, name, price);
+		Collection<VehicleType> c = types.values(); 
+		Iterator<VehicleType> itt = c.iterator();
+			while(itt.hasNext())
+			{
+				if(vee.getName() == itt.next().getName())
+				{
+					return false;
+				}
+				
+			}
+			try{
+				VehicleType returnT = nexus.createEntryVehicleType(vee);
+				
+				types.put(returnT.getId(), returnT);
+				return true;
+				}
+			catch(Exception e)
+			{
+				return false;
+			}
 	}
 	
 	public Reservation getReservation(int i)
