@@ -11,7 +11,7 @@ import java.util.ArrayList;
  * cumbersome manner but the idea is that you should be able to change database fairly easy if you edit this class
  * and the CONNECTION part of the 'data-delivering-system' (here called Nexus). This class need not be instantiated anywhere
  * as it because of its 'translate'-like nature can be replaced as long as the parameters are the same.
- * @authors mainly msta & tbrj
+ * @authors mainly msta & tbrj.
  */
 
 
@@ -40,7 +40,7 @@ public class Commands {
 	    }
 	    public static String createReservation(Reservation r)
 	    {
-	          return "INSERT INTO Reservation VALUES(" 
+	          return "INSERT INTO Reservation VALUES("
 	                    + r.getCustomer().getId() + "," + r.getVehicle().getId()
 	                    + ",\"" + r.getStartdate() + "\",\"" + r.getEnddate()
 	                            + "\");";
@@ -198,7 +198,16 @@ public class Commands {
 		          }     
 	        
 	    }
-	  	    
+  	    public static int getDbID(ResultSet r)
+  	    {
+  	    	try {
+  	    		return r.getInt("id");
+  	    	}
+  	    	catch(SQLException exn) {
+  	    		System.out.println("The system could not fetch the ID for the requested object:" + exn);
+  	    		return -1;
+  	    	}
+  	    }
 	    
 	    
 }

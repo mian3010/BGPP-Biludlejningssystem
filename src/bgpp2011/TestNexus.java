@@ -13,7 +13,7 @@ import org.junit.Test;
 import static org.junit.Assert.*;
 
 /**
- *
+ * This method
  * @author STAHL7
  */
 public class TestNexus {
@@ -70,7 +70,7 @@ public class TestNexus {
      /*
       * Test for updating a vehicle with the id = 0.
       */
-     
+   
      @Test 
      public void testUpdateVeh()
      {
@@ -81,4 +81,8 @@ public class TestNexus {
          db.update(Commands.updateVehicle(v1));
          db.close();
      }
+    
+
+     
+   
 }

@@ -36,10 +36,21 @@ public class Nexus {
 	     * Creator method. Updates db
 	     * Incomplete for now
 	     */
-	    public void createEntry(Customer c)
+	    public Reservation createEntryReservation(Reservation r)
 	    {
-	        db.update(Commands.createCustomer(c));
+	    	ResultSet res = db.get(Commands.createReservation(r));
+	    	int id = Commands.getDbID(res);
+	        	if(id != -1)
+	        	{
+	        		return new Reservation(id,r.getCustomer(),r.getVehicle(),new Date(r.getStartdate()),new Date(r.getEnddate()));
+	        	}
+	        	else 
+	        		return null;
+
+	        
 	    }
+	    
+	  
 	    public void deleteEntry()
 	    {}
 	    
