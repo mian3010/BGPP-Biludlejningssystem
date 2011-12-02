@@ -17,11 +17,13 @@ public class Customer{
     private String address;
     private String bankaccount;
     
+    
     public Customer(int id, String name, int number, String address, String account)
     {
         this.name = name;
         this.phonenumber = number;
         this.address = address;
+        this.bankaccount = account;
         this.id = id;
     }
     

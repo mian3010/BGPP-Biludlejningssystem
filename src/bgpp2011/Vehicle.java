@@ -16,7 +16,7 @@ public class Vehicle{
     private String model;
     private int year; 
    
-    private boolean rentable;
+
     
     public Vehicle(int id, String make, String model, int year, VehicleType type)
     {
@@ -25,7 +25,7 @@ public class Vehicle{
         this.model = model;
         this.year = year;
         this.id = id;
-        rentable = true;
+        
     }
     
     public VehicleType getType()
@@ -53,14 +53,6 @@ public class Vehicle{
         return id;
     }
     
-    public boolean getRentable()
-    {
-        return rentable;
-    }
-    
-    public void setRentable(boolean b)
-    {
-        rentable = b;
-    }
+
 
 }

@@ -34,9 +34,9 @@ public class CustomerView extends View {
     public JPanel draw()
     {
         super.draw();
-        String[] columnNames = {"ID", "Name", "Address", "Phone Number"};
+        String[] columnNames = {"ID", "Name", "Address", "Phone Number", "Account", "Remove"};
         Object[][] data = parseObjects(customers);
-        int[] columnSizes = {10,1000,1000,200};
+        int[] columnSizes = {10,1000,1000,200,200,100};
         //TableModel model = new TableModel(columnNames, data);
        
         JTable table = createTable(columnNames, data, columnSizes);
@@ -80,12 +80,12 @@ public class CustomerView extends View {
                 	{
                 		canvas.changeView((View)object);
                 	}
-                	catch (java.lang.ClassCastException e1)
+                	catch (ClassCastException e1)
                 	{
                 		try
                 		{
-                			Method m = view.getClass().getMethod((String)object);
-                			m.invoke((JTable)parameters);
+                			Method m = view.getClass().getMethod(object.toString(), JTable.class);
+                			m.invoke(view, (JTable)parameters);
                 		}
                 		catch (NoSuchMethodException e2){}
                 		catch (InvocationTargetException e2){}
@@ -102,18 +102,30 @@ public class CustomerView extends View {
     }
     public Object[][] parseObjects(ArrayList<Customer> dataObjects)
     {
-        Object[][] data = new Object[dataObjects.size()][4];
+        Object[][] data = new Object[dataObjects.size()][6];
         for (int j = 0; j < dataObjects.size(); j++)
         {
-            data[j][0] = dataObjects.get(j).getId();
-            data[j][1] = dataObjects.get(j).getName();
-            data[j][2] = dataObjects.get(j).getNumber();
-            data[j][3] = dataObjects.get(j).getAddress();
+            data[j][0] = (int)dataObjects.get(j).getId();
+            data[j][1] = (String)dataObjects.get(j).getName();
+            data[j][2] = (int)dataObjects.get(j).getNumber();
+            data[j][3] = (String)dataObjects.get(j).getAddress();
+            data[j][4] = (String)dataObjects.get(j).getBankAccount();
+            data[j][5] = (Boolean)false;
         }
         return data;
     }
     public void addCustomer(JTable table)
     {
-        addToTable(null, table);
+        addToTable(table);
+    }
+    public void removeCustomer(JTable table, int rowID)
+    {
+        removeFromTable(rowID, table);
+    }
+    public JTable createTable(String[] columnNames, Object[][] data, int[] columnSizes)
+    {
+    	JTable table = super.createTable(columnNames, data, columnSizes);
+    	
+    	return table;
     }
 }

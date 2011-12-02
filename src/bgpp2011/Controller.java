@@ -1,13 +1,17 @@
 
 package bgpp2011;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Collection;
+import java.util.Iterator;
 
 public class Controller
 {
-	private ArrayList<VehicleType> types;
-	private ArrayList<Vehicle> vehicles;
-	private ArrayList<Customer> customer;
-	private ArrayList<Reservation> reservations;
+	private HashMap<Integer, VehicleType> types;
+	private HashMap<Integer, Vehicle> vehicles;
+	private HashMap<Integer, Customer> customer;
+	private HashMap<Integer, Reservation> reservations;
+	private Nexus nexus;
 	/*
 	 * Controlleren must execute operations given by the user. It must do all the checking and ordering.
 	 * 
@@ -18,6 +22,13 @@ public class Controller
 	 * whether the startdate is after the enddate, or if the enddate is before the startdate. If that is true,
 	 * the reservation is possible and it will return true.
 	 */
+	public Controller()
+	{
+		nexus = new Nexus();
+		reservations = new HashMap<Integer, Reservation>();
+	}
+	
+	
 	public boolean checkReservation(Reservation re)
 	{
 		
@@ -27,13 +38,17 @@ public class Controller
 			/*
 			 * Remember to check if startdate the same or more than ennddate.
 			 */
-			for(Reservation r : reservations)
+			Collection c = reservations.values();
+			Iterator<Reservation> i = c.iterator();
+			
+			while(i.hasNext())
 			{
-				Vehicle vt = r.getVehicle();
-				if(vt.getId() == r.getVehicle().getId()) 
+				Reservation ra = i.next();
+				Vehicle vt = ra.getVehicle();
+				if(vt.getId() == ra.getVehicle().getId()) 
 				{
-					int startValue = re.getStartdate().compareTo(r.getEnddate());
-					int endValue = re.getEnddate().compareTo(r.getStartdate());
+					int startValue = re.getStartdate().compareTo(ra.getEnddate());
+					int endValue = re.getEnddate().compareTo(ra.getStartdate());
 						if(startValue < 0 && endValue > 0)
 						{
 							return false;
@@ -59,16 +74,23 @@ public class Controller
 	public Vehicle findCar(VehicleType v, Date start, Date end)
 	{
 		ArrayList<Vehicle> tmp = new ArrayList<Vehicle>();
-		for(Vehicle ve : vehicles)
+		
+		Collection vehicleC = vehicles.values();
+		Iterator<Vehicle> it = vehicleC.iterator();
+		
+		while(it.hasNext())
 			{  
-			   if(ve.getType() == v)
+			   if(it.next().getType() == v)
 			   	{
-				   tmp.add(ve);
+				   tmp.add(it.next());
 			   	}   
 			}
-					for(Reservation r : reservations)
+					
+					Collection reservationC = reservations.values();
+					Iterator<Reservation> itt = reservationC.iterator();
+					while(itt.hasNext())
 					{
-					Vehicle tmp1 = r.getVehicle();
+					Vehicle tmp1 = itt.next().getVehicle();
 						if(!tmp.contains(tmp1))
 					{
 						return tmp1;
@@ -77,8 +99,8 @@ public class Controller
 				
 						for(Vehicle va : tmp)
 						{
-						Customer tmpCustomer = new Customer(1,"tmp", 1, "tmp", "tmp");
-						Reservation res = new Reservation(0, tmpCustomer, va, start, end);
+						Customer tmpCustomer = new Customer(0,"tmp", 1, "tmp", "tmp");
+						Reservation res = new Reservation(0 ,tmpCustomer, va, start, end);
 							if(checkReservation(res)) 
 							{
 								return va;
@@ -92,19 +114,42 @@ public class Controller
 	 * Method, that makes a new reservation and adds it to the ArrayList called reservations.
 	 * It uses the checkReservations() method to see if it is possible to make the reservations.
 	 */
-	public boolean makeReservation(int id, Customer c, Vehicle v, Date start, Date end)
+	private Reservation makeReservation(Customer c, VehicleType t, Date start, Date end)
 	{
-		Reservation reservation = new Reservation(id, c, v, start, end);
-			if(checkReservation(reservation))
-			{
-				reservations.add(reservation);
-				return true;
-			}
-			else {
-				return false;
-			}
-			
+		if(findCar(t, start, end) == null)
+		{
+			return null;
+		}
+		else {
+			Vehicle tmp = findCar(t, start, end);
+			Reservation reservation = new Reservation(0 ,c, tmp, start, end);	
+			return reservation;
+						
+			}			
 	}
+	
+	/*
+	 * This metod is called by the GUI and it checks if a reservation is avaliable, and return it 
+	 * if it is. Else it resturns null.
+	 */
+	public Reservation createReservation(Customer c, VehicleType t, Date start, Date end)
+	{
+		if(findCar(t, start, end) == null)
+				{
+			 		return null;
+				}
+		else {
+					Reservation r = makeReservation(c,t,start,end);
+					if(nexus.createEntryReservation(r) != null)
+					{
+					Reservation re = nexus.createEntryReservation(r);
+					return re;
+					}
+				
+			}
+		return null;
+	}
+	
 	
 	public Reservation getReservation(int i)
 	{
@@ -117,16 +162,39 @@ public class Controller
 		}
 	}
 	
-	public boolean changeReservation(int i, Reservation newR)
+	public boolean changeReservation(Reservation newR)
 	{
 		
 		if(checkReservation(newR))
 		  {
-			reservations.remove(i);
-			reservations.add(i,newR);
+			int id = newR.getId();
+			reservations.remove(id);
+			reservations.put(id,newR);
 			return true;
 		  }
 		    return false;
 	}
 	
+	/*public String addReservation()
+	{
+		VehicleType vt = new VehicleType(4, "4door", 130);
+		Vehicle v = new Vehicle(1, "ford", "escort", 1990, vt);
+		Vehicle v2 = new Vehicle(2, "mazda", "626", 1999, vt);
+		Customer c1 = new Customer(1, "Poul Larsen", 37226455, "R¿devej 7, ", "2299-8287378834");
+		Customer c2 = new Customer(2, "Rudolph Martins", 67241594, "Alberts v¾nge 32, ", "2596-822343781234");
+		Date d1 = new Date(23, 11, 11);
+		Date d2 = new Date(23,21,2011);
+		Reservation r1 = new Reservation(1, c1, v, d1, d2);
+		Reservation r2 = new Reservation(2, c2, v2, d1, d2);
+		reservations.put(r1);
+		reservations.put(r2);
+		String s = "";
+		for(Reservation r : reservations)
+		{
+			Vehicle veh = r.getVehicle();
+			s = s + "" + veh.getMake() + " " + veh.getModel();
+		}
+		return s;
+	}
+	*/
 }

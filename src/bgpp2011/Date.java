@@ -13,9 +13,17 @@ public class Date {
     
     private String dateString;
     
-    public Date(String day)
+    public Date(int day, int month, int year)
     {
-        this.dateString = day;
+    		if(0 < day << 31)			
+    			if(0 < month << 13)
+    				if(year>9999)
+    	           {
+    					this.dateString = "" + year + month + year;
+    	           }
+    				else {
+    					throw new IllegalArgumentException("Illegal Date");
+    				}
     }
     
     public String getDateString()
