@@ -9,7 +9,7 @@ public class Controller
 {
 	private HashMap<Integer, VehicleType> types;
 	private HashMap<Integer, Vehicle> vehicles;
-	private HashMap<Integer, Customer> customer;
+	private HashMap<Integer, Customer> customers;
 	private HashMap<Integer, Reservation> reservations;
 	private Nexus nexus;
 	/*
@@ -29,7 +29,7 @@ public class Controller
 	}
 	
 	
-	public boolean checkReservation(Reservation re)
+	private boolean checkReservation(Reservation re)
 	{
 		
 		int o = re.getStartdate().compareTo(re.getEnddate());
@@ -71,7 +71,7 @@ public class Controller
 	 * 
 	 */
 
-	public Vehicle findCar(VehicleType v, Date start, Date end)
+	private Vehicle findCar(VehicleType v, Date start, Date end)
 	{
 		ArrayList<Vehicle> tmp = new ArrayList<Vehicle>();
 		
@@ -129,7 +129,7 @@ public class Controller
 	}
 	
 	/*
-	 * This metod is called by the GUI and it checks if a reservation is avaliable, and return it 
+	 * This method is called by the GUI and it checks if a reservation is avaliable, and return it 
 	 * if it is. Else it resturns null.
 	 */
 	public Reservation createReservation(Customer c, VehicleType t, Date start, Date end)
@@ -150,6 +150,28 @@ public class Controller
 		return null;
 	}
 	
+/*public Customer createCustomer(String name, int phonenumber, String address, String bankaccount)
+	{
+		Customer c = new Customer(0, name, phonenumber, address, bankaccount);
+		Collection customerC = customers.values();
+		Iterator<Customer> itt = customerC.iterator();
+			while(itt.hasNext())
+			{
+				if(itt.next()==c)
+				{
+					return null;
+				}
+			}
+			
+				try {
+					Customer returnC = nexus.createEntryCustomer(c);
+					return returnC;
+				    }
+				catch(Exception e)
+					{
+					return null;
+					}				
+	}*/
 	
 	public Reservation getReservation(int i)
 	{
@@ -161,6 +183,10 @@ public class Controller
 			throw new IllegalArgumentException("No reservations in that position!");
 		}
 	}
+	/*
+	 * This method takes a new reservation as a parameter and puts it in Hashmap, with a key equal to
+	 * the id of the reservation. 
+	 */
 	
 	public boolean changeReservation(Reservation newR)
 	{
@@ -175,6 +201,28 @@ public class Controller
 		    return false;
 	}
 	
+	/*
+	 * Acssesor methods for the HashMaps.
+	 */
+	public HashMap<Integer, Reservation> getReservations()
+	{
+		return reservations;
+	}
+	
+	public HashMap<Integer, Customer> getCustomers()
+	{
+		return customers;
+	}
+	
+	public HashMap<Integer, Vehicle> getVehicles()
+	{
+		return vehicles;
+	}
+	
+	public HashMap<Integer, VehicleType> getTypes()
+	{
+		return types;
+	}
 	/*public String addReservation()
 	{
 		VehicleType vt = new VehicleType(4, "4door", 130);
