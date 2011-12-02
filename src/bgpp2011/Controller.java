@@ -15,7 +15,6 @@ public class Controller
 	/*
 	 * Controlleren must execute operations given by the user. It must do all the checking and ordering.
 	 * 
-	 *
 	 * The checkreservation() method checks if there is an overlap with another reservation. It takes a
 	 * reservation as a parameter. First, it checks whether the startdate is before the enddate. Second,
 	 * It checks whether the Vehicle of the Reservations re is the same as i the ArrayList. Then it checks
@@ -38,7 +37,7 @@ public class Controller
 			/*
 			 * Remember to check if startdate the same or more than ennddate.
 			 */
-			Collection c = reservations.values();
+			Collection<Reservation> c = reservations.values();
 			Iterator<Reservation> i = c.iterator();
 			
 			while(i.hasNext())
@@ -55,8 +54,8 @@ public class Controller
 			  
 						}
 			    	
-				}	
-            }
+					}	
+				}
 		           
 			         
          } 
@@ -75,7 +74,7 @@ public class Controller
 	{
 		ArrayList<Vehicle> tmp = new ArrayList<Vehicle>();
 		
-		Collection vehicleC = vehicles.values();
+		Collection<Vehicle> vehicleC = vehicles.values();
 		Iterator<Vehicle> it = vehicleC.iterator();
 		
 		while(it.hasNext())
@@ -86,7 +85,7 @@ public class Controller
 			   	}   
 			}
 					
-					Collection reservationC = reservations.values();
+					Collection<Reservation> reservationC = reservations.values();
 					Iterator<Reservation> itt = reservationC.iterator();
 					while(itt.hasNext())
 					{
@@ -143,6 +142,7 @@ public class Controller
 					if(nexus.createEntryReservation(r) != null)
 					{
 					Reservation re = nexus.createEntryReservation(r);
+					reservations.put(re.getId(), re);
 					return re;
 					}
 				
@@ -150,28 +150,55 @@ public class Controller
 		return null;
 	}
 	
-/*public Customer createCustomer(String name, int phonenumber, String address, String bankaccount)
+	/*
+	 * This method creates a new customer. It checks whether the customer is already in the system. 
+	 */
+public boolean createCustomer(String name, int phonenumber, String address, String bankaccount)
 	{
 		Customer c = new Customer(0, name, phonenumber, address, bankaccount);
-		Collection customerC = customers.values();
+		Collection<Customer> customerC = customers.values();
 		Iterator<Customer> itt = customerC.iterator();
 			while(itt.hasNext())
 			{
 				if(itt.next()==c)
 				{
-					return null;
+					return false;
 				}
 			}
 			
 				try {
 					Customer returnC = nexus.createEntryCustomer(c);
-					return returnC;
+					customers.put(returnC.getId(), returnC);
+					return true;
 				    }
 				catch(Exception e)
 					{
-					return null;
+					return false;
 					}				
-	}*/
+	}
+
+	public boolean createVehicle(String make, String model, int year, VehicleType v)
+	{
+		Vehicle ve = new Vehicle(0, make, model, year, v);
+		
+		Collection<Vehicle> vehicleC = vehicles.values();
+		Iterator<Vehicle> itt = vehicleC.iterator();
+			while(itt.hasNext())
+			{
+				if(ve.getType() != itt.next().getType())
+				{
+					return false;
+				}
+			}
+			try {
+				Vehicle returnV = nexus.createEntryVehicle(ve);
+				vehicles.put(returnV.getId(), ve);
+			}
+			catch(Exception e) {
+				return false;
+			}
+		
+	}
 	
 	public Reservation getReservation(int i)
 	{
