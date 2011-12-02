@@ -35,4 +35,8 @@ public class Canvas {
         frame.setContentPane(contentPane);
         frame.repaint();
     }
+    public JFrame getFrame()
+    {
+    	return frame;
+    }
 }
