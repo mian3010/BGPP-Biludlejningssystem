@@ -53,14 +53,6 @@ public class Vehicle{
         return id;
     }
     
-    public boolean getRentable()
-    {
-        return rentable;
-    }
-    
-    public void setRentable(boolean b)
-    {
-        rentable = b;
-    }
+
 
 }
