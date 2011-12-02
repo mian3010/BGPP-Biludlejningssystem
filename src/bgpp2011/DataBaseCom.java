@@ -29,7 +29,7 @@ public class DataBaseCom {
         catch (SQLException exn) {
             System.out.println("The database connection cannot be opened");
         }  catch (ClassNotFoundException exn) {
-            System.out.println("There was an error handling the openDB request." + exn);
+            System.out.println("There was an error finding the connected Java driver." + exn);
         }
     }
     
@@ -78,17 +78,24 @@ public class DataBaseCom {
        }
             
     }
- /*   public ResultSet create(String query)
+   public ResultSet create(String query)
     {
     	try {
-    		if(dbStatement.executeUpdate(query, Statement.RETURN_GENERATED_KEYS) == 0)
+    		dbStatement.executeUpdate(query, dbStatement.RETURN_GENERATED_KEYS);
+    		ResultSet res = dbStatement.getGeneratedKeys();
+    		if(res == null)
     		{
-    			System.out.println("No keys can be returned, this means an error.");
+    			System.out.println("ResultSet fail!");
     		}
-    		ResultSet r = dbStatement.getGeneratedKeys;
+    		return res;
+    	}
+    	catch(SQLException exn)
+    	{
+    		System.out.println("The entry could not be created" + exn);
+    		return null;
     	}
     }
-    */
+    
     
     
     
