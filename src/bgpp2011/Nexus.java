@@ -45,11 +45,40 @@ public class Nexus {
 	        	{
 	        		return new Reservation(id,r.getCustomer(),r.getVehicle(),new Date(r.getStartdate()),new Date(r.getEnddate()));
 	        	}
-	        	else if(id == -1)
-	        		System.out.println("Entry Fail");
+	        	else
+	        		System.out.println("Reservation Entry Fail at ID get");
 	        		return null;
-
-	        
+	    }
+	    public Customer createEntryCustomer(Customer c)
+	    {
+	    	int id = Commands.getDbID(db.create(Commands.createCustomer(c)));
+	    	{
+	    		if(id != -1)
+	    		{
+	    			return new Customer(id, c.getName(), c.getNumber(), c.getAddress(),c.getBankAccount());
+	    		}
+	    		else if(id == -1)
+	    			System.out.println("Customer entry Fail at ID get");
+	    			return null;
+	    	}
+	    }
+	    public VehicleType createEntryVehicleType(VehicleType vt)
+	    {
+	    	int id = Commands.getDbID(db.create(Commands.createVehicleType(vt)));
+	    	 if(id != -1)
+	    		 	return new VehicleType(id,vt.getName(),vt.getPrice());
+	    	 else
+	    		 System.out.println("VehicleType entry fail at ID get");
+	    	 		return null;
+	    }
+	    public Vehicle createEntryVehicle(Vehicle v)
+	    {
+	    	int id = Commands.getDbID(db.create(Commands.createVehicle(v)));
+	    	if(id != -1)
+	    			return new Vehicle(id,v.getMake(),v.getModel(),v.getYear(),v.getType());
+	    	else
+	    		System.out.println("Vehicle entry fail at ID get");
+	    		return null;
 	    }
 	    
 	  

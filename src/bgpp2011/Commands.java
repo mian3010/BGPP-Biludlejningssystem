@@ -27,7 +27,7 @@ public class Commands {
 	        +  v.getType().getId() + ");";
 	     
 	    }         
-	    public static String createType(VehicleType t)
+	    public static String createVehicleType(VehicleType t)
 	    {
 	            return "INSERT INTO VehicleType VALUES (null, \"" 
 	                    + t.getName() + "\"," + t.getPrice() + ");";
@@ -202,7 +202,11 @@ public class Commands {
 		          }     
 	        
 	    }
-  	    public static int getDbID(ResultSet r)
+  	    /*
+  	     * This method 
+  	     */
+	    
+	    public static int getDbID(ResultSet r)
   	    {
   	    	try {
   	    		if(r == null)
