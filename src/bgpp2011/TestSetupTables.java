@@ -41,12 +41,12 @@ public class TestSetupTables {
     {
         DataBaseCom db = new DataBaseCom();
         assertEquals(db.update("CREATE TABLE VehicleType (id INT PRIMARY KEY AUTO_INCREMENT,"
-              + " name TEXT, price INT)"),true);    
+              + "price INT, name TEXT)"),true);    
         assertEquals(db.update("CREATE TABLE Vehicle (id INT PRIMARY KEY AUTO_INCREMENT, "
               + "make TEXT, "  + "model TEXT, year INT, typeID INT, "
               + "FOREIGN KEY (typeID)" + "REFERENCES VehicleType (id))"),true);
         assertEquals(db.update("CREATE TABLE Customer (id INT PRIMARY KEY AUTO_INCREMENT, "
-              + "name TEXT," + "phone INT, address TEXT)"),true);
+              + "name TEXT," + "phonenumber INT, address TEXT, bankaccount TEXT)"),true);
         assertEquals(db.update("CREATE TABLE Reservation (id INT PRIMARY KEY AUTO_INCREMENT,"
               + " customerID INT," + " vehicleID INT, startdate TEXT, "
               + "enddate TEXT, FOREIGN KEY" + "(customerID) REFERENCES "
@@ -75,7 +75,7 @@ public class TestSetupTables {
 	   clist.add(c4);
 	   clist.add(c5);
 	   clist.add(c6);
-	   clist.add(c6);
+	  
 	   clist.add(c7);
 	   clist.add(c8);
 	   clist.add(c9);
@@ -157,6 +157,7 @@ public class TestSetupTables {
 		  n.createEntryReservation(r);
 	  }
 	System.out.println("If you have no errors thus far, check the database. You should have success");  
+	n.closeDatabase();
    }
 	   
 	   

@@ -29,13 +29,14 @@ public class Commands {
 	    }         
 	    public static String createVehicleType(VehicleType t)
 	    {
-	            return "INSERT INTO VehicleType VALUES (null, \"" 
-	                    + t.getName() + "\"," + t.getPrice() + ");";
+	            return "INSERT INTO VehicleType VALUES (null, " + t.getPrice()
+	            		+ ",\"" + t.getName() + "\");";
 	    }
 	    public static String createCustomer(Customer c)
 	    {
 	       return "INSERT INTO Customer VALUES (null, \"" + c.getName() 
-	                + "\"," + c.getNumber() + ",\""  + c.getAddress() + "\");";   
+	                + "\"," + c.getNumber() + ",\""  + c.getAddress() + "\", \""
+	                + c.getBankAccount() + "\");";   
 	    
 	    }
 	    public static String createReservation(Reservation r)
@@ -55,7 +56,7 @@ public class Commands {
 	    }
 	    public static String getVehicles()
 	    {
-	        return "SELECT * FROM Vehicles;";
+	        return "SELECT * FROM Vehicle;";
 	    }
 	    public static String getCustomers()
 	    {
@@ -147,9 +148,9 @@ public class Commands {
 	            return returnmap;  
 	          }
 	         
-	          catch(SQLException e)
+	          catch(SQLException exn)
 	          {
-	            System.out.println("Non valid resultset");
+	            System.out.println("Non valid resultset" + exn);
 	            return null;
 	          }
 	    }
@@ -157,13 +158,17 @@ public class Commands {
 	    {
 	         HashMap<Integer, Vehicle> returnmap = new HashMap<Integer, Vehicle>();
 	          try{     
-	        
+	        	  System.out.println("line 0 test");
 	          while(r.next())
 	          {
+	        	  System.out.println("Line 1 test");
 	        	int vid = r.getInt("id");
-	            int id = r.getInt("typeId"); 
+	        	System.out.println("Line 2 test");
+	            int id = r.getInt("typeId");
+	            System.out.println("Line 3 test");
 	            Vehicle tmp = new Vehicle(vid,r.getString("make"),
 	                          r.getString("model"), r.getInt("year"),types.get(id));
+	            System.out.println("Line 4 test");
 	                                              
 	            returnmap.put(vid, tmp);
 	           
@@ -172,9 +177,9 @@ public class Commands {
 	            return returnmap;  
 	          }
 	         
-	          catch(SQLException e)
+	          catch(SQLException exn)
 	          {
-	            System.out.println("Non valid resultset");
+	            System.out.println("Non valid resultset at vehicle map creation" + exn);
 	            return returnmap;
 	          }
 	    }
@@ -187,7 +192,7 @@ public class Commands {
 		          while(r.next())
 		          {
 		        	int id = r.getInt("id");
-		            VehicleType v = new VehicleType(id,r.getString("name"),r.getDouble("price"));
+		            VehicleType v = new VehicleType(id, r.getString("name") ,r.getDouble("price"));
 		                                              
 		            vtmap.put(id,v);
 		            
@@ -195,9 +200,9 @@ public class Commands {
 		            return vtmap;  
 		          }
 		         
-		          catch(SQLException e)
+		          catch(SQLException exn)
 		          {
-		            System.out.println("Non valid resultset");
+		            System.out.println("Non valid resultset" + exn);
 		            return null;
 		          }     
 	        

@@ -5,12 +5,16 @@
 package bgpp2011;
 
 import java.sql.ResultSet;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Collection;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import static org.junit.Assert.*;
+
 
 /**
  * This method
@@ -43,62 +47,76 @@ public class TestNexus {
      * All the print statements are by default a success,
      * the code is written so as exceptions will be thrown in case of 
      * errors.
+     * @author Magnus Stahl
      */
     
-              
     /*
-     * A basic test for creating a vehicle. 
-     * I have not yet created fully automatic tests,
-     * these test require a look at the database tables to see whether
-     * or not they were possible.
-     * NB: It is also possible to receive SQL errors about 
-     * the tables already existing. In such a case it could also be viewed as 
-     * a success (the code works).
-     */
-   /* 
-     @Test
-     public void testCreateVehicle()
-     {
-         DataBaseCom db = new DataBaseCom();
-        
-         VehicleType t = new VehicleType(0, "hej", 200);
-         Vehicle v1 = new Vehicle(0,"toyo", "lol", 1990, t);
-         db.update(Commands.createVehicle(v1));
-         db.close();
-     }
-     
-     /*
-      * Test for updating a vehicle with the id = 0.
-      */
-   /*
-     @Test 
-     public void testUpdateVeh()
-     {
-         DataBaseCom db = new DataBaseCom();
-         
-         VehicleType t = new VehicleType(0, "hej", 200);
-         Vehicle v1 = new Vehicle(0,"toyotaaa", "lol", 1990, t);
-         db.update(Commands.updateVehicle(v1));
-         db.close();
-     }
+     * The following methods does not work without some sample data. Or in fact they do,
+     * but they wont really show anything.
+     * The following methods are designed to test the Commands.get*** methods,
+     * the Nexus HashMap retrievers and creaters from the database.
+     * And some basic iteration to check the sample data is ok.
      */
     @Test
-    public void testCreateRes()
+    public void TestCustomerLists()
     {
     	Nexus n = new Nexus();
-    	Customer c = new Customer(1,"John Smith",4,"Lolroad","123234");
-    	Date d1 = new Date("03022011");
-    	Date d2 = new Date("03012999");
-    	Vehicle v = new Vehicle(1, "toyota", "corolla", 1990, new VehicleType(1,"2dørs",345));
-    	Reservation r = new Reservation(1,c,v,d1,d2);
-    	Reservation r1 = n.createEntryReservation(r);
-  
-    	assertEquals(r1.getId(),1);
-    	assertEquals(r1.getVehicle().getYear(), 1990);
-    	assertEquals(c,r1.getCustomer());
+    	HashMap<Integer, Customer> cmap =  n.getCostumers();
+    	Collection<Customer> co = cmap.values();
+    	Iterator<Customer> itr = co.iterator();
+    	while(itr.hasNext())
+    	{
+    		Customer c = itr.next();
+    		System.out.println(c.getId() + "--" + c.getName() + "--" + c.getAddress() + "\n");
+    	}
+    	n.closeDatabase();
+    
+              
     	
     }
-
-     
-   
+    @Test
+    public void TestVehicleTypeList()
+    {
+    	Nexus n = new Nexus();
+    	HashMap<Integer, VehicleType> cmap =  n.getTypes();
+    	Collection<VehicleType> co = cmap.values();
+    	Iterator<VehicleType> itr = co.iterator();
+    	while(itr.hasNext())
+    	{
+    		VehicleType v = itr.next();
+    		System.out.println(v.getId() + "--" + v.getName() + "--" + v.getPrice() + "\n");
+    	}
+    	n.closeDatabase();
+    
+    }
+    @Test 
+    
+    public void TestVehicleList()
+    {
+    Nexus n = new Nexus();
+	HashMap<Integer, Vehicle> vmap =  n.getVehicles();
+	Collection<Vehicle> co = vmap.values();
+	Iterator<Vehicle> itr = co.iterator();
+	while(itr.hasNext())
+	{
+		Vehicle v = itr.next();
+		System.out.println(v.getId() + "--" + v.getMake() + "--" + v.getModel() + "\n");
+	}
+	n.closeDatabase();
+    }
+    @Test 
+    
+    public void TestReservationList()
+    {
+    Nexus n = new Nexus();
+	HashMap<Integer, Reservation> vmap =  n.getReservations();
+	Collection<Reservation> co = vmap.values();
+	Iterator<Reservation> itr = co.iterator();
+	while(itr.hasNext())
+	{
+		Reservation v = itr.next();
+		System.out.println(v.getId() + "--" + v.getCustomer().getName() + "--" + v.getStartdate() + "\n");
+	}
+	n.closeDatabase();
+    }
 }

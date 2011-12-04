@@ -101,22 +101,23 @@ public class Nexus {
 	    
 	    public HashMap<Integer, Vehicle> getVehicles() // Depends on the VehicleType as the objects are linked
 	    {
-	        ResultSet r = db.get(Commands.getVehicles());
 	        HashMap<Integer, VehicleType> vtmap = getTypes();
+	        ResultSet r = db.get(Commands.getVehicles());
 	        return Commands.makeMapVehicles(r, vtmap);
 	        
 	    }
 	    public HashMap<Integer, Reservation> getReservations() // Depends on Vehicles and Customer as the objects are also linked.
 	    {
-	        ResultSet r = db.get(Commands.getReservations());
+	        
 	        HashMap<Integer, Vehicle> vmap = getVehicles();
 	        HashMap<Integer, Customer> cmap = getCostumers();
+	        ResultSet r = db.get(Commands.getReservations());
 	        return Commands.makeMapReservation(r, cmap, vmap);
 	        		
 	    }
 	    public HashMap<Integer, VehicleType> getTypes() // Independent results from the database.
 	    {
-	       return Commands.makeMapTypes(db.get(Commands.getReservations()));
+	       return Commands.makeMapTypes(db.get(Commands.getTypes()));
 	    }
 	    public HashMap<Integer, Customer> getCostumers() // Same as above.
 	    {
