@@ -32,6 +32,11 @@ public class VehicleType
      return name;
     }
     
+    public String toString()
+    {
+    	return getName();
+    }
+    
     public double getPrice()
     {
         return price;
