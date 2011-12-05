@@ -125,7 +125,7 @@ public class Commands {
 	         
 	          catch(SQLException e)
 	          {
-	            System.out.println("Non valid resultset at reservation creation :" + exn);
+	            System.out.println("Non valid resultset at reservation creation :" + e);
 	            return null;
 	          }
 	    }
