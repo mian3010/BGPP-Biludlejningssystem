@@ -36,10 +36,17 @@ public class ControllerTest {
 		Customer c = con.getCustomers().get(1);
 		VehicleType v = con.getTypes().get(1);
 		Reservation r = con.createReservation(c, v, d1, d2);
+		if(r==null)
+		{
+			System.out.println("No car");
+		}
+		else
+		{
 		System.out.println(r.getCustomer().getName());
 		System.out.println(r.getVehicle().getMake());
 		System.out.println(r.getStartdate());
 		System.out.println(r.getEnddate());
-	}
+	    }
 
+}
 }

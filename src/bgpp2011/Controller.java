@@ -89,7 +89,7 @@ public class Controller
 			   	}   
 			}
 					
-					Collection<Reservation> reservationC = reservations.values();
+				/*	Collection<Reservation> reservationC = reservations.values();
 					Iterator<Reservation> itt = reservationC.iterator();
 					while(itt.hasNext())
 					{
@@ -98,7 +98,7 @@ public class Controller
 					{
 						return tmp1;
 					}
-					}
+					}*/
 				
 						for(Vehicle va : tmp)
 						{
