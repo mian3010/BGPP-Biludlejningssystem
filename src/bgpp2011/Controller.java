@@ -28,6 +28,7 @@ public class Controller
 		vehicles = nexus.getVehicles();
 		customers = nexus.getCostumers();
 		reservations = nexus.getReservations();
+		
 	
 	}
 	
@@ -157,7 +158,7 @@ public class Controller
 	/*
 	 * This method creates a new customer. It checks whether the customer is already in the system. 
 	 */
-public boolean createCustomer(String name, int phonenumber, String address, String bankaccount)
+	public boolean createCustomer(String name, int phonenumber, String address, String bankaccount)
 	{
 		Customer c = new Customer(0, name, phonenumber, address, bankaccount);
 		Collection<Customer> customerC = customers.values();
@@ -237,32 +238,131 @@ public boolean createCustomer(String name, int phonenumber, String address, Stri
 			}
 	}
 	
-	public Reservation getReservation(int i)
+	/*
+	 * Basic accsessor methods!
+	 */
+	public Reservation getReservation(int id)
 	{
-		if(i < reservations.size())
+		try 
 		{
-		return reservations.get(i);
+			if(id < reservations.size() && id>0)
+			{
+			return reservations.get(id);
+			
+			}
+			else 
+			{
+				throw new IllegalArgumentException("No reservations in that position!");
+			}
 		}
-		else {
-			throw new IllegalArgumentException("No reservations in that position!");
+		catch(NullPointerException e)
+		{
+			return null;
 		}
+			
+	}
+	
+	public Customer getCustomer(int id)
+	{
+		try 
+		{
+			if(id < customers.size() && id>0)
+			{
+			return customers.get(id);
+			
+			}
+			else 
+			{
+				throw new IllegalArgumentException("No reservations in that position!");
+			}
+		}
+		catch(Exception e)
+		{
+			return null;
+		}
+	}
+	
+	public Vehicle getVehicle(int id)
+	{
+		try 
+		{
+			if(id < vehicles.size() && id>0)
+			{
+			return vehicles.get(id);
+			
+			}
+			else 
+			{
+				throw new IllegalArgumentException("No reservations in that position!");
+			}
+		}
+		catch(Exception e)
+		{
+			return null;
+		}
+	}
+	
+	public VehicleType getType(int id)
+
+	{
+		try 
+		{
+			if(id < types.size() && id>0)
+			{
+			return types.get(id);
+			
+			}
+			else 
+			{
+				throw new IllegalArgumentException("No reservations in that position!");
+			}
+		}
+		catch(Exception e)
+		{
+			return null;
+		}
+	}
+	
+	public boolean deleteReservation()
+	{
+		return true;
 	}
 	/*
 	 * This method takes a new reservation as a parameter and puts it in Hashmap, with a key equal to
 	 * the id of the reservation. 
 	 */
 	
-	public boolean changeReservation(Reservation newR)
+	public boolean editReservation(Reservation newR, Reservation oldR)
 	{
 		
 		if(checkReservation(newR))
 		  {
-			int id = newR.getId();
+			int id = oldR.getId();
+			Reservation res = new Reservation(id, newR.getCustomer(), newR.getVehicle(), new Date(newR.getStartdate()), new Date(newR.getEnddate()));
+			if(nexus.editReservation(res))
+			{
 			reservations.remove(id);
-			reservations.put(id,newR);
+			reservations.put(id,res);
 			return true;
+			}
+			return false;
 		  }
 		    return false;
+	}
+	
+	public boolean editVehicle(Vehicle newV, Vehicle oldV)
+	{
+		
+			int id = oldV.getId();
+			Vehicle v = new Vehicle(id, newV.getMake(), newV.getModel(), newV.getYear(), newV.getType());
+			if(nexus.editVehicle(v))
+			{
+			vehicles.remove(id);
+			vehicles.put(id,v);
+			return true;
+			}
+			return false;
+		 
 	}
 	
 	/*
@@ -286,6 +386,11 @@ public boolean createCustomer(String name, int phonenumber, String address, Stri
 	public HashMap<Integer, VehicleType> getTypes()
 	{
 		return types;
+	}
+	
+	public void close()
+	{
+		nexus.closeDatabase();
 	}
 	/*public String addReservation()
 	{
