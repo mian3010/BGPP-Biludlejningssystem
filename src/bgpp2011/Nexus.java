@@ -86,8 +86,34 @@ public class Nexus {
 	    public void deleteEntry()
 	    {}
 	    
-	    public void editEntry()
-	    {}
+	    public boolean editCustomer(Customer c)
+	    {
+	    	boolean ok = db.update(Commands.updateCustomer(c));
+	    	if(ok)
+	    		return true;
+	    	return false;
+	    }
+	    public boolean editReservation(Reservation r)
+	    {
+	    	boolean ok = db.update(Commands.updateReservation(r));
+	    	if(ok)
+	    		return true;
+	    	return false;
+	    }
+	    public boolean editVehicle(Vehicle v)
+	    {
+	    	boolean ok = db.update(Commands.updateVehicle(v));
+	    	if(ok)
+	    		return true;
+	    	return false;
+	    }
+	    public boolean editVehicleType(VehicleType vt)
+	    {
+	    	boolean ok = db.update(Commands.updateVehicleType(vt));
+	    	if(ok)
+	    		return true;
+	    	return false;
+	    }
 	    
 	    /*
 	     * The following methods returns HashMaps containing the different types of objects 
