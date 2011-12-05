@@ -85,9 +85,12 @@ public class Controller
 		
 		while(it.hasNext())
 			{  
-			   if(it.next().getType() == v)
+			Vehicle v1 = it.next();
+			int id = v1.getType().getId();
+			   if(id == v.getId())
 			   	{
-				   tmp.add(it.next());
+				   System.out.println("Are we adding anything?");
+				   tmp.add(v1);
 			   	}   
 			}
 					
@@ -106,6 +109,7 @@ public class Controller
 						{
 						Customer tmpCustomer = new Customer(0,"tmp", 1, "tmp", "tmp");
 						Reservation res = new Reservation(0 ,tmpCustomer, va, start, end);
+						System.out.println("Checking reservation?");
 							if(checkReservation(res)) 
 							{
 								System.out.println("findCar is returning variable VA in the for loop");

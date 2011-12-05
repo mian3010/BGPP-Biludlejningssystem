@@ -35,6 +35,7 @@ public class ControllerTest {
 		Controller con = new Controller();
 		Customer c = con.getCustomers().get(1);
 		VehicleType v = con.getTypes().get(1);
+		System.out.println(v.getName());
 		Reservation r = con.createReservation(c, v, d1, d2);
 		if(r==null)
 		{
