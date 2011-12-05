@@ -158,27 +158,27 @@ public class Controller
 	/*
 	 * This method creates a new customer. It checks whether the customer is already in the system. 
 	 */
-	public boolean createCustomer(String name, int phonenumber, String address, String bankaccount)
+	public Customer createCustomer(String name, int phonenumber, String address, String bankaccount)
 	{
 		Customer c = new Customer(0, name, phonenumber, address, bankaccount);
 		Collection<Customer> customerC = customers.values();
 		Iterator<Customer> itt = customerC.iterator();
 			while(itt.hasNext())
 			{
-				if(itt.next()==c)
+				if(itt.next().getName()==c.getName() || itt.next().getNumber() == c.getNumber())
 				{
-					return false;
+					return null;
 				}
 			}
 			
 				try {
 					Customer returnC = nexus.createEntryCustomer(c);
 					customers.put(returnC.getId(), returnC);
-					return true;
+					return returnC;
 				    }
 				catch(Exception e)
 					{
-					return false;
+					return null;
 					}				
 	}
 	/*
@@ -186,7 +186,7 @@ public class Controller
 	 * It sends a vehicle to the database which deligates an id to it. 
 	 */
 
-	public boolean createVehicle(String make, String model, int year, VehicleType v)
+	public Vehicle createVehicle(String make, String model, int year, VehicleType v)
 	{
 		Vehicle ve = new Vehicle(0, make, model, year, v);
 		
@@ -196,16 +196,16 @@ public class Controller
 			{
 				if(ve.getType() != itt.next().getType())
 				{
-					return false;
+					return null;
 				}
 			}
 			try {
 				Vehicle returnV = nexus.createEntryVehicle(ve);
 				vehicles.put(returnV.getId(), ve);
-				return true;
+				return returnV;
 				}
 			catch(Exception e) {
-				return false;
+				return null;
 				}
 		
 	}
@@ -337,12 +337,13 @@ public class Controller
 		
 		if(checkReservation(newR))
 		  {
+			System.out.println("Edit: Status1");
 			int id = oldR.getId();
 			Reservation res = new Reservation(id, newR.getCustomer(), newR.getVehicle(), new Date(newR.getStartdate()), new Date(newR.getEnddate()));
 			if(nexus.editReservation(res))
 			{
 			System.out.println("EDit: nexus.editR is true");
-			//Reservation r = nexus.editReservation(res);
+			
 			reservations.remove(id);
 			reservations.put(id,res);
 			return true;
