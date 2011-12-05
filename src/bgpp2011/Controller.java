@@ -94,7 +94,7 @@ public class Controller
 			   	}   
 			}
 					
-				/*	Collection<Reservation> reservationC = reservations.values();
+					/*Collection<Reservation> reservationC = reservations.values();
 					Iterator<Reservation> itt = reservationC.iterator();
 					while(itt.hasNext())
 					{
@@ -120,42 +120,30 @@ public class Controller
 						return null;
 		
 	       }
-		             
-	/*
-	 * Method, that makes a new reservation and adds it to the ArrayList called reservations.
-	 * It uses the checkReservations() method to see if it is possible to make the reservations.
-	 */
-	private Reservation makeReservation(Customer c, VehicleType t, Date start, Date end)
-	{
-		if(findCar(t, start, end) == null)
-		{
-			return null;
-		}
-		else {
-			Vehicle tmp = findCar(t, start, end);
-			Reservation reservation = new Reservation(0 ,c, tmp, start, end);	
-			return reservation;
-						
-			}			
-	}
 	
+	public Vehicle searchVehicles(VehicleType v, Date start, Date end)
+	{
+		return findCar(v, start, end);
+	}
+
 	/*
 	 * This method is called by the GUI and it checks if a reservation is avaliable, and return it 
 	 * if it is. Else it resturns null.
 	 */
 	public Reservation createReservation(Customer c, VehicleType t, Date start, Date end)
 	{
+		
 		if(findCar(t, start, end) == null)
 				{
 			System.out.println("CreateReservation returns null in the findcar IF statement");
 			 		return null;
 				}
 		else {
-					Reservation r = makeReservation(c,t,start,end);
+					Vehicle v = findCar(t, start, end);
+					Reservation r = new Reservation(0,c,v,start,end);
 					Reservation re = nexus.createEntryReservation(r);
 					if(re != null)
 					{
-					
 					reservations.put(re.getId(), re);
 					System.out.println("Reservation seems succesful returning re in the else statement.");
 					return re;

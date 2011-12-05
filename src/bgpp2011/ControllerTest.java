@@ -12,8 +12,12 @@ public class ControllerTest {
 	public void test() 
 	{
 	    
-	      
+		 TestDropAllTables td = new TestDropAllTables();
+		 td.dropAllTables();
+		 TestSetupTables t = new TestSetupTables(); 
+		 t.setupAllTables();
 	     testCreateReservation();
+	     testSearchVehicles();
 	}
 	
 	public void testHashmaps()
@@ -50,4 +54,23 @@ public class ControllerTest {
 	    }
 
 }
+	
+	public void testSearchVehicles()
+	{
+		System.out.println("Testing search Vehicles");
+		Controller conn = new Controller();
+		VehicleType v = conn.getTypes().get(2);
+		Date d1 = new Date("120928");
+		Date d2 = new Date("121023");
+		Vehicle ve = conn.searchVehicles(v, d1, d2);
+		if(ve != null)
+		{
+		System.out.println(ve.getMake());
+		}
+		else
+		{
+			System.out.println("TestSearchVehicles: no Vehicles");
+		}
+		
+	}
 }
