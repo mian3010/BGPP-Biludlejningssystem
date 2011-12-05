@@ -13,7 +13,7 @@ public class ControllerTest {
 	{
 	    
 		 
-	     testCreateReservation();
+	     //testCreateReservation();
 	     testSearchVehicles();
 	}
 	@Test
@@ -25,7 +25,7 @@ public class ControllerTest {
 	      Iterator<Vehicle> it = c.iterator();
 	      while(it.hasNext())
 	      {
-	    	  System.out.println(it.next().getMake());
+	    	  
 	      }
 	      controller.close();
 	}
@@ -33,13 +33,14 @@ public class ControllerTest {
 	public void testCreateReservation()
 	{
 		try {
+		Controller con = new Controller();
 		Date d1 = new Date("110928");
 		Date d2 = new Date("111023");
-		Controller con = new Controller();
-		Customer c = con.createCustomer("Jax Teller", 27879809, "Charming Road 102", "2109-84938492");
+		Customer ce = con.createCustomer("Jax Teller", 27879809, "Charming Road 102", "2109-84938492");
+		
 		VehicleType v = con.getTypes().get(1);
 		System.out.println(v.getName());
-		Reservation r = con.createReservation(c, v, d1, d2);
+		Reservation r = con.createReservation(ce, v, d1, d2);
 		if(r==null)
 		{
 			System.out.println("No car");
@@ -87,12 +88,9 @@ public class ControllerTest {
 	public void testEditReservations()
 	{
 		
-		Nexus n = new Nexus();
-		Customer c = new Customer(100, "Peter Pan", 25938479, "Shotway 22", "343-345345345");
-		Vehicle v = new Vehicle(100, "Ellert", "el200", 1990, n.getTypes().get(1));
-		Customer ce = n.createEntryCustomer(c);
-		Vehicle ve = n.createEntryVehicle(v);
 		Controller con = new Controller();
+		Customer ce = con.createCustomer("Peter Pan", 25938479, "Shotway 22", "343-345345345");
+		Vehicle ve = con.createVehicle("Ellert", "el200", 1990, con.getTypes().get(1));
 		Reservation r = new Reservation(100, ce, ve, new Date("140811"), new Date("151011"));
 		int id = con.getReservation(1).getId();
 		System.out.println("Status");

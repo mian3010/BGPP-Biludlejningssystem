@@ -55,17 +55,17 @@ public class Controller
 					int endValue = re.getEnddate().compareTo(ra.getStartdate());
 						if(startValue < 0 && endValue > 0)
 						{
-							System.out.println("Checkreservation is returning false in the whileloop");
+							
 							return false;
 			  
 						}
 			    	
 					}	
 				}
-		      System.out.println("CR is returning true outside the whileloop.");     
+		    
 			  return true;
          } 
-		System.out.println("CR is returning false outside the whileloop.");
+		
 		return false;
 	}	
 	/*
@@ -136,7 +136,7 @@ public class Controller
 		
 		if(findCar(t, start, end) == null)
 				{
-			System.out.println("CreateReservation returns null in the findcar IF statement");
+			
 			 		return null;
 				}
 		else {
@@ -146,12 +146,12 @@ public class Controller
 					if(re != null)
 					{
 					reservations.put(re.getId(), re);
-					System.out.println("Reservation seems succesful returning re in the else statement.");
+					
 					return re;
 					}
 				
 			}
-		System.out.println("Returning null outside the else statement.");
+		
 					return null;
 	}
 	
@@ -165,7 +165,7 @@ public class Controller
 		Iterator<Customer> itt = customerC.iterator();
 			while(itt.hasNext())
 			{
-				if(itt.next().getName()==c.getName() || itt.next().getNumber() == c.getNumber())
+				if(itt.next().getName().equals(c.getName()) && itt.next().getNumber()==(c.getNumber()))
 				{
 					return null;
 				}
@@ -337,21 +337,21 @@ public class Controller
 		
 		if(checkReservation(newR))
 		  {
-			System.out.println("Edit: Status1");
+			
 			int id = oldR.getId();
 			Reservation res = new Reservation(id, newR.getCustomer(), newR.getVehicle(), new Date(newR.getStartdate()), new Date(newR.getEnddate()));
 			if(nexus.editReservation(res))
 			{
-			System.out.println("EDit: nexus.editR is true");
+			
 			
 			reservations.remove(id);
 			reservations.put(id,res);
 			return true;
 			}
-			System.out.println("edit: returns false");
+			
 			return false;
 		  }
-			System.out.println("edit: returns false2");
+			
 		    return false;
 	}
 	
