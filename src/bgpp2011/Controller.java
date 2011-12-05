@@ -143,9 +143,10 @@ public class Controller
 				}
 		else {
 					Reservation r = makeReservation(c,t,start,end);
-					if(nexus.createEntryReservation(r) != null)
-					{
 					Reservation re = nexus.createEntryReservation(r);
+					if(re != null)
+					{
+					
 					reservations.put(re.getId(), re);
 					return re;
 					}
