@@ -20,6 +20,7 @@ public class Controller
 	 * It checks whether the Vehicle of the Reservations re is the same as i the ArrayList. Then it checks
 	 * whether the startdate is after the enddate, or if the enddate is before the startdate. If that is true,
 	 * the reservation is possible and it will return true.
+	 * Bla bla im editing now
 	 */
 	public Controller()
 	{
