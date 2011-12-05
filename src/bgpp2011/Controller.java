@@ -342,7 +342,7 @@ public class Controller
 			if(nexus.editReservation(res))
 			{
 			System.out.println("EDit: nexus.editR is true");
-			Reservation r = nexus.editReservation(res);
+			//Reservation r = nexus.editReservation(res);
 			reservations.remove(id);
 			reservations.put(id,res);
 			return true;
