@@ -1,8 +1,14 @@
 package bgpp2011;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
 import javax.swing.*;
 import javax.swing.table.*;
 import javax.swing.event.*;
+
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 import java.util.*;
 
 /**
@@ -74,11 +80,76 @@ public abstract class View implements TableModelListener
     {
     	int row = e.getFirstRow();
     	int column = e.getColumn();
-    	if (column == 5)
+    	switch (column)
     	{
+    	case 6:
     		int response = JOptionPane.showConfirmDialog(canvas.getFrame(), "Are you sure you want to remove this customer?", "Are you sure?", JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE);
     		if (response == 0)
     			removeFromTable(row, table);
+    	break;
+    	default:
+    		
+    	break;
     	}
+
+    }
+    public JPanel createButtons()
+    {
+    	JPanel boxLayout = new JPanel();
+        boxLayout.setLayout(new BoxLayout(boxLayout, BoxLayout.Y_AXIS));
+        
+        ArrayList<JButton> buttons = new ArrayList<JButton>();
+        ArrayList<Object> views = new ArrayList<Object>();
+        ArrayList<Object> params = new ArrayList<Object>();
+        
+        buttons.add(new JButton("< Back"));
+        buttons.add(new JButton("Add"));
+        
+        views.add(new FrontPageView(canvas));
+        views.add("addEntry");
+        
+        params.add(null);
+        params.add(table);
+        
+        Iterator<JButton> i1 = buttons.iterator();
+        Iterator<Object> i2 = views.iterator();
+        Iterator<Object> i3 = params.iterator();
+        while (i1.hasNext() && i2.hasNext() && i3.hasNext())
+        {        
+            final JButton button = i1.next();
+            final Object object = i2.next();
+            final Object parameters = i3.next();
+            final View view = this;
+            
+            button.setMaximumSize(new Dimension(130,30));
+            boxLayout.add(button);
+            button.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                	try
+                	{
+                		canvas.changeView((View)object);
+                	}
+                	catch (ClassCastException e1)
+                	{
+                		try
+                		{
+                			Method m = view.getClass().getMethod(object.toString(), JTable.class);
+                			m.invoke(view, (JTable)parameters);
+                		}
+                		catch (NoSuchMethodException e2){}
+                		catch (InvocationTargetException e2){}
+                		catch (IllegalAccessException e2) {}
+                		
+                	}
+                    
+                }
+            });
+        }
+        return boxLayout;
+    }
+    public void addEntry()
+    {
+    	
     }
 }
