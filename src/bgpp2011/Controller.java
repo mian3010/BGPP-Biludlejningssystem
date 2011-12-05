@@ -54,15 +54,17 @@ public class Controller
 					int endValue = re.getEnddate().compareTo(ra.getStartdate());
 						if(startValue < 0 && endValue > 0)
 						{
+							System.out.println("Checkreservation is returning false in the whileloop");
 							return false;
 			  
 						}
 			    	
 					}	
 				}
-		           
+		      System.out.println("CR is returning true outside the whileloop.");     
 			  return true;
          } 
+		System.out.println("CR is returning false outside the whileloop.");
 		return false;
 	}	
 	/*
@@ -106,9 +108,11 @@ public class Controller
 						Reservation res = new Reservation(0 ,tmpCustomer, va, start, end);
 							if(checkReservation(res)) 
 							{
+								System.out.println("findCar is returning variable VA in the for loop");
 								return va;
 							}
 						}
+						System.out.println("findCar is returning null outside the for loop.");
 						return null;
 		
 	       }
@@ -139,6 +143,7 @@ public class Controller
 	{
 		if(findCar(t, start, end) == null)
 				{
+			System.out.println("CreateReservation returns null in the findcar IF statement");
 			 		return null;
 				}
 		else {
@@ -148,10 +153,12 @@ public class Controller
 					{
 					
 					reservations.put(re.getId(), re);
+					System.out.println("Reservation seems succesful returning re in the else statement.");
 					return re;
 					}
 				
 			}
+		System.out.println("Returning null outside the else statement.");
 					return null;
 	}
 	
