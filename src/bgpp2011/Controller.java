@@ -341,12 +341,16 @@ public class Controller
 			Reservation res = new Reservation(id, newR.getCustomer(), newR.getVehicle(), new Date(newR.getStartdate()), new Date(newR.getEnddate()));
 			if(nexus.editReservation(res))
 			{
+			System.out.println("EDit: nexus.editR is true");
+			Reservation r = nexus.editReservation(res);
 			reservations.remove(id);
 			reservations.put(id,res);
 			return true;
 			}
+			System.out.println("edit: returns false");
 			return false;
 		  }
+			System.out.println("edit: returns false2");
 		    return false;
 	}
 	
@@ -392,26 +396,5 @@ public class Controller
 	{
 		nexus.closeDatabase();
 	}
-	/*public String addReservation()
-	{
-		VehicleType vt = new VehicleType(4, "4door", 130);
-		Vehicle v = new Vehicle(1, "ford", "escort", 1990, vt);
-		Vehicle v2 = new Vehicle(2, "mazda", "626", 1999, vt);
-		Customer c1 = new Customer(1, "Poul Larsen", 37226455, "R¿devej 7, ", "2299-8287378834");
-		Customer c2 = new Customer(2, "Rudolph Martins", 67241594, "Alberts v¾nge 32, ", "2596-822343781234");
-		Date d1 = new Date(23, 11, 11);
-		Date d2 = new Date(23,21,2011);
-		Reservation r1 = new Reservation(1, c1, v, d1, d2);
-		Reservation r2 = new Reservation(2, c2, v2, d1, d2);
-		reservations.put(r1);
-		reservations.put(r2);
-		String s = "";
-		for(Reservation r : reservations)
-		{
-			Vehicle veh = r.getVehicle();
-			s = s + "" + veh.getMake() + " " + veh.getModel();
-		}
-		return s;
-	}
-	*/
+	
 }

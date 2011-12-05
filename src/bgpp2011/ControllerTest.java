@@ -86,13 +86,18 @@ public class ControllerTest {
 	@Test
 	public void testEditReservations()
 	{
-		Controller con = new Controller();
+		
+		Nexus n = new Nexus();
 		Customer c = new Customer(100, "Peter Pan", 25938479, "Shotway 22", "343-345345345");
-		Vehicle v = new Vehicle(100, "Ellert", "el200", 1990, con.getTypes().get(1));
-		Reservation r = new Reservation(100, c, v, new Date("130911"), new Date("131011"));
+		Vehicle v = new Vehicle(100, "Ellert", "el200", 1990, n.getTypes().get(1));
+		n.createEntryCustomer(c);
+		n.createEntryVehicle(v);
+		Controller con = new Controller();
+		Reservation r = new Reservation(100, con.getCustomer(100), con.getVehicle(100), new Date("140811"), new Date("151011"));
 		int id = con.getReservation(1).getId();
+		System.out.println("Status");
 		con.editReservation(r, con.getReservation(1));
-		System.out.println(con.getReservation(id));
+		System.out.println("Edit: " + con.getReservation(id).getCustomer().getName());
 		
 	}
 }
