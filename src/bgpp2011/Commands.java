@@ -86,8 +86,8 @@ public class Commands {
 	    }
 	    public static String updateReservation(Reservation r)
 	    {
-	        return "UPDATE Reservation SET customer = " + r.getCustomer().getId() +
-	                ", vehicle = " + r.getVehicle().getId() + ", startdate = \""
+	        return "UPDATE Reservation SET customerID = " + r.getCustomer().getId() +
+	                ", vehicleID = " + r.getVehicle().getId() + ", startdate = \""
 	                + r.getStartdate() + "\", enddate = \"" + r.getEnddate()
 	                + "\" where id = " + r.getId();
 	    }
