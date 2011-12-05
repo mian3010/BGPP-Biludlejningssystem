@@ -83,4 +83,16 @@ public class ControllerTest {
 		conn.close();
 		
 	}
+	@Test
+	public void testEditReservations()
+	{
+		Controller con = new Controller();
+		Customer c = new Customer(100, "Peter Pan", 25938479, "Shotway 22", "343-345345345");
+		Vehicle v = new Vehicle(100, "Ellert", "el200", 1990, con.getTypes().get(1));
+		Reservation r = new Reservation(100, c, v, new Date("130911"), new Date("131011"));
+		int id = con.getReservation(1).getId();
+		con.editReservation(r, con.getReservation(1));
+		System.out.println(con.getReservation(id));
+		
+	}
 }
