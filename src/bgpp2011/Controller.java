@@ -23,8 +23,12 @@ public class Controller
 	 */
 	public Controller()
 	{
-		nexus = new Nexus();
-		reservations = new HashMap<Integer, Reservation>();
+		nexus = new Nexus();	
+		types = nexus.getTypes();
+		vehicles = nexus.getVehicles();
+		customers = nexus.getCostumers();
+		reservations = nexus.getReservations();
+	
 	}
 	
 	
@@ -147,7 +151,7 @@ public class Controller
 					}
 				
 			}
-		return null;
+					return null;
 	}
 	
 	/*
