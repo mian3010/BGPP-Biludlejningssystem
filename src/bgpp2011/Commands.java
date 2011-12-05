@@ -216,14 +216,11 @@ public class Commands {
   	    	try {
   	    		if(r == null)
   	    			System.out.println("The resultset is not valid at getDBID request.");
-  	    		r.next();
-  	    		
+  	    		r.next();	
   	    		return r.getInt(1);
   	    	}
   	    	catch(SQLException exn) {
-  	  
-  	    		System.out.println("The system could not fetch the ID for the requested object:" + exn);
-  	    		return -1;
+  	    		throw new IllegalArgumentException("The system could not fetch the ID for the requested object:" + exn);
   	    	}
   	    }
 	    

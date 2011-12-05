@@ -373,6 +373,18 @@ public class Controller
 			return false;
 		 
 	}
+	public boolean editVehicleType(VehicleType vtnew, VehicleType vtold)
+	{
+			int id = vtold.getId();
+			VehicleType vt = new VehicleType(id, vtnew.getName(), vtnew.getPrice());
+			if(nexus.editVehicleType(vt))
+			{
+				types.remove(id);
+				types.put(id,vt);
+				return true;
+			}
+			return false;
+	}
 	
 	/*
 	 * Acssesor methods for the HashMaps.
