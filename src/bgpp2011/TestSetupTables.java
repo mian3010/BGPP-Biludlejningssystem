@@ -37,7 +37,7 @@ public class TestSetupTables {
     public void tearDown() {
     }
     @Test
-    public static void setupAllTables()
+    public void setupAllTables()
     {
         DataBaseCom db = new DataBaseCom();
         assertEquals(db.update("CREATE TABLE VehicleType (id INT PRIMARY KEY AUTO_INCREMENT,"
@@ -55,7 +55,7 @@ public class TestSetupTables {
         db.close();
     }    
    @Test
-   public static void setupSampleCustomers()
+   public void setupSampleCustomers()
    {
 	   Nexus n = new Nexus();
 	   ArrayList<Customer> clist = new ArrayList<Customer>();
