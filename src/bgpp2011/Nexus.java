@@ -90,7 +90,7 @@ public class Nexus {
 	    {}
 	    
 	    /*
-	     * The following methods returns ArrayLists containing the different types of objects 
+	     * The following methods returns HashMaps containing the different types of objects 
 	     * used in the Controller for modifying, searching and sorting. 
 	     * These methods should be called at the loading of the program and ONLY there,
 	     * as they do not guarantee consistency of data if the database itself has been changed. 

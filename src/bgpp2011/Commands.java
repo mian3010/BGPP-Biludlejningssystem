@@ -125,7 +125,7 @@ public class Commands {
 	         
 	          catch(SQLException e)
 	          {
-	            System.out.println("Non valid resultset");
+	            System.out.println("Non valid resultset at reservation creation :" + exn);
 	            return null;
 	          }
 	    }
@@ -158,17 +158,17 @@ public class Commands {
 	    {
 	         HashMap<Integer, Vehicle> returnmap = new HashMap<Integer, Vehicle>();
 	          try{     
-	        	  System.out.println("line 0 test");
+	        	 
 	          while(r.next())
 	          {
-	        	  System.out.println("Line 1 test");
+	        	 
 	        	int vid = r.getInt("id");
-	        	System.out.println("Line 2 test");
+	        	
 	            int id = r.getInt("typeId");
-	            System.out.println("Line 3 test");
+	         
 	            Vehicle tmp = new Vehicle(vid,r.getString("make"),
 	                          r.getString("model"), r.getInt("year"),types.get(id));
-	            System.out.println("Line 4 test");
+	           
 	                                              
 	            returnmap.put(vid, tmp);
 	           
@@ -202,7 +202,7 @@ public class Commands {
 		         
 		          catch(SQLException exn)
 		          {
-		            System.out.println("Non valid resultset" + exn);
+		            System.out.println("Non valid resultset at vehicletype creation: " + exn);
 		            return null;
 		          }     
 	        
@@ -215,7 +215,7 @@ public class Commands {
   	    {
   	    	try {
   	    		if(r == null)
-  	    			System.out.println("getDBID fail.");
+  	    			System.out.println("The resultset is not valid at getDBID request.");
   	    		r.next();
   	    		
   	    		return r.getInt(1);
