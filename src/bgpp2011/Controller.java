@@ -61,9 +61,9 @@ public class Controller
 					}	
 				}
 		           
-			         
+			  return true;
          } 
-		return true;
+		return false;
 	}	
 	/*
 	 * This code is very VERY abstract. It start out by making an arrayList containing the cars of
