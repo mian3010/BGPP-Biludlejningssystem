@@ -39,7 +39,7 @@ public class Controller
 	}
 	
 	
-	private boolean checkReservation(Reservation re)
+	public boolean checkReservation(Reservation re)
 	{
 		
 		int o = re.getStartdate().compareTo(re.getEnddate());
@@ -83,13 +83,12 @@ public class Controller
 	 * 
 	 */
 
-	private Vehicle findCar(VehicleType v, Date start, Date end)
+	public Vehicle findCar(VehicleType v, Date start, Date end)
 	{
 		ArrayList<Vehicle> tmp = new ArrayList<Vehicle>();
 		
 		Collection<Vehicle> vehicleC = vehicles.values();
 		Iterator<Vehicle> it = vehicleC.iterator();
-		
 		while(it.hasNext())
 			{  
 			Vehicle v1 = it.next();
@@ -101,32 +100,19 @@ public class Controller
 			   	}   
 			}
 					
-					/*Collection<Reservation> reservationC = reservations.values();
-					Iterator<Reservation> itt = reservationC.iterator();
-					while(itt.hasNext())
-					{
-					Vehicle tmp1 = itt.next().getVehicle();
-						if(!tmp.contains(tmp1))
-					{
-						return tmp1;
-					}
-					}*/
-				
-						for(Vehicle va : tmp)
-						{
-						Customer tmpCustomer = new Customer(0,"tmp", 1, "tmp", "tmp");
-						Reservation res = new Reservation(0 ,tmpCustomer, va, start, end);
-						System.out.println("Checking reservation?");
-							if(checkReservation(res)) 
-							{
+		for(Vehicle va : tmp)
+		{
+			Customer tmpCustomer = new Customer(0,"tmp", 1, "tmp", "tmp");
+			Reservation res = new Reservation(0 ,tmpCustomer, va, start, end);
+				if(checkReservation(res)) 
+				{
 							
-								return va;
-							}
-						}
+					return va;
+				}
+		}
 						
-						return null;
-		
-	       }
+					return null;
+}
 	
 	public Vehicle searchVehicles(VehicleType v, Date start, Date end)
 	{
@@ -173,12 +159,12 @@ public class Controller
 			while(itt.hasNext())
 			{
 				Customer c1 = itt.next();
-				if(c1.getName().equals(c.getName()) && c1.getNumber() == c.getNumber())
+				/*if(c1.getName().equals(c.getName()) && c1.getNumber() == c.getNumber())
 				
 				{
 
 					return null;
-				}
+				}*/
 			}
 			
 				try {

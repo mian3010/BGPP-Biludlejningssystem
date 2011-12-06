@@ -13,7 +13,7 @@ public class ControllerTest {
 	@Test
 	public void testHashmaps()
 	{
-			Controller controller = new Controller();
+		  Controller controller = new Controller();
 	      HashMap<Integer, Vehicle> v = controller.getVehicles();
 	      Collection<Vehicle> c = v.values();
 	      Iterator<Vehicle> it = c.iterator();
@@ -49,9 +49,15 @@ public class ControllerTest {
 		
 		}
 		
-		
-
 }
+	@Test
+	public void testCreateCustomer()
+	{
+		Controller con = new Controller();
+		Customer c = con.createCustomer("Michael Bolton", 66666666, "LonelyIsland 42", "4444-235425345");
+		assertEquals(c.getId(), con.getCustomer(c.getId()).getId());
+	}
+	
 	@Test
 	public void testSearchVehicles()
 	{
@@ -89,5 +95,35 @@ public class ControllerTest {
 	}
 	
 	@Test
-	public 
+	public void testCheckReservation()
+	{
+		Controller con = new Controller();
+		Reservation r = con.getReservation(2);
+		Reservation r2 = con.getReservation(4);
+		Customer ce = con.createCustomer("Jack Sparrow", 426374858, "Tortuga", "343-3454545345");
+		Vehicle ve = con.createVehicle("The black Pearl", "Glory42", 1990, con.getTypes().get(1));
+		Reservation r3 = new Reservation(100, ce, ve, new Date("880811"), new Date("891011"));
+		boolean a = con.checkReservation(r);
+		boolean b = con.checkReservation(r2);
+		boolean c = con.checkReservation(r3);
+		assertEquals(a,false);
+		assertEquals(b, false);
+		assertEquals(c, true);
+	}
+	
+	@Test
+	public void testFindCar()
+	{
+		Controller con = new Controller();
+		VehicleType v = con.getType(2);
+		VehicleType v2 = con.getType(3);
+		Date d1 = new Date("110202");
+		Date d2 = new Date("110303");
+		Date d3 = new Date("120303");
+		Date d4 = new Date("120404");
+		Vehicle ve = con.findCar(v, d1, d2);
+		Vehicle ve2 = con.findCar(v2, d3, d4);
+		assertEquals(ve.getType().getId(), v.getId());
+		assertEquals(ve2.getType().getId(), v2.getId());
+	}
 }
