@@ -3,6 +3,7 @@ package bgpp2011;
 
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import org.junit.After;
 import org.junit.AfterClass;
@@ -36,10 +37,21 @@ public class TestSetupTables {
     @After
     public void tearDown() {
     }
+    
     @Test
-    public void setupAllTables()
+    public void dropAllTables()
     {
-        DataBaseCom db = new DataBaseCom();
+    	
+    }
+    
+    @Test
+    public void TestdropAndSetupAllTables()
+    {
+    	DataBaseCom db = new DataBaseCom();
+    	db.update("DROP TABLE Vehicle;");
+    	db.update("DROP TABLE VehicleType;");
+    	db.update("DROP TABLE Customer");
+    	db.update("DROP TABLE Reservation;");
         assertEquals(db.update("CREATE TABLE VehicleType (id INT PRIMARY KEY AUTO_INCREMENT,"
               + "price INT, name TEXT)"),true);    
         assertEquals(db.update("CREATE TABLE Vehicle (id INT PRIMARY KEY AUTO_INCREMENT, "
@@ -158,8 +170,32 @@ public class TestSetupTables {
 	  }
 	System.out.println("If you have no errors thus far, check the database. You should have success");  
 	n.closeDatabase();
+	
    }
-	   
+
+   @Test 
+   public void TestLists()
+   {
+   Nexus n = new Nexus();
+   HashMap<Integer, Customer> cmap =  n.getCostumers();
+   HashMap<Integer, VehicleType> vtmap =  n.getTypes();
+	HashMap<Integer, Vehicle> vmap =  n.getVehicles();
+	HashMap<Integer, Reservation> rmap =  n.getReservations();
+	assertEquals(vmap.get(1).getMake(),"Suzuki");
+	assertEquals(vmap.get(10).getModel(),"TT");
+	assertEquals(vmap.get(5).getYear(),1903);
+	assertEquals(cmap.get(1).getName(),"John Mogensen");
+	assertEquals(cmap.get(4).getNumber(),30534521);
+	assertEquals(cmap.get(10).getAddress(),"Winterfell");
+	assertEquals(rmap.get(1).getVehicle().getMake(),"Suzuki");
+	assertEquals(rmap.get(4).getStartdate(),"17-04-2001");
+	assertEquals(rmap.get(8).getCustomer().getName(),"Toke Loke Bruno");
+	assertEquals(vtmap.get(1).getId(),1);
+	assertEquals(vtmap.get(4).getName(),"3-dørs");
+	n.closeDatabase();
+   }
+  
+   
 	   
 	   
    }

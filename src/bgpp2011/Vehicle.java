@@ -8,7 +8,8 @@ package bgpp2011;
  * It contains a vehicleType object in a field. This object specifies the price
  * and the type.
  */
-public class Vehicle{
+public class Vehicle
+{
      
     private int id;
     private VehicleType vehicletype;

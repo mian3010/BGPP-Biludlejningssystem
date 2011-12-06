@@ -45,7 +45,24 @@ public class Commands {
 	                    + r.getCustomer().getId() + "," + r.getVehicle().getId()
 	                    + ",\"" + r.getStartdate() + "\",\"" + r.getEnddate()
 	                            + "\");";
-	    }	    
+	    }	 
+	    
+	    public static String deleteVehicle(Vehicle v)
+	    {
+	    	return "DELETE FROM Vehicle WHERE id = " + v.getId();
+	    }
+	    public static String deleteReservation(Reservation r)
+	    {
+	    	return "DELETE FROM Reservation WHERE id = " + r.getId();
+	    }
+	    public static String deleteCustomer(Customer c)
+	    {
+	    	return "DELETE FROM Customer WHERE id = " + c.getId();
+	    }
+	    public static String deleteVehicleType(VehicleType vt)
+	    {
+	    	return "DELETE FROM VehicleType WHERE id = " + vt.getId();
+	    }
 	    /*
 	     * The following methods are SQL-command for retrieving entire tables as ResultSets, usable in the Nexus.
 	     */

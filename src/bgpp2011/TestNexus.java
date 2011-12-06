@@ -23,6 +23,7 @@ import static org.junit.Assert.*;
 public class TestNexus {
     
     public TestNexus() {
+    	
     }
 
     @BeforeClass
@@ -57,66 +58,7 @@ public class TestNexus {
      * the Nexus HashMap retrievers and creaters from the database.
      * And some basic iteration to check the sample data is ok.
      */
-    @Test
-    public void TestCustomerLists()
-    {
-    	Nexus n = new Nexus();
-    	HashMap<Integer, Customer> cmap =  n.getCostumers();
-    	Collection<Customer> co = cmap.values();
-    	Iterator<Customer> itr = co.iterator();
-    	while(itr.hasNext())
-    	{
-    		Customer c = itr.next();
-    		System.out.println(c.getId() + "--" + c.getName() + "--" + c.getAddress() + "\n");
-    	}
-    	n.closeDatabase();
+
     
-              
-    	
-    }
-    @Test
-    public void TestVehicleTypeList()
-    {
-    	Nexus n = new Nexus();
-    	HashMap<Integer, VehicleType> cmap =  n.getTypes();
-    	Collection<VehicleType> co = cmap.values();
-    	Iterator<VehicleType> itr = co.iterator();
-    	while(itr.hasNext())
-    	{
-    		VehicleType v = itr.next();
-    		System.out.println(v.getId() + "--" + v.getName() + "--" + v.getPrice() + "\n");
-    	}
-    	n.closeDatabase();
-    
-    }
-    @Test 
-    
-    public void TestVehicleList()
-    {
-    Nexus n = new Nexus();
-	HashMap<Integer, Vehicle> vmap =  n.getVehicles();
-	Collection<Vehicle> co = vmap.values();
-	Iterator<Vehicle> itr = co.iterator();
-	while(itr.hasNext())
-	{
-		Vehicle v = itr.next();
-		System.out.println(v.getId() + "--" + v.getMake() + "--" + v.getModel() + "\n");
-	}
-	n.closeDatabase();
-    }
-    @Test 
-    
-    public void TestReservationList()
-    {
-    Nexus n = new Nexus();
-	HashMap<Integer, Reservation> vmap =  n.getReservations();
-	Collection<Reservation> co = vmap.values();
-	Iterator<Reservation> itr = co.iterator();
-	while(itr.hasNext())
-	{
-		Reservation v = itr.next();
-		System.out.println(v.getId() + "--" + v.getCustomer().getName() + "--" + v.getStartdate() + "\n");
-	}
-	n.closeDatabase();
-    }
+
 }

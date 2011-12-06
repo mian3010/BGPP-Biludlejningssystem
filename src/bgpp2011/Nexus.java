@@ -51,7 +51,7 @@ public class Nexus {
 
 	    }
 	    public VehicleType createEntryVehicleType(VehicleType vt)
-	    {
+	    { 
 	    	int id = Commands.getDbID(db.create(Commands.createVehicleType(vt)));
 	    		 	return new VehicleType(id,vt.getName(),vt.getPrice());    	
 	    }
@@ -71,9 +71,27 @@ public class Nexus {
 	    }
 	    */
 	  
-	    public void deleteEntry()
-	    {}
-	    
+	    public boolean deleteCustomer(Customer c)
+	    {
+	    	return db.update(Commands.deleteCustomer(c));
+	    	
+	    }
+	    public boolean deleteReservation(Reservation r)
+	    {
+	    	return db.update(Commands.deleteReservation(r));
+	    	
+	    }
+	    public boolean deleteCustomer(Vehicle v)
+	    {
+	    	return db.update(Commands.deleteVehicle(v));
+	 	
+	    }
+	    public boolean deleteVehicleType(VehicleType vt)
+	    {
+	    	return db.update(Commands.deleteVehicleType(vt));
+	    	
+	    }
+	     
 	    public boolean editCustomer(Customer c)
 	    {
 	    	return db.update(Commands.updateCustomer(c));
