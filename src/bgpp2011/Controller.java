@@ -24,12 +24,17 @@ public class Controller
 	public Controller()
 	{
 		nexus = new Nexus();	
+		boot();
+		
+	
+	}
+	
+	public void boot()
+	{
 		types = nexus.getTypes();
 		vehicles = nexus.getVehicles();
 		customers = nexus.getCostumers();
 		reservations = nexus.getReservations();
-		
-	
 	}
 	
 	
@@ -55,17 +60,17 @@ public class Controller
 					int endValue = re.getEnddate().compareTo(ra.getStartdate());
 						if(startValue < 0 && endValue > 0)
 						{
-							System.out.println("Checkreservation is returning false in the whileloop");
+							
 							return false;
 			  
 						}
 			    	
 					}	
 				}
-		      System.out.println("CR is returning true outside the whileloop.");     
+		     
 			  return true;
          } 
-		System.out.println("CR is returning false outside the whileloop.");
+		
 		return false;
 	}	
 	/*
@@ -90,7 +95,7 @@ public class Controller
 			int id = v1.getType().getId();
 			   if(id == v.getId())
 			   	{
-				   System.out.println("Are we adding anything?");
+				   
 				   tmp.add(v1);
 			   	}   
 			}
@@ -113,11 +118,11 @@ public class Controller
 						System.out.println("Checking reservation?");
 							if(checkReservation(res)) 
 							{
-								System.out.println("findCar is returning variable VA in the for loop");
+							
 								return va;
 							}
 						}
-						System.out.println("findCar is returning null outside the for loop.");
+						
 						return null;
 		
 	       }
@@ -147,6 +152,7 @@ public class Controller
 					{
 					reservations.put(re.getId(), re);
 					System.out.println("Reservation seems succesful returning re in the else statement.");
+					boot();
 					return re;
 					}
 				
@@ -193,14 +199,19 @@ public class Controller
 	{
 		Vehicle ve = new Vehicle(0, make, model, year, v);
 		
-		Collection<Vehicle> vehicleC = vehicles.values();
-		Iterator<Vehicle> itt = vehicleC.iterator();
+		Collection<VehicleType> vehicleTypes = types.values();
+		Iterator<VehicleType> itt = vehicleTypes.iterator();
+		boolean typeExists = false;
 			while(itt.hasNext())
 			{
-				if(ve.getType() != itt.next().getType())
+				if(ve.getType().getId() == itt.next().getId())
 				{
-					return null;
+					typeExists = true;
 				}
+			}
+			if (!typeExists)
+			{
+				return null;
 			}
 			try {
 				Vehicle returnV = nexus.createEntryVehicle(ve);
@@ -342,7 +353,9 @@ public class Controller
 		  {
 			System.out.println("Edit: Status1");
 			int id = oldR.getId();
+			System.out.println("status 2");
 			Reservation res = new Reservation(id, newR.getCustomer(), newR.getVehicle(), new Date(newR.getStartdate()), new Date(newR.getEnddate()));
+			System.out.println("Status 3");
 			if(nexus.editReservation(res))
 			{
 			System.out.println("EDit: nexus.editR is true");

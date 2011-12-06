@@ -8,14 +8,8 @@ import org.junit.Test;
 
 public class ControllerTest {
 
-	@Test
-	public void test() 
-	{
-	    
-		 
-	     //testCreateReservation();
-	     testSearchVehicles();
-	}
+	
+
 	@Test
 	public void testHashmaps()
 	{
@@ -23,10 +17,6 @@ public class ControllerTest {
 	      HashMap<Integer, Vehicle> v = controller.getVehicles();
 	      Collection<Vehicle> c = v.values();
 	      Iterator<Vehicle> it = c.iterator();
-	      while(it.hasNext())
-	      {
-	    	  
-	      }
 	      controller.close();
 	}
 	@Test
@@ -37,7 +27,6 @@ public class ControllerTest {
 		Date d1 = new Date("110928");
 		Date d2 = new Date("111023");
 		Customer ce = con.createCustomer("Jax Teller", 27879809, "Charming Road 102", "2109-84938492");
-		
 		VehicleType v = con.getTypes().get(1);
 		System.out.println(v.getName());
 		Reservation r = con.createReservation(ce, v, d1, d2);
@@ -98,4 +87,7 @@ public class ControllerTest {
 		System.out.println("Edit: " + con.getReservation(id).getCustomer().getName() + " " + con.getReservation(id).getVehicle().getMake());
 		
 	}
+	
+	@Test
+	public 
 }
