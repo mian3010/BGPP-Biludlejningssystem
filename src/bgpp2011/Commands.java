@@ -17,28 +17,49 @@ import java.util.HashMap;
 
 public class Commands {
 		/*
-		 * The first methods takes in objects of different kinds and creates a SQL-command that creates the post in the 
+		 * These first methods takes in objects of different kinds and creates a SQL-command that creates the post in the 
 		 * designated table. These commands are returned as strings to be used further in the Nexus.
+		 * @param Different objects used in the Javaprogram such as Vehicle, VehicleType, Customer and Reservation
+		 * @return String of valid SQL-syntax used to insert into SQL database.
+		 */
+	
+
+		/*
+		 * Creates valid SQL-syntax for inserting Vehicle data from an object into a database table
+		 * named Vehicle.
 		 */
 	    public static String createVehicle(Vehicle v)
 	    {
 	       return "INSERT INTO Vehicle VALUES (null, \"" + v.getMake() + 
 	        "\", \"" + v.getModel() + "\"," + v.getYear() + ","
-	        +  v.getType().getId() + ");";
-	     
-	    }         
+	        +  v.getType().getId() + ");";  
+	    }
+	    
+		/*
+		 * Creates valid SQL-syntax for inserting VehicleType data from an object into a database table
+		 * named VehicleType.
+		 */
 	    public static String createVehicleType(VehicleType t)
 	    {
 	            return "INSERT INTO VehicleType VALUES (null, " + t.getPrice()
 	            		+ ",\"" + t.getName() + "\");";
 	    }
+	    
+		/*
+		 * Creates valid SQL-syntax for inserting Customer data from an object into a database table
+		 * named Customer.
+		 */
 	    public static String createCustomer(Customer c)
 	    {
-	       return "INSERT INTO Customer VALUES (null, \"" + c.getName() 
+	      return "INSERT INTO Customer VALUES (null, \"" + c.getName() 
 	                + "\"," + c.getNumber() + ",\""  + c.getAddress() + "\", \""
-	                + c.getBankAccount() + "\");";   
-	    
+	                + c.getBankAccount() + "\");";    
 	    }
+	    
+		/*
+		 * Creates valid SQL-syntax for inserting Reservation data from an object into a database table
+		 * named Reservation.
+		 */
 	    public static String createReservation(Reservation r)
 	    {
 	          return "INSERT INTO Reservation VALUES(null,"
@@ -46,6 +67,7 @@ public class Commands {
 	                    + ",\"" + r.getStartdate() + "\",\"" + r.getEnddate()
 	                            + "\");";
 	    }	 
+	   
 	    
 	    public static String deleteVehicle(Vehicle v)
 	    {
@@ -84,9 +106,11 @@ public class Commands {
 	        return "SELECT * from VehicleType;";
 	    }
 	    /*
-	     * These methods should be used when closing the program. They are intended to update the database with the newest content
-	     * created while the program was open. It should be noticed that any type of overwriting is allowed; if you have an object
-	     * with a corresponding id you will delete the former post in the table.
+	     * The following methods are used when editing different types of object in the java structure,
+	     * then wanting to update them in the database.
+	     * Please note that these methods are ID specific, which means that they will overwrite
+	     * any post in the table with the same ID, no questions asked.
+	     * Returns valid SQL syntax usable in the DataBaseConnections.
 	     */
 	    public static String updateVehicle(Vehicle v)
 	    {
@@ -146,6 +170,7 @@ public class Commands {
 	            return null;
 	          }
 	    }
+	    
 	    public static HashMap<Integer, Customer> makeMapCustomer(ResultSet r)
 	    {
 	         HashMap<Integer, Customer> returnmap = new HashMap<Integer, Customer>();
@@ -171,6 +196,7 @@ public class Commands {
 	            return null;
 	          }
 	    }
+	    
 	    public static HashMap<Integer, Vehicle> makeMapVehicles(ResultSet r, HashMap<Integer, VehicleType> types)
 	    {
 	         HashMap<Integer, Vehicle> returnmap = new HashMap<Integer, Vehicle>();
@@ -200,6 +226,7 @@ public class Commands {
 	            return returnmap;
 	          }
 	    }
+	   
 	    public static HashMap<Integer, VehicleType> makeMapTypes(ResultSet r)
 	    {
 	    
@@ -224,10 +251,13 @@ public class Commands {
 		          }     
 	        
 	    }
-  	    /*
-  	     * This method 
-  	     */
-	    
+  	   
+	    /*
+	     * This method returns an integer when given a ResultSet containing an auto-generated key from an SQL
+	     * database. This will throw an exception when the ResultSet is either closed too soon or 
+	     * not valid for retrieving id's from it.
+	     * Returns an integer relating to the requested auto-generated key.
+	     */
 	    public static int getDbID(ResultSet r)
   	    {
   	    	try {

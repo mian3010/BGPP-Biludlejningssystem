@@ -5,9 +5,8 @@
 package bgpp2011;
 
 /**
- *
- * @author tokejensen
  * The date object contains a string with information about a date.
+ * @author tokejensen
  */
 public class Date {
     

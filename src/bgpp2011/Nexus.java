@@ -5,11 +5,9 @@ import java.util.HashMap;
 
 
 /*
- * This is the COMMAND CENTER / Nexus part of the database. This 
- * class initialize the connection class and uses the syntax 
- * from the COMMANDS class to communicate with the database.
- * This class is the only link to the rest of the reservation program.
- * @author Magnus Stahl
+ * This class is essentially the outermost part of the 'Datastoragemanagement' part of the system.
+ * This class handles all connections to the database and takes in requests primarily from the 'Controlling/Model' 
+ * part of the program.
  */
 
 public class Nexus {

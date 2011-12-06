@@ -5,9 +5,13 @@
 package bgpp2011;
 
 /**
- *
- * @author tokejensen
- * Contains information about a customer. Name, phonenumber.....ect.
+ * 
+ * The basic class for modelling a customer. Contains information 
+ * about the customer's id, name, phonenumber, address and bankaccount.
+ * Its equipped with a constructor for defining the fields and basic
+ * getter methods related to the different fields.
+ * Also, this has a special toString() method to easily show in GUI's.
+ * @author tbrj.
  */
 public class Customer
 {

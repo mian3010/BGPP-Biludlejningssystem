@@ -6,12 +6,12 @@ package bgpp2011;
 
 
 /**
- *
- * @author tokejensen
+
+ * 
  * This class contains information about a reservation. It contains two Date objects
  * as well as a Customer object and a Vehicle object. The purpose of this class 
  * is to contain all information about a reservation.
- 
+ * @author tokejensen.
  */
 public class Reservation{
     
