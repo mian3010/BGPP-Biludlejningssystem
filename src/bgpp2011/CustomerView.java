@@ -84,7 +84,7 @@ public class CustomerView extends View {
     	}
     	else
     	{
-    		JOptionPane.showMessageDialog(canvas.getFrame(), "Customer already exists!", "Error", JOptionPane.ERROR_MESSAGE);
+    		JOptionPane.showMessageDialog(canvas.getFrame(), "Could not create customer - Maybe it already exists", "Error", JOptionPane.ERROR_MESSAGE);
     		return false;
     	}
     }

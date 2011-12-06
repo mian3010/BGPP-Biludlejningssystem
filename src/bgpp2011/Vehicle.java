@@ -53,6 +53,10 @@ public class Vehicle
     {
         return id;
     }
+    public String toString()
+    {
+     return vehicletype.toString() + ": " + year + make + model;
+    }
     
 
 

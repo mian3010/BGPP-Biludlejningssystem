@@ -52,4 +52,8 @@ public class Customer
     {
         return bankaccount;
     }
+    public String toString()
+    {
+     return name + ": " + phonenumber;
+    }
 }
