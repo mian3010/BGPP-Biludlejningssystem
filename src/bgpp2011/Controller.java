@@ -159,12 +159,12 @@ public class Controller
 			while(itt.hasNext())
 			{
 				Customer c1 = itt.next();
-				/*if(c1.getName().equals(c.getName()) && c1.getNumber() == c.getNumber())
+				if(c1.getName().equals(c.getName()) && c1.getNumber() == c.getNumber())
 				
 				{
 
 					return null;
-				}*/
+				}
 			}
 			
 				try {
