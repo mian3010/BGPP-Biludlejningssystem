@@ -19,6 +19,7 @@ public class Canvas {
         //Setting up frame and contentpane
         frame = new JFrame("Cartopia");
         frame.setResizable(false);
+        frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         contentPane = new Container();
         contentPane.setLayout(new GridLayout(1,1));
         contentPane.setPreferredSize(new Dimension(1000,800));
