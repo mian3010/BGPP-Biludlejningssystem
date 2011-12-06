@@ -40,79 +40,59 @@ public class Nexus {
 	     */
 	    public Reservation createEntryReservation(Reservation r)
 	    {
-	    	ResultSet res = db.create(Commands.createReservation(r));
-	    	int id = Commands.getDbID(res);
-	        	if(id != -1)
-	        	{
-	        		return new Reservation(id,r.getCustomer(),r.getVehicle(),new Date(r.getStartdate()),new Date(r.getEnddate()));
-	        	}
-	        	else
-	        		System.out.println("Reservation Entry Fail at ID get");
-	        		return null;
+	    	int id = Commands.getDbID(db.create(Commands.createReservation(r)));
+	    	return new Reservation(id,r.getCustomer(),r.getVehicle(),new Date(r.getStartdate()),new Date(r.getEnddate()));
+	        
 	    }
 	    public Customer createEntryCustomer(Customer c)
 	    {
 	    	int id = Commands.getDbID(db.create(Commands.createCustomer(c)));
-	    	{
-	    		if(id != -1)
-	    		{
 	    			return new Customer(id, c.getName(), c.getNumber(), c.getAddress(),c.getBankAccount());
-	    		}
-	    		else if(id == -1)
-	    			System.out.println("Customer entry Fail at ID get");
-	    			return null;
-	    	}
+
 	    }
 	    public VehicleType createEntryVehicleType(VehicleType vt)
 	    {
 	    	int id = Commands.getDbID(db.create(Commands.createVehicleType(vt)));
-	    	 if(id != -1)
-	    		 	return new VehicleType(id,vt.getName(),vt.getPrice());
-	    	 else
-	    		 System.out.println("VehicleType entry fail at ID get");
-	    	 		return null;
+	    		 	return new VehicleType(id,vt.getName(),vt.getPrice());    	
 	    }
 	    public Vehicle createEntryVehicle(Vehicle v)
 	    {
 	    	int id = Commands.getDbID(db.create(Commands.createVehicle(v)));
-	    	if(id != -1)
-	    			return new Vehicle(id,v.getMake(),v.getModel(),v.getYear(),v.getType());
-	    	else
-	    		System.out.println("Vehicle entry fail at ID get");
-	    		return null;
+	    			return new Vehicle(id,v.getMake(),v.getModel(),v.getYear(),v.getType());	    	
 	    }
-	    
+	/*    public Data createEntry(Data entry)
+	    {
+	    	int id;
+	    	ResultSet r; 
+	    	switch(entry instanceof)
+	    	{
+	    	case Vehicle: 
+	    	}
+	    }
+	    */
 	  
 	    public void deleteEntry()
 	    {}
 	    
 	    public boolean editCustomer(Customer c)
 	    {
-	    	boolean ok = db.update(Commands.updateCustomer(c));
-	    	if(ok)
-	    		return true;
-	    	return false;
+	    	return db.update(Commands.updateCustomer(c));
+	    
 	    }
 	    public boolean editReservation(Reservation r)
 	    {
-	    	boolean ok = db.update(Commands.updateReservation(r));
-	    	if(ok)
-	    		return true;
-	    	return false;
+	    	return db.update(Commands.updateReservation(r));
+	  
 	    }
 	    public boolean editVehicle(Vehicle v)
 	    {
-	    	boolean ok = db.update(Commands.updateVehicle(v));
-	    	if(ok)
-	    		return true;
-	    	return false;
+	    	return db.update(Commands.updateVehicle(v));
+	    	
 	    }
 	    public boolean editVehicleType(VehicleType vt)
 	    {
-	    	boolean ok = db.update(Commands.updateVehicleType(vt));
-	    	if(ok)
-	    		return true;
-	    	return false;
+	    	return db.update(Commands.updateVehicleType(vt));
+	  
 	    }
 	    
 	    /*

@@ -20,6 +20,7 @@ public class Controller
 	 * It checks whether the Vehicle of the Reservations re is the same as i the ArrayList. Then it checks
 	 * whether the startdate is after the enddate, or if the enddate is before the startdate. If that is true,
 	 * the reservation is possible and it will return true.
+	 * Bla bla im editing now
 	 */
 	public Controller()
 	{
@@ -384,6 +385,18 @@ public class Controller
 			}
 			return false;
 		 
+	}
+	public boolean editVehicleType(VehicleType vtnew, VehicleType vtold)
+	{
+			int id = vtold.getId();
+			VehicleType vt = new VehicleType(id, vtnew.getName(), vtnew.getPrice());
+			if(nexus.editVehicleType(vt))
+			{
+				types.remove(id);
+				types.put(id,vt);
+				return true;
+			}
+			return false;
 	}
 	
 	/*
