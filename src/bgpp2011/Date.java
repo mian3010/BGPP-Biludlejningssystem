@@ -15,6 +15,7 @@ public class Date {
     
     public Date(String dateString)
     {
+   	
     	this.dateString = dateString;
     		/*if(0< day <<31 && 0 < month<<13 && 2010 < year << 9999)
     		{
@@ -25,6 +26,8 @@ public class Date {
     		}*/
     		
     }
+    
+    
     
     public String getDateString()
     {
