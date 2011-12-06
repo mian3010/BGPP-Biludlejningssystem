@@ -49,13 +49,16 @@ class TableModel extends AbstractTableModel {
         fireTableCellUpdated(row, col);
     }
     
-    public void addRow() {   
+    public void addRow(Object[] dataInsert) {   
     	Object[][] temp = data;
         data = new Object[temp.length+1][temp[0].length];
         for (int i = 0; i < temp.length; i++)
         {
         	data[i] = temp[i];
         }
+        if (dataInsert == null)
+        	dataInsert = new Object[data[0].length];
+        data[data.length-1] = dataInsert;
         this.fireTableDataChanged();   
     }
     public void removeRow(int rowID)
@@ -67,7 +70,8 @@ class TableModel extends AbstractTableModel {
         {
         	if (i == rowID)
         		i++;
-        	data[j] = temp[i];
+        	if (i < temp.length)
+        		data[j] = temp[i];
         	j++;
         }
         this.fireTableDataChanged(); 

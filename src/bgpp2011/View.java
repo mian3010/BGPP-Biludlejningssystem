@@ -26,8 +26,10 @@ public abstract class View implements TableModelListener
     public String topText;
     public JLabel welcomeText;
     public JLabel copyrightText;
+    public String addText;
     public Canvas canvas;
     private JTable table;
+    public Controller controller;
     
     //Constructor
     public View(Canvas canvas)
@@ -68,8 +70,12 @@ public abstract class View implements TableModelListener
     }
     public void addToTable(JTable table)
     {
+        addToTable(null, table);
+    }
+    public void addToTable(Object[] data, JTable table)
+    {
         TableModel model = (TableModel)table.getModel();
-        model.addRow();
+        model.addRow(data);
     }
     public void removeFromTable(int rowID, JTable table)
     {
@@ -78,19 +84,6 @@ public abstract class View implements TableModelListener
     }
     public void tableChanged(TableModelEvent e)
     {
-    	int row = e.getFirstRow();
-    	int column = e.getColumn();
-    	switch (column)
-    	{
-    	case 6:
-    		int response = JOptionPane.showConfirmDialog(canvas.getFrame(), "Are you sure you want to remove this customer?", "Are you sure?", JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE);
-    		if (response == 0)
-    			removeFromTable(row, table);
-    	break;
-    	default:
-    		
-    	break;
-    	}
 
     }
     public JPanel createButtons()
@@ -100,25 +93,19 @@ public abstract class View implements TableModelListener
         
         ArrayList<JButton> buttons = new ArrayList<JButton>();
         ArrayList<Object> views = new ArrayList<Object>();
-        ArrayList<Object> params = new ArrayList<Object>();
         
         buttons.add(new JButton("< Back"));
         buttons.add(new JButton("Add"));
         
         views.add(new FrontPageView(canvas));
-        views.add("addEntry");
-        
-        params.add(null);
-        params.add(table);
+        views.add("drawAddFrame");
         
         Iterator<JButton> i1 = buttons.iterator();
         Iterator<Object> i2 = views.iterator();
-        Iterator<Object> i3 = params.iterator();
-        while (i1.hasNext() && i2.hasNext() && i3.hasNext())
+        while (i1.hasNext() && i2.hasNext())
         {        
             final JButton button = i1.next();
             final Object object = i2.next();
-            final Object parameters = i3.next();
             final View view = this;
             
             button.setMaximumSize(new Dimension(130,30));
@@ -134,8 +121,8 @@ public abstract class View implements TableModelListener
                 	{
                 		try
                 		{
-                			Method m = view.getClass().getMethod(object.toString(), JTable.class);
-                			m.invoke(view, (JTable)parameters);
+                			Method m = view.getClass().getMethod(object.toString());
+                			m.invoke(view);
                 		}
                 		catch (NoSuchMethodException e2){}
                 		catch (InvocationTargetException e2){}
@@ -148,8 +135,57 @@ public abstract class View implements TableModelListener
         }
         return boxLayout;
     }
-    public void addEntry()
+    public void drawAddFrame()
     {
     	
+    }
+    public JPanel drawAddFrameHead()
+    {
+    	JPanel contentPane = new JPanel();
+    	contentPane.setLayout(new BoxLayout(contentPane, BoxLayout.Y_AXIS));
+    	JLabel header = new JLabel(addText);
+    	header.setFont(new Font("Arial", Font.PLAIN, 24));
+    	header.setAlignmentX(0);
+    	contentPane.add(header);
+    	
+    	return contentPane;
+    }
+    public JPanel drawAddFrameFoot(final JFrame frame, final Object[] input)
+    {
+    	
+    	JPanel buttonscont = new JPanel();
+    	buttonscont.setLayout(new FlowLayout(FlowLayout.LEFT));
+    	
+    	JButton[] buttons = new JButton[2];
+    	buttons[0] = new JButton("Add");
+    	buttons[0].addActionListener(new ActionListener() {
+            	@Override
+            	public void actionPerformed(ActionEvent e) {
+            		boolean success = addEntry(input);
+            		if (success)
+            			frame.dispose();
+            	} 
+            });
+    	
+    	buttons[1] = new JButton("Cancel");
+    	buttons[1].addActionListener(new ActionListener() {
+        	@Override
+        	public void actionPerformed(ActionEvent e) {
+        		frame.dispose();
+        	} 
+        });
+    	
+    	for (JButton button : buttons)
+    	{
+    		buttonscont.add(button);
+    	}
+    	
+    	buttonscont.setAlignmentX(0);
+    	
+    	return buttonscont;
+    }
+    public boolean addEntry(Object[] input)
+    {
+    	return false;
     }
 }
