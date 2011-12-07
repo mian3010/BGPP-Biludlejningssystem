@@ -18,6 +18,14 @@ public class ControllerTest {
 	      HashMap<Integer, Vehicle> v = controller.getVehicles();
 	      Collection<Vehicle> c = v.values();
 	      Iterator<Vehicle> it = c.iterator();
+	      boolean a = true;
+	      while(it.hasNext())
+	      {
+	    	  Vehicle ve = it.next();
+	    	  if(ve == null)
+	    		  a = false;
+	      }
+	      assertEquals(a, true);
 	      controller.close();
 	}
 	@Test
@@ -56,8 +64,56 @@ public class ControllerTest {
 	{
 		Controller con = new Controller();
 		Customer c = con.createCustomer("Michael Bolton", 66666666, "LonelyIsland 42", "4444-235425345");
-		assertEquals(c.getId(), con.getCustomer(c.getId()).getId());
+		Customer c2 = con.getCustomer(2);
+		Customer cu = con.createCustomer(c2.getName(), c2.getNumber(),c2.getAddress(),c2.getBankAccount());
+		boolean a = false;
+			if(c != null)
+			{
+			a = true;
+			}
+			boolean b = false;
+			if(cu == null)
+			{
+			b = true;
+			}
+				assertEquals(a, true);
+				assertEquals(b, true);
 	}
+	
+	@Test
+	public void testCreateVehicle()
+	{
+		Controller con = new Controller();
+		Vehicle v = con.getVehicle(4);
+		Vehicle ve = con.createVehicle(v.getMake(), v.getModel(), v.getYear(), new VehicleType(12, "Fantasibil", 10000000));
+		boolean a = false;
+		if(ve == null)
+		{
+			a = true;
+		}
+		Vehicle v2 = con.createVehicle("Lada", "Tm 120 shit", 1962, con.getType(1));
+		boolean b = false;
+		if(v2 != null)
+		{
+			b = true;
+		}
+		
+		assertEquals(a, true);
+		assertEquals(b, true);
+	}
+	
+	@Test
+	public void testCreateVehicleType()
+	{
+		Controller con = new Controller();
+		boolean a = con.createVehicleType("Supercar", 202021920);
+		boolean b = con.createVehicleType(con.getType(1).getName(), 2000000);
+		assertEquals(a, true);
+		assertEquals(b, false);
+		
+	}
+	
+	
 	
 	@Test
 	public void testSearchVehicles()
