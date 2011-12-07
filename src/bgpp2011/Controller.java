@@ -339,7 +339,7 @@ public class Controller
 		else
 			return false;
 	}
-	public boolean deleteReservation(Vehicle v)
+	public boolean deleteVehicle(Vehicle v)
 	{
 		Vehicle vcheck = vehicles.remove(v.getId());
 		if(vcheck != null)
