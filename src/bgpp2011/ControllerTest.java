@@ -183,4 +183,10 @@ public class ControllerTest {
 		assertEquals(ve.getType().getId(), v.getId());
 		assertEquals(ve2.getType().getId(), v2.getId());
 	}
+	
+	@Test
+	public void testDelete()
+	{
+		
+	}
 }
