@@ -75,7 +75,7 @@ public class Controller
 			    	
 					}	
 				}
-		     //If the code reaches this point. The reservation is possible and it will return true.
+		     //If the code reaches this point. The reservation is possible and it will return true..
 			  return true;
          } 
 		//If the code reaches this, then the startdate is before the enddate, and therefore illegal.
