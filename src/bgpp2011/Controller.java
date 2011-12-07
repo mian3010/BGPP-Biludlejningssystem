@@ -343,7 +343,7 @@ public class Controller
 	{
 		Vehicle vcheck = vehicles.remove(v.getId());
 		if(vcheck != null)
-			return nexus.deleteCustomer(vcheck);
+			return nexus.deleteVehicle(vcheck);
 		else
 			return false;
 	}
