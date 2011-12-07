@@ -9,7 +9,12 @@ import org.junit.Test;
 
 public class ControllerTest {
 
-	//SUp sup sup
+	/*
+	 * This testclass test all the non-trivial methods in the controller class. All test will return true
+	 * In the tables in database has been reset before run. All the test have assertequals that will return
+	 * false and a assertEquals that will return false. This ensures that the checks can both have a 
+	 * succesfull and an unsuccesfull outcome.
+	 */
 
 	@Test
 	public void testHashmaps()
@@ -187,6 +192,36 @@ public class ControllerTest {
 	@Test
 	public void testDelete()
 	{
+		// Delete reservation.
+		Controller con = new Controller();
+		Reservation r = con.getReservation(3);
+		boolean a = con.deleteReservation(r);
+		Customer ce = new Customer(100, "Clay Morrow", 25438479, "Charming cenemtary 22", "343-34545455345");
+		Vehicle ve = new Vehicle(100, "Harley Davidson", "3000", 1962, con.getTypes().get(1));
+		Reservation re = new Reservation(100, ce, ve, new Date("140811"), new Date("151011"));
+		boolean b = con.deleteReservation(re);
+		assertEquals(a, true);
+		assertEquals(b, false);
+		//Delete Customer.
+		Customer cu = con.getCustomer(3);
+		boolean c = con.deleteCustomer(cu);
+		boolean d = con.deleteCustomer(ce);
+		assertEquals(c, true);
+		assertEquals(d, false);
+		//Delete Vehicle
+		Vehicle vec = con.getVehicle(2);
+		boolean e = con.deleteVehicle(vec);
+		boolean f = con.deleteVehicle(ve);
+		assertEquals(e, true);
+		assertEquals(f, false);
+		//Delete VehicleType.
+		VehicleType vt = con.getType(2);
+		boolean g = con.deleteVehicleType(vt);
+		VehicleType vt2 = new VehicleType(100, "TestType", 100000);
+		boolean h = con.deleteVehicleType(vt2);
+		assertEquals(g, true);
+		assertEquals(h, false);
 		
 	}
 }
+//Author: Toke Jensen.

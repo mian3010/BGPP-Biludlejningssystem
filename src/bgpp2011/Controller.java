@@ -29,7 +29,7 @@ public class Controller
 		
 	
 	}
-	
+	//Method that loads the HashMaps with data from the database. Uses the getmethods() from the nexus.
 	public void boot()
 	{
 		types = nexus.getTypes();
@@ -38,16 +38,19 @@ public class Controller
 		reservations = nexus.getReservations();
 	}
 	
-	
+	/*
+	 * This method check if a reservation overlaps another reservation. It compares the dates of the
+	 * reservation given in the parameter with the dates from all reservations in the HashMap reservations.
+	 * It uses the String-types compare method to check if the dates are overlapping.
+	 *
+	 */
 	public boolean checkReservation(Reservation re)
 	{
-		
+		//Checks if the startdate is before the enddate.
 		int o = re.getStartdate().compareTo(re.getEnddate());
 		if( o<0 )
 		{
-			/*
-			 * Remember to check if startdate the same or more than ennddate.
-			 */
+		
 			Collection<Reservation> c = reservations.values();
 			Iterator<Reservation> i = c.iterator();
 			
@@ -55,10 +58,14 @@ public class Controller
 			{
 				Reservation ra = i.next();
 				Vehicle vt = ra.getVehicle();
-				if(vt.getId() == ra.getVehicle().getId()) 
+				//Checks if the the vehicle re is the same as the vehicle ra.
+				if(vt.getId() == re.getVehicle().getId()) 
 				{
+					//Checks if the stardate of re is after the enddate of ra.
 					int startValue = re.getStartdate().compareTo(ra.getEnddate());
+					//Checks if the enddate of re is before the startdate of ra.
 					int endValue = re.getEnddate().compareTo(ra.getStartdate());
+					//If this if-statement is true, the dates are overlapping. Returns false.
 						if(startValue < 0 && endValue > 0)
 						{
 							
@@ -68,10 +75,10 @@ public class Controller
 			    	
 					}	
 				}
-		     
+		     //If the code reaches this point. The reservation is possible and it will return true.
 			  return true;
          } 
-		
+		//If the code reaches this, then the startdate is before the enddate, and therefore illegal.
 		return false;
 	}	
 	
@@ -89,6 +96,7 @@ public class Controller
 		
 		Collection<Vehicle> vehicleC = vehicles.values();
 		Iterator<Vehicle> it = vehicleC.iterator();
+		//Tmp is an ArrayList of cars with the same VehicleType as v.
 		while(it.hasNext())
 			{  
 			Vehicle v1 = it.next();
@@ -99,7 +107,7 @@ public class Controller
 				   tmp.add(v1);
 			   	}   
 			}
-					
+		//The for-each-loop creates a reservation containing the same VehicleType
 		for(Vehicle va : tmp)
 		{
 			Customer tmpCustomer = new Customer(0,"tmp", 1, "tmp", "tmp");
@@ -412,8 +420,20 @@ public class Controller
 			return false;
 	}
 	
+	public boolean editCustomer(Customer newC, Customer oldC)
+	{
+		int id = oldC.getId();
+		Customer c = new Customer(id, newC.getName(), newC.getNumber(), newC.getAddress(), newC.getBankAccount());
+		if(nexus.editCustomer(c))
+		{
+			customers.remove(id);
+			customers.put(id, c);
+			return true;
+		}
+		return false;
+	}
 	/*
-	 * Acssesor methods for the HashMaps.
+	 * Accessor methods for the HashMaps.
 	 */
 	public HashMap<Integer, Reservation> getReservations()
 	{
@@ -435,6 +455,9 @@ public class Controller
 		return types;
 	}
 	
+	/*
+	 * Closes the connection to the database. Uses the close database method from the Nexusclass.
+	 */
 	public void close()
 	{
 		nexus.closeDatabase();
