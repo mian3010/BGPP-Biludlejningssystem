@@ -20,7 +20,7 @@ public class Controller
 	 * It checks whether the Vehicle of the Reservations re is the same as i the ArrayList. Then it checks
 	 * whether the startdate is after the enddate, or if the enddate is before the startdate. If that is true,
 	 * the reservation is possible and it will return true.
-	 * Bla bla im editing now
+	 * New commit to help TOKE
 	 */
 	public Controller()
 	{
@@ -74,6 +74,7 @@ public class Controller
 		
 		return false;
 	}	
+	
 	/*
 	 * This code is very VERY abstract. It start out by making an arrayList containing the cars of
 	 *  a given type. Then it runs a for-each loop that checks if there is a car that has no reservations.
@@ -82,7 +83,6 @@ public class Controller
 	 *  avaliable. It will return null.
 	 * 
 	 */
-
 	public Vehicle findCar(VehicleType v, Date start, Date end)
 	{
 		ArrayList<Vehicle> tmp = new ArrayList<Vehicle>();
@@ -159,12 +159,12 @@ public class Controller
 			while(itt.hasNext())
 			{
 				Customer c1 = itt.next();
-				if(c1.getName().equals(c.getName()) && c1.getNumber() == c.getNumber())
+				/*if(c1.getName().equals(c.getName()) && c1.getNumber() == c.getNumber())
 				
 				{
-
+					
 					return null;
-				}
+				}*/
 			}
 			
 				try {
@@ -181,7 +181,6 @@ public class Controller
 	 * Creates a new vehicle. It check if the type is correct and already in the system.
 	 * It sends a vehicle to the database which deligates an id to it. 
 	 */
-
 	public Vehicle createVehicle(String make, String model, int year, VehicleType v)
 	{
 		Vehicle ve = new Vehicle(0, make, model, year, v);
@@ -324,8 +323,32 @@ public class Controller
 		}
 	}
 	
-	public boolean deleteReservation()
+	public boolean deleteReservation(Reservation r)
 	{
+		Reservation rescheck = reservations.remove(r.getId());
+		if(rescheck == null)
+			return false;
+		return true;
+	}
+	public boolean deleteCustomer(Customer c)
+	{
+		Customer cuscheck = customers.remove(c.getId());
+		if(cuscheck == null)
+			return false;
+		return true;
+	}
+	public boolean deleteReservation(Vehicle v)
+	{
+		Vehicle vcheck = vehicles.remove(v.getId());
+		if(vcheck == null)
+			return false;
+		return true;
+	}
+	public boolean deleteVehicleType(VehicleType vt)
+	{
+		VehicleType vtcheck = types.remove(vt.getId());
+		if(vtcheck == null)
+			return false;
 		return true;
 	}
 	/*
