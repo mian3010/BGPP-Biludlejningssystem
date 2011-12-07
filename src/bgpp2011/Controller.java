@@ -326,30 +326,34 @@ public class Controller
 	public boolean deleteReservation(Reservation r)
 	{
 		Reservation rescheck = reservations.remove(r.getId());
-		if(rescheck == null)
+		if(rescheck != null)
+			return nexus.deleteReservation(rescheck);
+		else
 			return false;
-		return true;
 	}
 	public boolean deleteCustomer(Customer c)
 	{
 		Customer cuscheck = customers.remove(c.getId());
-		if(cuscheck == null)
+		if(cuscheck != null)
+			return nexus.deleteCustomer(cuscheck);
+		else
 			return false;
-		return true;
 	}
 	public boolean deleteReservation(Vehicle v)
 	{
 		Vehicle vcheck = vehicles.remove(v.getId());
-		if(vcheck == null)
+		if(vcheck != null)
+			return nexus.deleteCustomer(vcheck);
+		else
 			return false;
-		return true;
 	}
 	public boolean deleteVehicleType(VehicleType vt)
 	{
 		VehicleType vtcheck = types.remove(vt.getId());
-		if(vtcheck == null)
+		if(vtcheck != null)
+			return nexus.deleteVehicleType(vtcheck);
+		else
 			return false;
-		return true;
 	}
 	/*
 	 * This method takes a new reservation as a parameter and puts it in Hashmap, with a key equal to
