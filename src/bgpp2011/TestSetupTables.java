@@ -14,8 +14,14 @@ import org.junit.Test;
 import static org.junit.Assert.*;
 
 /**
- * This method sets up all the tables without any data.
- * @author STAHL7
+ * This is the main test method used for testing connection to the database,
+ * creating sample data and testing the different list creation methods of the database part of the system.
+ * This test will 1. delete all tables from the database 2. create some sample data and upload it to the database
+ * 3. use the nexus' hashmap creation and test some sample data from these.
+ * This test then covers all the necessary functionality when opening the system.
+ * The absence of errors is the means of success when running the sample data,
+ * and assertEquals statements are used when testing the HashMaps.
+ * @author Magnus Stahl
  */
 public class TestSetupTables {
     
@@ -44,6 +50,7 @@ public class TestSetupTables {
     	
     }
     
+    // Sets up all the tables but deleting everything first to make a clean slate.
     @Test
     public void TestdropAndSetupAllTables()
     {
@@ -65,9 +72,10 @@ public class TestSetupTables {
               + "Customer (id), FOREIGN KEY" + "(vehicleID) "
               + "REFERENCES Vehicle (id))"),true);
         db.close();
-    }    
+    }  
+   // Sets up a lot of standard sample data. 
    @Test
-   public void setupSampleCustomers()
+   public void setupSampleData()
    {
 	   Nexus n = new Nexus();
 	   ArrayList<Customer> clist = new ArrayList<Customer>();
@@ -172,7 +180,7 @@ public class TestSetupTables {
 	n.closeDatabase();
 	
    }
-
+   //Test the HashMaps using assertEquals statements.
    @Test 
    public void TestLists()
    {
