@@ -1,5 +1,6 @@
 
 package bgpp2011;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Collection;
@@ -82,13 +83,13 @@ public class Controller
 		return false;
 	}	
 	
+	
 	/*
 	 * This code is very VERY abstract. It start out by making an arrayList containing the cars of
 	 *  a given type. Then it runs a for-each loop that checks if there is a car that has no reservations.
 	 *  If that is not the case, it runs a for-each loop, that creates a temporary reservation and runs
 	 *  the check reservation method on it. If it is true, it will return that car. If there is no car 
 	 *  avaliable. It will return null.
-	 * 
 	 */
 	public Vehicle findCar(VehicleType v, Date start, Date end)
 	{
@@ -107,21 +108,25 @@ public class Controller
 				   tmp.add(v1);
 			   	}   
 			}
-		//The for-each-loop creates a reservation containing the same VehicleType
+		/*The for-each-loop creates a reservation containing the same VehicleType, start and enddate
+		 * as given in the parameters. 
+		 */
 		for(Vehicle va : tmp)
 		{
 			Customer tmpCustomer = new Customer(0,"tmp", 1, "tmp", "tmp");
 			Reservation res = new Reservation(0 ,tmpCustomer, va, start, end);
+			//It runs the check reservation method on the Reservation res.
 				if(checkReservation(res)) 
 				{
-							
+					//If check reservation returns true, the vehicle is available and returns. 
 					return va;
 				}
-		}
-						
+	    }
+					//If there is no available vehicle it returns null;
 					return null;
 }
 	
+	//This method simply calls the findcar() method and returns the given vehicle.
 	public Vehicle searchVehicles(VehicleType v, Date start, Date end)
 	{
 		return findCar(v, start, end);
@@ -129,31 +134,46 @@ public class Controller
 
 	/*
 	 * This method is called by the GUI and it checks if a reservation is avaliable, and return it 
-	 * if it is. Else it resturns null.
+	 * if it is. Else it returns null.
 	 */
 	public Reservation createReservation(Customer c, VehicleType t, Date start, Date end)
 	{
 		
-		if(findCar(t, start, end) == null)
-				{
-			System.out.println("CreateReservation returns null in the findcar IF statement");
+		//Runs the find car method to see if a car is avaliable.
+		try
+		{
+			if(findCar(t, start, end) == null)
+			{
 			 		return null;
-				}
-		else {
+			}
+			else 
+			{
+				
+				
+					/*If a car is available it creates a temporary reservation and calls the
+					 * createEntryReservation() method on it. 
+					 */
 					Vehicle v = findCar(t, start, end);
 					Reservation r = new Reservation(0,c,v,start,end);
 					Reservation re = nexus.createEntryReservation(r);
+					//If it doesnt return null, the reservation has been registered by the database.
 					if(re != null)
 					{
+					//The reservation is added to the HashMap reservations. It returns the vehicle.
 					reservations.put(re.getId(), re);
-					System.out.println("Reservation seems succesful returning re in the else statement.");
 					boot();
 					return re;
 					}
 				
+				
 			}
-		System.out.println("Returning null outside the else statement.");
+					//If the code reaches this point, the reservation has not been successfully registered.
 					return null;
+		}
+		catch(SQLException e)
+		{
+			return null;
+		}
 	}
 	
 	/*
@@ -161,9 +181,11 @@ public class Controller
 	 */
 	public Customer createCustomer(String name, int phonenumber, String address, String bankaccount)
 	{
+		//Creates a temporary customer with the parameters given in the constructor.
 		Customer c = new Customer(0, name, phonenumber, address, bankaccount);
 		Collection<Customer> customerC = customers.values();
 		Iterator<Customer> itt = customerC.iterator();
+		//Runs through the customer HashMap and checks if there is a customer with same name and number.
 			while(itt.hasNext())
 			{
 				Customer c1 = itt.next();
@@ -174,14 +196,16 @@ public class Controller
 					return null;
 				}
 			}
-			
+			//Creates a customer using the createEntryCustomer() in the nexus.
 				try {
 					Customer returnC = nexus.createEntryCustomer(c);
 					customers.put(returnC.getId(), returnC);
+					//Returns the customer.
 					return returnC;
 				    }
 				catch(Exception e)
 					{
+					//If the code reaches this point, there has been an error in the database.
 					return null;
 					}				
 	}
@@ -191,28 +215,32 @@ public class Controller
 	 */
 	public Vehicle createVehicle(String make, String model, int year, VehicleType v)
 	{
-		Vehicle ve = new Vehicle(0, make, model, year, v);
-		
+		//Creates a temporary vehicle with the parameters of the constructor.
+		Vehicle ve = new Vehicle(0, make, model, year, v);		
 		Collection<VehicleType> vehicleTypes = types.values();
 		Iterator<VehicleType> itt = vehicleTypes.iterator();
 		boolean typeExists = false;
+			//The while loop runs through the types HashMap. It checks if the given type exists.
 			while(itt.hasNext())
 			{
 				if(ve.getType().getId() == itt.next().getId())
 				{
 					typeExists = true;
 				}
+			//If the type does not exist, it returns null.
 			}
 			if (!typeExists)
 			{
 				return null;
 			}
+			//If the type exist, it creates the vehicle, puts it in the HashMap and returns it.
 			try {
 				Vehicle returnV = nexus.createEntryVehicle(ve);
 				vehicles.put(returnV.getId(), ve);
 				return returnV;
 				}
 			catch(Exception e) {
+				//If the code reaches this point there has been an error in the database.
 				return null;
 				}
 		
@@ -223,9 +251,11 @@ public class Controller
 	 */
 	public boolean createVehicleType(String name, double price)
 	{
+		//Creates a temporary vehicleType with the parameters.
 		VehicleType vee = new VehicleType(0, name, price);
 		Collection<VehicleType> c = types.values(); 
 		Iterator<VehicleType> itt = c.iterator();
+		//Checks of a type with the same name does exist. 
 			while(itt.hasNext())
 			{
 				if(vee.getName() == itt.next().getName())
@@ -234,6 +264,7 @@ public class Controller
 				}
 				
 			}
+			//If the name dies not exist already, it creates the type, puts it in the map and returns it.
 			try{
 				VehicleType returnT = nexus.createEntryVehicleType(vee);
 				
@@ -241,14 +272,13 @@ public class Controller
 				return true;
 				}
 			catch(Exception e)
+			//If the code reaches this point, there has been an error in the database.
 			{
 				return false;
 			}
 	}
 	
-	/*
-	 * Basic accsessor methods!
-	 */
+	//Returns a given reservation.
 	public Reservation getReservation(int id)
 	{
 		try 
@@ -270,6 +300,7 @@ public class Controller
 			
 	}
 	
+	//Returns a given customer.
 	public Customer getCustomer(int id)
 	{
 		try 
@@ -290,6 +321,7 @@ public class Controller
 		}
 	}
 	
+	//Returns a given vehicle.
 	public Vehicle getVehicle(int id)
 	{
 		try 
@@ -310,6 +342,7 @@ public class Controller
 		}
 	}
 	
+	//Returns a given vehicletype.
 	public VehicleType getType(int id)
 
 	{
@@ -331,37 +364,71 @@ public class Controller
 		}
 	}
 	
+	//Deletes a reservation.
 	public boolean deleteReservation(Reservation r)
 	{
+		try {
 		Reservation rescheck = reservations.remove(r.getId());
 		if(rescheck != null)
 			return nexus.deleteReservation(rescheck);
 		else
 			return false;
+		}
+		catch(SQLException e)
+		{
+			return false;
+		}
+	
+		
 	}
 	public boolean deleteCustomer(Customer c)
 	{
-		Customer cuscheck = customers.remove(c.getId());
-		if(cuscheck != null)
-			return nexus.deleteCustomer(cuscheck);
-		else
-			return false;
+		try
+		{
+			Customer cuscheck = customers.remove(c.getId());
+			if(cuscheck != null)
+				return nexus.deleteCustomer(cuscheck);
+			else
+				return false;
+		}
+		
+		catch(SQLException e)
+		{
+				return false;
+		}
 	}
 	public boolean deleteVehicle(Vehicle v)
 	{
-		Vehicle vcheck = vehicles.remove(v.getId());
-		if(vcheck != null)
-			return nexus.deleteVehicle(vcheck);
-		else
-			return false;
-	}
+		try 
+		{
+			Vehicle vcheck = vehicles.remove(v.getId());
+			if(vcheck != null)
+				return nexus.deleteVehicle(vcheck);
+			else
+				return false;
+		}
+		
+		catch(SQLException e)
+		{
+				return false;
+		}
+		}
+	
 	public boolean deleteVehicleType(VehicleType vt)
 	{
-		VehicleType vtcheck = types.remove(vt.getId());
-		if(vtcheck != null)
-			return nexus.deleteVehicleType(vtcheck);
-		else
-			return false;
+		try
+		{
+			VehicleType vtcheck = types.remove(vt.getId());
+			if(vtcheck != null)
+				return nexus.deleteVehicleType(vtcheck);
+			else
+				return false;
+		}
+		
+		catch(SQLException e)
+		{
+				return false;
+		}
 	}
 	/*
 	 * This method takes a new reservation as a parameter and puts it in Hashmap, with a key equal to
@@ -370,32 +437,36 @@ public class Controller
 	
 	public boolean editReservation(Reservation newR, Reservation oldR)
 	{
-		
-		if(checkReservation(newR))
-		  {
-			System.out.println("Edit: Status1");
-			int id = oldR.getId();
-			System.out.println("status 2");
-			Reservation res = new Reservation(id, newR.getCustomer(), newR.getVehicle(), new Date(newR.getStartdate()), new Date(newR.getEnddate()));
-			System.out.println("Status 3");
-			if(nexus.editReservation(res))
+		try
+		{
+			if(checkReservation(newR))
 			{
-			System.out.println("EDit: nexus.editR is true");
 			
-			reservations.remove(id);
-			reservations.put(id,res);
-			return true;
-			}
-			System.out.println("edit: returns false");
-			return false;
-		  }
-			System.out.println("edit: returns false2");
+				int id = oldR.getId();
+				Reservation res = new Reservation(id, newR.getCustomer(), newR.getVehicle(), new Date(newR.getStartdate()), new Date(newR.getEnddate()));			
+				if(nexus.editReservation(res))
+				{
+					reservations.remove(id);
+					reservations.put(id,res);
+					return true;
+			}		
+					return false;
+		 }
+			
 		    return false;
+		}
+		
+		catch(SQLException e)
+		{
+			return false;
+		}
 	}
 	
 	public boolean editVehicle(Vehicle newV, Vehicle oldV)
 	{
 		
+		try
+		{
 			int id = oldV.getId();
 			Vehicle v = new Vehicle(id, newV.getMake(), newV.getModel(), newV.getYear(), newV.getType());
 			if(nexus.editVehicle(v))
@@ -405,11 +476,19 @@ public class Controller
 			return true;
 			}
 			return false;
+		}
+		catch(SQLException e)
+		{
+			return false;
+		}
 		 
 	}
 	public boolean editVehicleType(VehicleType vtnew, VehicleType vtold)
 	{
-			int id = vtold.getId();
+		
+		try
+		{
+		    int id = vtold.getId();
 			VehicleType vt = new VehicleType(id, vtnew.getName(), vtnew.getPrice());
 			if(nexus.editVehicleType(vt))
 			{
@@ -418,19 +497,31 @@ public class Controller
 				return true;
 			}
 			return false;
+		}
+		catch(SQLException e)
+		{
+			return false;
+		}
 	}
 	
 	public boolean editCustomer(Customer newC, Customer oldC)
 	{
-		int id = oldC.getId();
-		Customer c = new Customer(id, newC.getName(), newC.getNumber(), newC.getAddress(), newC.getBankAccount());
-		if(nexus.editCustomer(c))
+		try
 		{
-			customers.remove(id);
-			customers.put(id, c);
-			return true;
+			int id = oldC.getId();
+			Customer c = new Customer(id, newC.getName(), newC.getNumber(), newC.getAddress(), newC.getBankAccount());
+			if(nexus.editCustomer(c))
+			{
+				customers.remove(id);
+				customers.put(id, c);
+				return true;
+			}
+				return false;
 		}
-		return false;
+		catch(SQLException e)
+		{
+			return false;
+		}
 	}
 	/*
 	 * Accessor methods for the HashMaps.
