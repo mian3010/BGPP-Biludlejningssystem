@@ -11,7 +11,7 @@ package bgpp2011;
  * Its equipped with a constructor for defining the fields and basic
  * getter methods related to the different fields.
  * Also, this has a special toString() method to easily show in GUI's.
- * @author tbrj.
+ * @author tbrj. 
  */
 public class Customer
 {
