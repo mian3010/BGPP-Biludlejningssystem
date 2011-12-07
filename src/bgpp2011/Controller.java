@@ -33,10 +33,19 @@ public class Controller
 	//Method that loads the HashMaps with data from the database. Uses the getmethods() from the nexus.
 	public void boot()
 	{
-		types = nexus.getTypes();
-		vehicles = nexus.getVehicles();
-		customers = nexus.getCostumers();
-		reservations = nexus.getReservations();
+		try
+		{
+			types = nexus.getTypes();
+			vehicles = nexus.getVehicles();
+			customers = nexus.getCostumers();
+			reservations = nexus.getReservations();	
+		}
+		
+		catch(SQLException e)
+		{
+			System.out.println("SQLException in boot()");
+		}
+		
 	}
 	
 	/*
@@ -281,8 +290,7 @@ public class Controller
 	//Returns a given reservation.
 	public Reservation getReservation(int id)
 	{
-		try 
-		{
+		
 			if(id < reservations.size() && id>0)
 			{
 			return reservations.get(id);
@@ -292,19 +300,14 @@ public class Controller
 			{
 				throw new IllegalArgumentException("No reservations in that position!");
 			}
-		}
-		catch(NullPointerException e)
-		{
-			return null;
-		}
+		
 			
 	}
 	
 	//Returns a given customer.
 	public Customer getCustomer(int id)
 	{
-		try 
-		{
+		
 			if(id < customers.size() && id>0)
 			{
 			return customers.get(id);
@@ -314,18 +317,13 @@ public class Controller
 			{
 				throw new IllegalArgumentException("No reservations in that position!");
 			}
-		}
-		catch(Exception e)
-		{
-			return null;
-		}
+		
 	}
 	
 	//Returns a given vehicle.
 	public Vehicle getVehicle(int id)
 	{
-		try 
-		{
+		
 			if(id < vehicles.size() && id>0)
 			{
 			return vehicles.get(id);
@@ -335,19 +333,14 @@ public class Controller
 			{
 				throw new IllegalArgumentException("No reservations in that position!");
 			}
-		}
-		catch(Exception e)
-		{
-			return null;
-		}
+		
 	}
 	
 	//Returns a given vehicletype.
 	public VehicleType getType(int id)
 
 	{
-		try 
-		{
+		
 			if(id < types.size() && id>0)
 			{
 			return types.get(id);
@@ -357,11 +350,8 @@ public class Controller
 			{
 				throw new IllegalArgumentException("No reservations in that position!");
 			}
-		}
-		catch(Exception e)
-		{
-			return null;
-		}
+		
+		
 	}
 	
 	//Deletes a reservation.
@@ -439,10 +429,11 @@ public class Controller
 	{
 		try
 		{
+			//Runs the checkReservation on newR to see if the reservation is possible.
 			if(checkReservation(newR))
 			{
-			
 				int id = oldR.getId();
+				//Creates a new reservation and with the data from newR and id from oldR.
 				Reservation res = new Reservation(id, newR.getCustomer(), newR.getVehicle(), new Date(newR.getStartdate()), new Date(newR.getEnddate()));			
 				if(nexus.editReservation(res))
 				{
@@ -462,12 +453,14 @@ public class Controller
 		}
 	}
 	
+	//Edits a vehicle in the database. Returns a boolean.
 	public boolean editVehicle(Vehicle newV, Vehicle oldV)
 	{
 		
 		try
 		{
 			int id = oldV.getId();
+			//Creates a new vehicle with the data from newV and id from oldV.
 			Vehicle v = new Vehicle(id, newV.getMake(), newV.getModel(), newV.getYear(), newV.getType());
 			if(nexus.editVehicle(v))
 			{
@@ -483,12 +476,15 @@ public class Controller
 		}
 		 
 	}
+	
+	//Edits a VehicleType. Returns a boolean.
 	public boolean editVehicleType(VehicleType vtnew, VehicleType vtold)
 	{
 		
 		try
 		{
 		    int id = vtold.getId();
+		    //Creates a new type with the data from vtnew and id from vtold.
 			VehicleType vt = new VehicleType(id, vtnew.getName(), vtnew.getPrice());
 			if(nexus.editVehicleType(vt))
 			{
@@ -504,6 +500,7 @@ public class Controller
 		}
 	}
 	
+	//Edits a customer in the database. Returns a boolean.
 	public boolean editCustomer(Customer newC, Customer oldC)
 	{
 		try
