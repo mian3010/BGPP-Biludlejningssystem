@@ -68,7 +68,12 @@ public class Commands {
 	                            + "\");";
 	    }	 
 	   
-	    
+	    /*
+	     * SQL-syntax for deleting a post in the table Vehicle with information corresponding to the
+	     * Vehicle.
+	     * @param Vehicle Vehicle object containing the information that should be deleted from the table.
+	     * @return String the corresponding SQL syntax.
+	     */
 	    public static String deleteVehicle(Vehicle v)
 	    {
 	    	return "DELETE FROM Vehicle WHERE id = " + v.getId();

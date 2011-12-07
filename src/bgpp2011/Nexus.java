@@ -8,6 +8,9 @@ import java.util.HashMap;
  * This class handles all connections to the database and takes in requests primarily from the 'Controlling/Model' 
  * part of the program.
  * In terms of a traditional VMC pattern, one might view this as part of the Model.
+ * As of now, this class also throws all exceptions to the controller class for it to handle there.
+ * In this way, this class won't be responsible for describing the errors as they should be displayed 
+ * in the interface.
  * @author Magnus Stahl
  */
 
@@ -39,11 +42,13 @@ public class Nexus {
 	     * @param Reservation A valid reservation with or without id, won't matter.
 	     * @return Reservation The same reservation but with a database-generated ID.
 	     */
-	    public Reservation createEntryReservation(Reservation r)
+	    public Reservation createEntryReservation(Reservation r) throws SQLException
 	    {
 	    	int id = Commands.getDbID(db.create(Commands.createReservation(r)));
 	    	return new Reservation(id,r.getCustomer(),r.getVehicle(),new Date(r.getStartdate()),new Date(r.getEnddate()));
-    	/*
+   
+	    }
+	 	/*
     	 * This method sends a request to a database to create a post in a specific table using the 
     	 * Customer object from the parameter. If the query is successful, the method will return
     	 * a new Customer object with the same information as the previous but with a unique id generated
@@ -51,11 +56,12 @@ public class Nexus {
     	 * @param Customer Any valid customer object.
     	 * @return Customer A new object alike the previous, except with a new ID.
     	 */ 
-	    }
-	    public Customer createEntryCustomer(Customer c)
+	    public Customer createEntryCustomer(Customer c) throws SQLException
 	    {
 	    	int id = Commands.getDbID(db.create(Commands.createCustomer(c)));
 	    			return new Customer(id, c.getName(), c.getNumber(), c.getAddress(),c.getBankAccount());
+	   			
+	    }
 	    /*
 	     * This method sends a request to a database to create a post in a specific table using the 
     	 * VehicleType object from the parameter. If the query is successful, the method will return
@@ -63,7 +69,11 @@ public class Nexus {
     	 * in the database.
     	 * @param VehicleType Any valid VehicleType object.
     	 * @return VehicleType A new object alike the previous, except with a new ID.
-    	 */ 			
+    	 */ 
+	    public VehicleType createEntryVehicleType(VehicleType vt) throws SQLException
+	    { 
+	    	int id = Commands.getDbID(db.create(Commands.createVehicleType(vt)));
+	    		 	return new VehicleType(id,vt.getName(),vt.getPrice());    	
 	    }
 		/*
     	 * This method sends a request to a database to create a post in a specific table using the 
@@ -73,25 +83,12 @@ public class Nexus {
     	 * @param Vehicle Any valid Vehicle object.
     	 * @return Vehicle A new object alike the previous, except with a new ID.
     	 */ 
-	    public VehicleType createEntryVehicleType(VehicleType vt)
-	    { 
-	    	int id = Commands.getDbID(db.create(Commands.createVehicleType(vt)));
-	    		 	return new VehicleType(id,vt.getName(),vt.getPrice());    	
-	    }
-		/*
-    	 * This method sends a request to a database to create a post in a specific table using the 
-    	 * VehicleType object from the parameter. If the query is successful, the method will return
-    	 * a new VehicleType object with the same information as the previous but with a unique id generated
-    	 * in the database.
-    	 * @param VehicleType Any valid vehicletype object.
-    	 * @return VehicleType A new object alike the previous, except with a new ID.
-    	 */ 
-	    public Vehicle createEntryVehicle(Vehicle v)
+	    public Vehicle createEntryVehicle(Vehicle v) throws SQLException
 	    {
 	    	int id = Commands.getDbID(db.create(Commands.createVehicle(v)));
 	    			return new Vehicle(id,v.getMake(),v.getModel(),v.getYear(),v.getType());	    	
 	    }
-	/*    public Data createEntry(Data entry)
+	    /*    public Data createEntry(Data entry)
 	    {
 	    	int id;
 	    	ResultSet r; 
@@ -108,10 +105,10 @@ public class Nexus {
 	     * @param Customer A customer object with information corresponding to a post in the database
 	     * @return boolean true if the request was successful, false if the request failed.
 	     */
-	    public boolean deleteCustomer(Customer c)
+	    public boolean deleteCustomer(Customer c) throws SQLException
 	    {
-	    	return db.update(Commands.deleteCustomer(c));
-	    	
+	    	return (db.update(Commands.deleteCustomer(c)));
+	    		
 	    }
 	    /*
 	     * This method requests the database connected to this class that it deletes a post in a table
@@ -119,7 +116,7 @@ public class Nexus {
 	     * @param Reservation A reservation object with information corresponding to a post in the database
 	     * @return boolean true if the request was successful, false if the request failed.
 	     */
-	    public boolean deleteReservation(Reservation r)
+	    public boolean deleteReservation(Reservation r) throws SQLException
 	    {
 	    	return db.update(Commands.deleteReservation(r));
 	    	
@@ -130,7 +127,7 @@ public class Nexus {
 	     * @param Vehicle A vehicle object with information corresponding to a post in the database
 	     * @return boolean true if the request was successful, false if the request failed.
 	     */
-	    public boolean deleteVehicle(Vehicle v)
+	    public boolean deleteVehicle(Vehicle v) throws SQLException
 	    {
 	    	return db.update(Commands.deleteVehicle(v));
 	 	
@@ -141,29 +138,29 @@ public class Nexus {
 	     * @param VehicleType A VehicleType object with information corresponding to a post in the database
 	     * @return boolean true if the request was successful, false if the request failed.
 	     */
-	    public boolean deleteVehicleType(VehicleType vt)
+	    public boolean deleteVehicleType(VehicleType vt) throws SQLException
 	    {
 	    	return db.update(Commands.deleteVehicleType(vt));
 	    	
 	    }
 	     
 	    
-	    public boolean editCustomer(Customer c)
+	    public boolean editCustomer(Customer c) throws SQLException
 	    {
 	    	return db.update(Commands.updateCustomer(c));
 	    
 	    }
-	    public boolean editReservation(Reservation r)
+	    public boolean editReservation(Reservation r) throws SQLException
 	    {
 	    	return db.update(Commands.updateReservation(r));
 	  
 	    }
-	    public boolean editVehicle(Vehicle v)
+	    public boolean editVehicle(Vehicle v) throws SQLException
 	    {
-	    	return db.update(Commands.updateVehicle(v));
+	    	return db.update(Commands.updateVehicle(v)); 
 	    	
 	    }
-	    public boolean editVehicleType(VehicleType vt)
+	    public boolean editVehicleType(VehicleType vt) throws SQLException
 	    {
 	    	return db.update(Commands.updateVehicleType(vt));
 	  
@@ -179,14 +176,16 @@ public class Nexus {
 	     * @author msta & tbrj
 	     */
 	    
-	    public HashMap<Integer, Vehicle> getVehicles() // Depends on the VehicleType as the objects are linked
+	    public HashMap<Integer, Vehicle> getVehicles() throws SQLException 
+	    // Depends on the VehicleType as the objects are linked
 	    {
 	        HashMap<Integer, VehicleType> vtmap = getTypes();
 	        ResultSet r = db.get(Commands.getVehicles());
 	        return Commands.makeMapVehicles(r, vtmap);
 	        
 	    }
-	    public HashMap<Integer, Reservation> getReservations() // Depends on Vehicles and Customer as the objects are also linked.
+	    public HashMap<Integer, Reservation> getReservations() throws SQLException
+	    // Depends on Vehicles and Customer as the objects are also linked.
 	    {
 	        
 	        HashMap<Integer, Vehicle> vmap = getVehicles();
@@ -195,11 +194,13 @@ public class Nexus {
 	        return Commands.makeMapReservation(r, cmap, vmap);
 	        		
 	    }
-	    public HashMap<Integer, VehicleType> getTypes() // Independent results from the database.
+	    public HashMap<Integer, VehicleType> getTypes() throws SQLException
+	    // Independent results from the database.
 	    {
 	       return Commands.makeMapTypes(db.get(Commands.getTypes()));
 	    }
-	    public HashMap<Integer, Customer> getCostumers() // Same as above.
+	    public HashMap<Integer, Customer> getCostumers() throws SQLException
+	    // Same as above.
 	    {
 	       return Commands.makeMapCustomer(db.get(Commands.getCustomers()));
 	        
