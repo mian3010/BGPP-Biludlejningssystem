@@ -1,7 +1,4 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package bgpp2011;
 
 /**
@@ -32,30 +29,46 @@ public class Customer
         this.id = id;
     }
     
+    /* Returns the name of the customer.
+     * @return String
+     */
     public String getName()
     {
         return name;
     }
     
+    /* Returns the number of the customer.
+     * @return integer
+     */
     public int getNumber()
     {
         return phonenumber;
     }
     
+    /* Returns the customers address.
+     * @return String
+     */
     public String getAddress()
     {
         return address;
     }
-    
+    /* Returns the customers unique id.
+     * @return id.
+     */
     public int getId()
     {
         return id;
     }
-    
+    /* Returns the customers bankaccount.
+     * @return String
+     */
     public String getBankAccount()
     {
         return bankaccount;
     }
+    /* Returns the customers name and phonenumber in a suitable way for a GUI.
+     * @return String name + phonenumber
+     */
     public String toString()
     {
      return name + ": " + phonenumber;
