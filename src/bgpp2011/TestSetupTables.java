@@ -2,6 +2,7 @@ package bgpp2011;
 
 
 
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -54,29 +55,38 @@ public class TestSetupTables {
     @Test
     public void TestdropAndSetupAllTables()
     {
-    	DataBaseCom db = new DataBaseCom();
-    	db.update("DROP TABLE Vehicle;");
-    	db.update("DROP TABLE VehicleType;");
+    	
+    	try {
+        DataBaseCom db = new DataBaseCom();
+		db.update("DROP TABLE Vehicle;");
+		db.update("DROP TABLE VehicleType;");
     	db.update("DROP TABLE Customer");
-    	db.update("DROP TABLE Reservation;");
-        assertEquals(db.update("CREATE TABLE VehicleType (id INT PRIMARY KEY AUTO_INCREMENT,"
-              + "price INT, name TEXT)"),true);    
-        assertEquals(db.update("CREATE TABLE Vehicle (id INT PRIMARY KEY AUTO_INCREMENT, "
-              + "make TEXT, "  + "model TEXT, year INT, typeID INT, "
-              + "FOREIGN KEY (typeID)" + "REFERENCES VehicleType (id))"),true);
-        assertEquals(db.update("CREATE TABLE Customer (id INT PRIMARY KEY AUTO_INCREMENT, "
-              + "name TEXT," + "phonenumber INT, address TEXT, bankaccount TEXT)"),true);
-        assertEquals(db.update("CREATE TABLE Reservation (id INT PRIMARY KEY AUTO_INCREMENT,"
-              + " customerID INT," + " vehicleID INT, startdate TEXT, "
-              + "enddate TEXT, FOREIGN KEY" + "(customerID) REFERENCES "
-              + "Customer (id), FOREIGN KEY" + "(vehicleID) "
-              + "REFERENCES Vehicle (id))"),true);
+        db.update("DROP TABLE Reservation;");
+        db.update("CREATE TABLE VehicleType (id INT PRIMARY KEY AUTO_INCREMENT,"
+    		   + "price INT, name TEXT)");    
+        db.update("CREATE TABLE Vehicle (id INT PRIMARY KEY AUTO_INCREMENT, "
+    		   + "make TEXT, "  + "model TEXT, year INT, typeID INT, "
+    		   + "FOREIGN KEY (typeID)" + "REFERENCES VehicleType (id))");
+        db.update("CREATE TABLE Customer (id INT PRIMARY KEY AUTO_INCREMENT, "
+               + "name TEXT," + "phonenumber INT, address TEXT, bankaccount TEXT)");
+        db.update("CREATE TABLE Reservation (id INT PRIMARY KEY AUTO_INCREMENT,"
+    		   + " customerID INT," + " vehicleID INT, startdate TEXT, "
+               + "enddate TEXT, FOREIGN KEY" + "(customerID) REFERENCES "
+               + "Customer (id), FOREIGN KEY" + "(vehicleID) "
+               + "REFERENCES Vehicle (id))");
         db.close();
+    	}
+    	catch(SQLException exn)
+    	{
+    		System.out.println("The database creation failed: " + exn);
+    	}
+       
     }  
    // Sets up a lot of standard sample data. 
    @Test
    public void setupSampleData()
    {
+	   try {
 	   Nexus n = new Nexus();
 	   ArrayList<Customer> clist = new ArrayList<Customer>();
 	   Customer c1 = new Customer(1, "John Mogensen", 43982342,"Mogensvej","4234890-4324");
@@ -105,7 +115,6 @@ public class TestSetupTables {
 		   n.createEntryCustomer(c);
 		
 	   }
-	   System.out.println("No exceptions so far? All customers created");
 	   VehicleType vt1 = new VehicleType(1,"Motorcykel",700);
 	   VehicleType vt2 = new VehicleType(2,"4-dørs",550);
 	   VehicleType vt3 = new VehicleType(3,"5-dørs",650);
@@ -176,19 +185,23 @@ public class TestSetupTables {
 	  {
 		  n.createEntryReservation(r);
 	  }
-	System.out.println("If you have no errors thus far, check the database. You should have success");  
 	n.closeDatabase();
-	
+	   }
+	   catch(SQLException exn)
+	   {
+		   System.out.println("Creation of sample data failed:" + exn);
+	   }
    }
    //Test the HashMaps using assertEquals statements.
    @Test 
    public void TestLists()
    {
    Nexus n = new Nexus();
+   try {
    HashMap<Integer, Customer> cmap =  n.getCostumers();
    HashMap<Integer, VehicleType> vtmap =  n.getTypes();
-	HashMap<Integer, Vehicle> vmap =  n.getVehicles();
-	HashMap<Integer, Reservation> rmap =  n.getReservations();
+   HashMap<Integer, Vehicle> vmap =  n.getVehicles();
+   HashMap<Integer, Reservation> rmap =  n.getReservations();
 	assertEquals(vmap.get(1).getMake(),"Suzuki");
 	assertEquals(vmap.get(10).getModel(),"TT");
 	assertEquals(vmap.get(5).getYear(),1903);
@@ -200,7 +213,13 @@ public class TestSetupTables {
 	assertEquals(rmap.get(8).getCustomer().getName(),"Toke Loke Bruno");
 	assertEquals(vtmap.get(1).getId(),1);
 	assertEquals(vtmap.get(4).getName(),"3-dørs");
-	n.closeDatabase();
+	n.closeDatabase();  
+   }
+   catch(SQLException exn)
+   {
+	   System.out.println("The was a critical error in the testing of the sample data: " + exn);
+   }
+
    }
   
    
