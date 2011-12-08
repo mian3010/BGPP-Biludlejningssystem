@@ -26,7 +26,7 @@ public class FrontPageView extends View {
     {
         super.draw();
         //The tree elements of the borderlayout (North, Center, South)
-        JPanel gridLayout = new JPanel(new GridLayout(2,2,50,50));
+        JPanel gridLayout = new JPanel(new GridLayout(1,3,50,50));
         gridLayout.setBorder(BorderFactory.createEmptyBorder(100,100,100,100));
         
         //Configuring the four buttons
@@ -35,16 +35,13 @@ public class FrontPageView extends View {
         Dimension size = new Dimension(100,100);
         Font font = new Font("Arial", Font.BOLD, 15);
         
+        buttons.add(new JButton("Vehicles"));
         buttons.add(new JButton("Customers"));
         buttons.add(new JButton("Reservations"));
-        buttons.add(new JButton("Vehicles"));
-        buttons.add(new JButton("Vehicle Types"));
         
+        views.add(new VehicleView(canvas));
         views.add(new CustomerView(canvas));
         views.add(new ReservationView(canvas));
-        views.add(new VehicleView(canvas));
-        views.add(new VehicleView(canvas));
-        
         
         //Setting size and font and adding to layout
         Iterator<JButton> i1 = buttons.iterator();

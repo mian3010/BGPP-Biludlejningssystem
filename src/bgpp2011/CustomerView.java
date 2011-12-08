@@ -126,15 +126,9 @@ public class CustomerView extends View {
     	frame.pack();
     	frame.setVisible(true);
     }
-    public void removeCustomer(JTable table, int rowID)
+    public void removeCustomer(int rowID, JTable table)
     {
-        
-    }
-    public JTable createTable(String[] columnNames, Object[][] data, int[] columnSizes)
-    {
-    	JTable table = super.createTable(columnNames, data, columnSizes);
-    	
-    	return table;
+        removeFromTable(rowID, table);
     }
     public void tableChanged(TableModelEvent e)
     {
@@ -151,7 +145,7 @@ public class CustomerView extends View {
     	case 6:
     		int response = JOptionPane.showConfirmDialog(canvas.getFrame(), questionRemove, titleRemove, JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE);
 			if (response == 0)
-    			removeFromTable(row, table);
+    			removeCustomer(row, table);
     	break;
     	default:
     		

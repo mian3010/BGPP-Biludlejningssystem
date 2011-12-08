@@ -161,7 +161,7 @@ public class VehicleView extends View {
     	case 5:
     		int response = JOptionPane.showConfirmDialog(canvas.getFrame(), questionRemove, titleRemove, JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE);
 			if (response == 0)
-    			removeFromTable(row, table);
+    			removeVehicle(row, table);
     	break;
     	default:
     		
@@ -250,5 +250,9 @@ public class VehicleView extends View {
     	frame.setContentPane(pane);
     	frame.pack();
     	frame.setVisible(true);
+    }
+    public void removeVehicle(int rowID, JTable table)
+    {
+    	removeFromTable(rowID, table);
     }
 }

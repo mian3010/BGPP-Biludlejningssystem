@@ -2,6 +2,7 @@ package bgpp2011;
 import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
+import javax.swing.event.TableModelEvent;
 
 import java.util.*;
 import java.util.Map.Entry;
@@ -159,5 +160,35 @@ public class ReservationView extends View {
     	frame.setContentPane(pane);
     	frame.pack();
     	frame.setVisible(true);
+    }
+    public void tableChanged(TableModelEvent e)
+    {
+    	String questionRemove = "Are you sure you want to remove this reservation?";
+    	String titleRemove = "Removing reservation";
+    	int row = e.getFirstRow();
+    	int column = e.getColumn();
+    	
+    	switch (column)
+    	{
+    	case 5:
+    		changeCustomer();
+    	break;
+    	case 6:
+    		int response = JOptionPane.showConfirmDialog(canvas.getFrame(), questionRemove, titleRemove, JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE);
+			if (response == 0)
+    			removeReservation(row, table);
+    	break;
+    	default:
+    		
+    	break;
+    	}
+    }
+    public void changeCustomer()
+    {
+    	
+    }
+    public void removeReservation(int rowID, JTable table)
+    {
+    	removeFromTable(rowID, table);
     }
 }

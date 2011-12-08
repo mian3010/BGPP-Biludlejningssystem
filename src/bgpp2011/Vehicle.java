@@ -77,7 +77,7 @@ public class Vehicle
      */
     public String toString()
     {
-     return vehicletype.toString() + ": " + year + make + model;
+     return vehicletype.toString() + ": " + year + " " + make + " " + model;
     }
     
 
