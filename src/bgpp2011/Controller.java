@@ -92,7 +92,12 @@ public class Controller
 		return false;
 	}	
 	
-	
+	public HashMap<Integer, Vehicle> searchOpenCars(VehicleType type, Date start, Date end)
+	{
+		HashMap<Integer,Vehicle> vmap = new HashMap<Integer,Vehicle>();
+		
+		return vmap;
+	}
 	/*
 	 * This code is very VERY abstract. It start out by making an arrayList containing the cars of
 	 *  a given type. Then it runs a for-each loop that checks if there is a car that has no reservations.
@@ -100,23 +105,31 @@ public class Controller
 	 *  the check reservation method on it. If it is true, it will return that car. If there is no car 
 	 *  avaliable. It will return null.
 	 */
+	
+	/*
+	 * This method returns an ArrayList of Vehicles that have the specified vehicletype.
+	 */
+	private ArrayList<Vehicle> vehiclesByType(VehicleType v)
+	{
+	ArrayList<Vehicle> vlist = new ArrayList<Vehicle>();
+	Collection<Vehicle> vc = vehicles.values();
+	Iterator<Vehicle> it = vc.iterator();
+	while(it.hasNext())
+	{
+		Vehicle v1 = it.next();
+		if(v1.getType().getId() == v.getId())
+		{
+			vlist.add(v1);
+		}
+	}
+	return vlist;
+	
+	}
+	
 	public Vehicle findCar(VehicleType v, Date start, Date end)
 	{
-		ArrayList<Vehicle> tmp = new ArrayList<Vehicle>();
+		ArrayList<Vehicle> tmp = vehiclesByType(v);
 		
-		Collection<Vehicle> vehicleC = vehicles.values();
-		Iterator<Vehicle> it = vehicleC.iterator();
-		//Tmp is an ArrayList of cars with the same VehicleType as v.
-		while(it.hasNext())
-			{  
-			Vehicle v1 = it.next();
-			int id = v1.getType().getId();
-			   if(id == v.getId())
-			   	{
-				   
-				   tmp.add(v1);
-			   	}   
-			}
 		/*The for-each-loop creates a reservation containing the same VehicleType, start and enddate
 		 * as given in the parameters. 
 		 */
@@ -135,10 +148,23 @@ public class Controller
 					return null;
 }
 	
-	//This method simply calls the findcar() method and returns the given vehicle.
-	public Vehicle searchVehicles(VehicleType v, Date start, Date end)
+	/*
+	 * This method returns a HashMap containing the Vehicles who is available from the 
+	 * Date start to Date end, grouped by a type passed as a parameter.
+	 */
+	public HashMap<Integer, Vehicle> searchVehicles(VehicleType vt, Date start, Date end)
 	{
-		return findCar(v, start, end);
+		HashMap<Integer,Vehicle> vmap = new HashMap<Integer,Vehicle>();
+		ArrayList<Vehicle> vlist = vehiclesByType(vt);
+		for(Vehicle v : vlist)
+		{
+			Reservation r = new Reservation(0, new Customer(0,"tmp",0,"tmp","tmp"),v, start, end);
+			if(checkReservation(r))
+			{
+				vmap.put(v.getId(),v);
+			}
+		}
+		return vmap;
 	}
 
 	/*
@@ -181,6 +207,7 @@ public class Controller
 		}
 		catch(SQLException e)
 		{
+			System.out.println("Check reservation error: " + e);
 			return null;
 		}
 	}
