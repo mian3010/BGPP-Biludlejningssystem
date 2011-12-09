@@ -160,16 +160,16 @@ public class TestSetupTables {
 	  
 	   }
 	   
-	   Reservation r1 = new Reservation(1,c1,v1,new Date("20-05-2011"),new Date("20-06-2011"));
-	   Reservation r2 = new Reservation(2,c1,v2, new Date("20-05-2011"),new Date("20-06-2011"));
-	   Reservation r3 = new Reservation(3,c2,v2, new Date("21-06-2011"),new Date("24-06-2011"));
-	   Reservation r4 = new Reservation(4,c2,v2, new Date("17-04-2001"), new Date("17-02-2011"));
-	   Reservation r5 = new Reservation(5,c3,v3,new Date("17-02-1999"), new Date("17-02-2000"));
-	   Reservation r6 = new Reservation(6,c4,v4, new Date("184324234"), new Date("3534523123"));
-	   Reservation r7 = new Reservation(7,c5,v4, new Date("3192389283"),new Date("53495843"));
-	   Reservation r8 = new Reservation(8,c6,v6, new Date("Hmm? Bug?"), new Date("Bigass Bug?"));
-	   Reservation r9 = new Reservation(9,c7,v7, new Date("20052011"),new Date("20062011"));
-	   Reservation r10 = new Reservation(10,c1,v1, new Date("20052011"), new Date("20062011"));
+	   Reservation r1 = new Reservation(1,c1,v1,new Date("2011-05-20"),new Date("2011-06-20"));
+	   Reservation r2 = new Reservation(2,c1,v2, new Date("2011-05-20"),new Date("2011-06-20"));
+	   Reservation r3 = new Reservation(3,c2,v2, new Date("2011-06-21"),new Date("2011-06-24"));
+	   Reservation r4 = new Reservation(4,c2,v2, new Date("2001-04-17"), new Date("2001-02-17"));
+	   Reservation r5 = new Reservation(5,c3,v3,new Date("1999-02-17"), new Date("2000-02-17"));
+	   Reservation r6 = new Reservation(6,c4,v4, new Date("1993-05-31"), new Date("1993-06-20"));
+	   Reservation r7 = new Reservation(7,c5,v4, new Date("2011-11-11"),new Date("2011-11-12"));
+	   Reservation r8 = new Reservation(8,c6,v6, new Date("2011-12-12"), new Date("2012-12-12"));
+	   Reservation r9 = new Reservation(9,c7,v7, new Date("2003-10-12"),new Date("2002-10-11"));
+	   Reservation r10 = new Reservation(10,c1,v1, new Date("2006-03-05"), new Date("2006-04-06"));
 	  ArrayList<Reservation> rlist = new ArrayList<Reservation>();
 	  rlist.add(r1);
 	  rlist.add(r2);
@@ -209,7 +209,7 @@ public class TestSetupTables {
 	assertEquals(cmap.get(4).getNumber(),30534521);
 	assertEquals(cmap.get(10).getAddress(),"Winterfell");
 	assertEquals(rmap.get(1).getVehicle().getMake(),"Suzuki");
-	assertEquals(rmap.get(4).getStartdate(),"17-04-2001");
+	assertEquals(rmap.get(4).getStartdate(),"2001-04-17");
 	assertEquals(rmap.get(8).getCustomer().getName(),"Toke Loke Bruno");
 	assertEquals(vtmap.get(1).getId(),1);
 	assertEquals(vtmap.get(4).getName(),"3-dørs");

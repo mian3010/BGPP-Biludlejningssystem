@@ -128,7 +128,11 @@ public class CustomerView extends View {
     }
     public void removeCustomer(int rowID, JTable table)
     {
-        removeFromTable(rowID, table);
+    	boolean success = controller.deleteCustomer(customers.get(table.getValueAt(rowID, 0)));
+    	if (success)
+    		removeFromTable(rowID, table);
+    	else
+    		JOptionPane.showMessageDialog(canvas.getFrame(), "Could not remove customer - SQLException", "Error", JOptionPane.ERROR_MESSAGE);
     }
     public void tableChanged(TableModelEvent e)
     {
@@ -148,8 +152,18 @@ public class CustomerView extends View {
     			removeCustomer(row, table);
     	break;
     	default:
-    		
+    		changeCustomer(row, table);
     	break;
     	}
+    }
+    public void changeCustomer(int rowID, JTable table)
+    {
+    	Customer oldCustomer = customers.get(table.getValueAt(rowID, 0));
+    	Customer newCustomer = new Customer((Integer)table.getValueAt(rowID, 0),
+    										(String)table.getValueAt(rowID, 1),
+    										(Integer)table.getValueAt(rowID, 2),
+    										(String)table.getValueAt(rowID, 3),
+    										(String)table.getValueAt(rowID, 4)
+    										);
     }
 }

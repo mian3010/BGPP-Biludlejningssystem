@@ -76,19 +76,19 @@ public class Commands {
 	     */
 	    public static String deleteVehicle(Vehicle v)
 	    {
-	    	return "DELETE FROM Vehicle WHERE id = " + v.getId();
+	    	return "DELETE FROM Vehicle WHERE id = " + v.getId() + ";";
 	    }
 	    public static String deleteReservation(Reservation r)
 	    {
-	    	return "DELETE FROM Reservation WHERE id = " + r.getId();
+	    	return "DELETE FROM Reservation WHERE id = " + r.getId() + ";";
 	    }
 	    public static String deleteCustomer(Customer c)
 	    {
-	    	return "DELETE FROM Customer WHERE id = " + c.getId();
+	    	return "DELETE FROM Customer WHERE id = " + c.getId() + ";";
 	    }
 	    public static String deleteVehicleType(VehicleType vt)
 	    {
-	    	return "DELETE FROM VehicleType WHERE id = " + vt.getId();
+	    	return "DELETE FROM VehicleType WHERE id = " + vt.getId() + ";";
 	    }
 	    /*
 	     * The following methods are SQL-command for retrieving entire tables as ResultSets, usable in the Nexus.
@@ -122,25 +122,25 @@ public class Commands {
 	        return "UPDATE Vehicle SET make = \"" + v.getMake() + "\", "
 	                + "model = \"" + v.getModel() + "\", typeID = " + 
 	                v.getType().getId() + ", year = " + v.getYear() + 
-	                " where id = " + v.getId();
+	                " where id = " + v.getId() + ";";
 	    }
 	    public static String updateCustomer(Customer c)
 	    {
 	        return "UPDATE Customer SET name = \"" + c.getName() + "\", "
 	                + "address = \"" + c.getAddress() + "\", phone = " + 
-	                c.getNumber() + " where id = " + c.getId();
+	                c.getNumber() + " where id = " + c.getId() + ";";
 	    }
 	    public static String updateReservation(Reservation r)
 	    {
 	        return "UPDATE Reservation SET customerID = " + r.getCustomer().getId() +
 	                ", vehicleID = " + r.getVehicle().getId() + ", startdate = \""
 	                + r.getStartdate() + "\", enddate = \"" + r.getEnddate()
-	                + "\" where id = " + r.getId();
+	                + "\" where id = " + r.getId() + ";";
 	    }
 	    public static String updateVehicleType(VehicleType t)
 	    {   
 	              return "UPDATE VehicleType SET name = \"" + t.getName() +
-	              "\", price = " + t.getPrice() + " where id = " + t.getId();
+	              "\", price = " + t.getPrice() + " where id = " + t.getId() + ";";
 	    }
 	    /*
 	     * These methods are responsible for taking in ResultSets from the database and returning them as HashMaps, usable

@@ -189,6 +189,10 @@ public class ReservationView extends View {
     }
     public void removeReservation(int rowID, JTable table)
     {
-    	removeFromTable(rowID, table);
+    	boolean success = controller.deleteReservation(reservations.get(table.getValueAt(rowID, 0)));
+    	if (success)
+    		removeFromTable(rowID, table);
+    	else
+    		JOptionPane.showMessageDialog(canvas.getFrame(), "Could not remove reservation - SQLException", "Error", JOptionPane.ERROR_MESSAGE);
     }
 }

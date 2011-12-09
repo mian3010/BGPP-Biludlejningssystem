@@ -8,6 +8,7 @@ import java.util.Iterator;
 
 public class Controller
 {
+
 	private HashMap<Integer, VehicleType> types;
 	private HashMap<Integer, Vehicle> vehicles;
 	private HashMap<Integer, Customer> customers;
@@ -489,13 +490,11 @@ public class Controller
 			int id = oldV.getId();
 			//Creates a new vehicle with the data from newV and id from oldV.
 			Vehicle v = new Vehicle(id, newV.getMake(), newV.getModel(), newV.getYear(), newV.getType());
-			if(nexus.editVehicle(v))
-			{
+			nexus.editVehicle(v);
+			//The exception will be caught here if it comes;
 			vehicles.remove(id);
 			vehicles.put(id,v);
 			return true;
-			}
-			return false;
 		}
 		catch(SQLException e)
 		{

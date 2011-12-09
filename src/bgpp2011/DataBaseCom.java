@@ -79,7 +79,10 @@ public class DataBaseCom {
      */
     public boolean update(String query) throws SQLException
     { 
-    		return dbStatement.execute(query);      
+    	
+    		dbStatement.execute(query);
+    		return true;
+    	  
     }
     /*
      * This method is used for retrieving information from the database as ResultSets.

@@ -120,7 +120,7 @@ public class ControllerTest {
 	
 	
 	
-	@Test
+	/* @Test
 	public void testSearchVehicles()
 	{
 		System.out.println("Testing search Vehicles");
@@ -141,6 +141,7 @@ public class ControllerTest {
 		conn.close();
 		
 	}
+	*/
 	@Test
 	public void testEditReservations()
 	{

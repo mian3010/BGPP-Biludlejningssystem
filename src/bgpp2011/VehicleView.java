@@ -91,7 +91,7 @@ public class VehicleView extends View {
     public Object[][] parseObjects(HashMap<Integer, Vehicle> dataObjects, VehicleType type)
     {
     	HashMap<Integer, Vehicle> vehicle = new HashMap<Integer, Vehicle>();
-    	Iterator<Entry<Integer, Vehicle>> i = vehicles.entrySet().iterator();
+    	Iterator<Entry<Integer, Vehicle>> i = dataObjects.entrySet().iterator();
     	while (i.hasNext())
     	{
         	Map.Entry<Integer, Vehicle> object = (Map.Entry<Integer, Vehicle>)i.next();
@@ -253,6 +253,10 @@ public class VehicleView extends View {
     }
     public void removeVehicle(int rowID, JTable table)
     {
-    	removeFromTable(rowID, table);
+    	boolean success = controller.deleteVehicle(vehicles.get(table.getValueAt(rowID, 0)));
+    	if (success)
+    		removeFromTable(rowID, table);
+    	else
+    		JOptionPane.showMessageDialog(canvas.getFrame(), "Could not remove vehicle - SQLException", "Error", JOptionPane.ERROR_MESSAGE);
     }
 }
