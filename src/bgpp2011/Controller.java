@@ -8,12 +8,8 @@ import java.util.Iterator;
 
 public class Controller
 {
-
-	private HashMap<Integer, VehicleType> types;
-	private HashMap<Integer, Vehicle> vehicles;
-	private HashMap<Integer, Customer> customers;
-	private HashMap<Integer, Reservation> reservations;
 	private Nexus nexus;
+	private ListHolder listholder;
 	/*
 	 * Controlleren must execute operations given by the user. It must do all the checking and ordering.
 	 * 
@@ -26,28 +22,25 @@ public class Controller
 	 */
 	public Controller()
 	{
-		nexus = new Nexus();	
-		boot();
 		
-	
-	}
-	//Method that loads the HashMaps with data from the database. Uses the getmethods() from the nexus.
-	public void boot()
-	{
 		try
 		{
-			types = nexus.getTypes();
-			vehicles = nexus.getVehicles();
-			customers = nexus.getCostumers();
-			reservations = nexus.getReservations();	
+			nexus = new Nexus();	
+			HashMap<Integer, VehicleType> types = nexus.getTypes();
+			HashMap<Integer, Vehicle> vehicles = nexus.getVehicles();
+			HashMap<Integer, Customer> customers = nexus.getCostumers();
+			HashMap<Integer, Reservation> reservations = nexus.getReservations();	
+			listholder = new ListHolder(types, vehicles, customers, reservations);
+			
 		}
 		
 		catch(SQLException e)
 		{
 			System.out.println("SQLException in boot()");
 		}
-		
 	}
+	//Method that loads the HashMaps with data from the database. Uses the getmethods() from the nexus.
+	
 	
 	/*
 	 * This method check if a reservation overlaps another reservation. It compares the dates of the
@@ -62,7 +55,7 @@ public class Controller
 		if( o<0 )
 		{
 		
-			Collection<Reservation> c = reservations.values();
+			Collection<Reservation> c = listholder.getReservations().values();
 			Iterator<Reservation> i = c.iterator();
 			
 			while(i.hasNext())
@@ -93,12 +86,7 @@ public class Controller
 		return false;
 	}	
 	
-	public HashMap<Integer, Vehicle> searchOpenCars(VehicleType type, Date start, Date end)
-	{
-		HashMap<Integer,Vehicle> vmap = new HashMap<Integer,Vehicle>();
-		
-		return vmap;
-	}
+	
 	/*
 	 * This code is very VERY abstract. It start out by making an arrayList containing the cars of
 	 *  a given type. Then it runs a for-each loop that checks if there is a car that has no reservations.
@@ -106,31 +94,23 @@ public class Controller
 	 *  the check reservation method on it. If it is true, it will return that car. If there is no car 
 	 *  avaliable. It will return null.
 	 */
-	
-	/*
-	 * This method returns an ArrayList of Vehicles that have the specified vehicletype.
-	 */
-	private ArrayList<Vehicle> vehiclesByType(VehicleType v)
-	{
-	ArrayList<Vehicle> vlist = new ArrayList<Vehicle>();
-	Collection<Vehicle> vc = vehicles.values();
-	Iterator<Vehicle> it = vc.iterator();
-	while(it.hasNext())
-	{
-		Vehicle v1 = it.next();
-		if(v1.getType().getId() == v.getId())
-		{
-			vlist.add(v1);
-		}
-	}
-	return vlist;
-	
-	}
-	
 	public Vehicle findCar(VehicleType v, Date start, Date end)
 	{
-		ArrayList<Vehicle> tmp = vehiclesByType(v);
+		ArrayList<Vehicle> tmp = new ArrayList<Vehicle>();
 		
+		Collection<Vehicle> vehicleC = listholder.getVehicles().values();
+		Iterator<Vehicle> it = vehicleC.iterator();
+		//Tmp is an ArrayList of cars with the same VehicleType as v.
+		while(it.hasNext())
+			{  
+			Vehicle v1 = it.next();
+			int id = v1.getType().getId();
+			   if(id == v.getId())
+			   	{
+				   
+				   tmp.add(v1);
+			   	}   
+			}
 		/*The for-each-loop creates a reservation containing the same VehicleType, start and enddate
 		 * as given in the parameters. 
 		 */
@@ -149,23 +129,10 @@ public class Controller
 					return null;
 }
 	
-	/*
-	 * This method returns a HashMap containing the Vehicles who is available from the 
-	 * Date start to Date end, grouped by a type passed as a parameter.
-	 */
-	public HashMap<Integer, Vehicle> searchVehicles(VehicleType vt, Date start, Date end)
+	//This method simply calls the findcar() method and returns the given vehicle.
+	public Vehicle searchVehicles(VehicleType v, Date start, Date end)
 	{
-		HashMap<Integer,Vehicle> vmap = new HashMap<Integer,Vehicle>();
-		ArrayList<Vehicle> vlist = vehiclesByType(vt);
-		for(Vehicle v : vlist)
-		{
-			Reservation r = new Reservation(0, new Customer(0,"tmp",0,"tmp","tmp"),v, start, end);
-			if(checkReservation(r))
-			{
-				vmap.put(v.getId(),v);
-			}
-		}
-		return vmap;
+		return findCar(v, start, end);
 	}
 
 	/*
@@ -196,8 +163,7 @@ public class Controller
 					if(re != null)
 					{
 					//The reservation is added to the HashMap reservations. It returns the vehicle.
-					reservations.put(re.getId(), re);
-					boot();
+					listholder.getReservations().put(re.getId(), re);
 					return re;
 					}
 				
@@ -208,7 +174,6 @@ public class Controller
 		}
 		catch(SQLException e)
 		{
-			System.out.println("Check reservation error: " + e);
 			return null;
 		}
 	}
@@ -220,7 +185,7 @@ public class Controller
 	{
 		//Creates a temporary customer with the parameters given in the constructor.
 		Customer c = new Customer(0, name, phonenumber, address, bankaccount);
-		Collection<Customer> customerC = customers.values();
+		Collection<Customer> customerC = listholder.getCustomers().values();
 		Iterator<Customer> itt = customerC.iterator();
 		//Runs through the customer HashMap and checks if there is a customer with same name and number.
 			while(itt.hasNext())
@@ -236,7 +201,7 @@ public class Controller
 			//Creates a customer using the createEntryCustomer() in the nexus.
 				try {
 					Customer returnC = nexus.createEntryCustomer(c);
-					customers.put(returnC.getId(), returnC);
+					listholder.getCustomers().put(returnC.getId(), returnC);
 					//Returns the customer.
 					return returnC;
 				    }
@@ -254,7 +219,7 @@ public class Controller
 	{
 		//Creates a temporary vehicle with the parameters of the constructor.
 		Vehicle ve = new Vehicle(0, make, model, year, v);		
-		Collection<VehicleType> vehicleTypes = types.values();
+		Collection<VehicleType> vehicleTypes = listholder.getTypes().values();
 		Iterator<VehicleType> itt = vehicleTypes.iterator();
 		boolean typeExists = false;
 			//The while loop runs through the types HashMap. It checks if the given type exists.
@@ -273,7 +238,7 @@ public class Controller
 			//If the type exist, it creates the vehicle, puts it in the HashMap and returns it.
 			try {
 				Vehicle returnV = nexus.createEntryVehicle(ve);
-				vehicles.put(returnV.getId(), ve);
+				listholder.getVehicles().put(returnV.getId(), ve);
 				return returnV;
 				}
 			catch(Exception e) {
@@ -290,7 +255,7 @@ public class Controller
 	{
 		//Creates a temporary vehicleType with the parameters.
 		VehicleType vee = new VehicleType(0, name, price);
-		Collection<VehicleType> c = types.values(); 
+		Collection<VehicleType> c = listholder.getTypes().values(); 
 		Iterator<VehicleType> itt = c.iterator();
 		//Checks of a type with the same name does exist. 
 			while(itt.hasNext())
@@ -305,7 +270,7 @@ public class Controller
 			try{
 				VehicleType returnT = nexus.createEntryVehicleType(vee);
 				
-				types.put(returnT.getId(), returnT);
+				listholder.getTypes().put(returnT.getId(), returnT);
 				return true;
 				}
 			catch(Exception e)
@@ -315,78 +280,11 @@ public class Controller
 			}
 	}
 	
-	//Returns a given reservation.
-	public Reservation getReservation(int id)
-	{
-		
-			if(id < reservations.size() && id>0)
-			{
-			return reservations.get(id);
-			
-			}
-			else 
-			{
-				throw new IllegalArgumentException("No reservations in that position!");
-			}
-		
-			
-	}
-	
-	//Returns a given customer.
-	public Customer getCustomer(int id)
-	{
-		
-			if(id < customers.size() && id>0)
-			{
-			return customers.get(id);
-			
-			}
-			else 
-			{
-				throw new IllegalArgumentException("No reservations in that position!");
-			}
-		
-	}
-	
-	//Returns a given vehicle.
-	public Vehicle getVehicle(int id)
-	{
-		
-			if(id < vehicles.size() && id>0)
-			{
-			return vehicles.get(id);
-			
-			}
-			else 
-			{
-				throw new IllegalArgumentException("No reservations in that position!");
-			}
-		
-	}
-	
-	//Returns a given vehicletype.
-	public VehicleType getType(int id)
-
-	{
-		
-			if(id < types.size() && id>0)
-			{
-			return types.get(id);
-			
-			}
-			else 
-			{
-				throw new IllegalArgumentException("No reservations in that position!");
-			}
-		
-		
-	}
-	
 	//Deletes a reservation.
 	public boolean deleteReservation(Reservation r)
 	{
 		try {
-		Reservation rescheck = reservations.remove(r.getId());
+		Reservation rescheck = listholder.getReservations().remove(r.getId());
 		if(rescheck != null)
 			return nexus.deleteReservation(rescheck);
 		else
@@ -403,7 +301,7 @@ public class Controller
 	{
 		try
 		{
-			Customer cuscheck = customers.remove(c.getId());
+			Customer cuscheck = listholder.getCustomers().remove(c.getId());
 			if(cuscheck != null)
 				return nexus.deleteCustomer(cuscheck);
 			else
@@ -419,7 +317,7 @@ public class Controller
 	{
 		try 
 		{
-			Vehicle vcheck = vehicles.remove(v.getId());
+			Vehicle vcheck = listholder.getVehicles().remove(v.getId());
 			if(vcheck != null)
 				return nexus.deleteVehicle(vcheck);
 			else
@@ -431,12 +329,11 @@ public class Controller
 				return false;
 		}
 		}
-	
 	public boolean deleteVehicleType(VehicleType vt)
 	{
 		try
 		{
-			VehicleType vtcheck = types.remove(vt.getId());
+			VehicleType vtcheck = listholder.getTypes().remove(vt.getId());
 			if(vtcheck != null)
 				return nexus.deleteVehicleType(vtcheck);
 			else
@@ -465,8 +362,8 @@ public class Controller
 				Reservation res = new Reservation(id, newR.getCustomer(), newR.getVehicle(), new Date(newR.getStartdate()), new Date(newR.getEnddate()));			
 				if(nexus.editReservation(res))
 				{
-					reservations.remove(id);
-					reservations.put(id,res);
+					listholder.getReservations().remove(id);
+					listholder.getReservations().put(id,res);
 					return true;
 			}		
 					return false;
@@ -490,11 +387,13 @@ public class Controller
 			int id = oldV.getId();
 			//Creates a new vehicle with the data from newV and id from oldV.
 			Vehicle v = new Vehicle(id, newV.getMake(), newV.getModel(), newV.getYear(), newV.getType());
-			nexus.editVehicle(v);
-			//The exception will be caught here if it comes;
-			vehicles.remove(id);
-			vehicles.put(id,v);
+			if(nexus.editVehicle(v))
+			{
+			listholder.getVehicles().remove(id);
+			listholder.getVehicles().put(id,v);
 			return true;
+			}
+			return false;
 		}
 		catch(SQLException e)
 		{
@@ -514,8 +413,8 @@ public class Controller
 			VehicleType vt = new VehicleType(id, vtnew.getName(), vtnew.getPrice());
 			if(nexus.editVehicleType(vt))
 			{
-				types.remove(id);
-				types.put(id,vt);
+				listholder.getTypes().remove(id);
+				listholder.getTypes().put(id,vt);
 				return true;
 			}
 			return false;
@@ -535,8 +434,8 @@ public class Controller
 			Customer c = new Customer(id, newC.getName(), newC.getNumber(), newC.getAddress(), newC.getBankAccount());
 			if(nexus.editCustomer(c))
 			{
-				customers.remove(id);
-				customers.put(id, c);
+				listholder.getCustomers().remove(id);
+				listholder.getCustomers().put(id, c);
 				return true;
 			}
 				return false;
@@ -546,32 +445,16 @@ public class Controller
 			return false;
 		}
 	}
-	/*
-	 * Accessor methods for the HashMaps.
-	 */
-	public HashMap<Integer, Reservation> getReservations()
-	{
-		return reservations;
-	}
-	
-	public HashMap<Integer, Customer> getCustomers()
-	{
-		return customers;
-	}
-	
-	public HashMap<Integer, Vehicle> getVehicles()
-	{
-		return vehicles;
-	}
-	
-	public HashMap<Integer, VehicleType> getTypes()
-	{
-		return types;
-	}
+
 	
 	/*
 	 * Closes the connection to the database. Uses the close database method from the Nexusclass.
 	 */
+	
+	public ListHolder getListholder()
+	{
+		return listholder;
+	}
 	public void close()
 	{
 		nexus.closeDatabase();
