@@ -1,14 +1,17 @@
 package bgpp2011;
 import javax.swing.table.*;
+import java.util.*;
 
 class TableModel extends AbstractTableModel {
     private String[] columnNames;
     private Object[][] data;
+    private HashMap<Integer, Boolean> cellEditable;
     
-    public TableModel(Object[][] data, String[] columnNames)
+    public TableModel(Object[][] data, String[] columnNames, HashMap<Integer, Boolean> cellEditable)
     {
     	this.data = data;
     	this.columnNames = columnNames;
+    	this.cellEditable = cellEditable;
     }
 
     public int getColumnCount() {
@@ -37,7 +40,7 @@ class TableModel extends AbstractTableModel {
      * editable.
      */
     public boolean isCellEditable(int row, int col) {
-        return true;
+        return cellEditable.get(col);
     }
 
     /*

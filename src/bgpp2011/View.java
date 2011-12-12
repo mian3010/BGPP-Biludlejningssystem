@@ -4,7 +4,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import javax.swing.*;
-import javax.swing.table.*;
 import javax.swing.event.*;
 
 import java.lang.reflect.InvocationTargetException;
@@ -21,7 +20,8 @@ import java.util.*;
  */
 public abstract class View implements TableModelListener
 {
-    //Instance variables
+	private static final long serialVersionUID = -2198358766333127667L;
+	//Instance variables
     public JPanel contentPane = new JPanel();
     public String topText;
     public JLabel welcomeText;
@@ -30,6 +30,7 @@ public abstract class View implements TableModelListener
     public Canvas canvas;
     private JTable table;
     public Controller controller;
+    public boolean noChange;
     
     //Constructor
     public View(Canvas canvas)
@@ -56,10 +57,10 @@ public abstract class View implements TableModelListener
         
         return contentPane;
     }
-    public JTable createTable(String[] columnNames, Object[][] data, int[] columnSizes)
+    public JTable createTable(String[] columnNames, Object[][] data, HashMap<Integer, Boolean> cellEditable, int[] columnSizes)
     {
         JTable table = new JTable(data, columnNames);
-        table.setModel(new TableModel(data,columnNames));
+        table.setModel(new TableModel(data,columnNames, cellEditable));
         table.getModel().addTableModelListener(this);
         for (int i = 0; i < columnSizes.length; i++)
         {
@@ -187,5 +188,9 @@ public abstract class View implements TableModelListener
     public boolean addEntry(Object[] input)
     {
     	return false;
+    }
+    public void paint(Graphics g)
+    {
+    	g.drawRect(0, 0, 100, 100);
     }
 }

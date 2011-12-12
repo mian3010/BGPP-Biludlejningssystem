@@ -43,6 +43,13 @@ public class VehicleView extends View {
         columnNames[4] = "Change Type";
         columnNames[5] = "Remove";
         int[] columnSizes = {20,1000,1000,200,100,100};
+        HashMap<Integer, Boolean> cellEditable = new HashMap<Integer, Boolean>();
+        cellEditable.put(0, false);
+        cellEditable.put(1, true);
+        cellEditable.put(2, true);
+        cellEditable.put(3, true);
+        cellEditable.put(4, true);
+        cellEditable.put(5, true);
         ArrayList<JLabel> label = new ArrayList<JLabel>();
         table = new ArrayList<JTable>();
         ArrayList<JPanel> panel = new ArrayList<JPanel>();
@@ -52,7 +59,7 @@ public class VehicleView extends View {
         	Map.Entry<Integer, VehicleType> entry = (Map.Entry<Integer, VehicleType>)i.next();
         	label.add(new JLabel(entry.getValue().getName()+":"));
         	Object[][] data = parseObjects(vehicles, entry.getValue());
-        	table.add(createTable(columnNames, data, columnSizes));
+        	table.add(createTable(columnNames, data, cellEditable, columnSizes));
         	panel.add(new JPanel());
         }
         
@@ -138,34 +145,37 @@ public class VehicleView extends View {
     
     public void tableChanged(TableModelEvent e)
     {
-    	String questionRemove = "Are you sure you want to remove this vehicle?";
-    	String titleRemove = "Removing vehicle";
-    	int row = e.getFirstRow();
-    	int column = e.getColumn();
-    	TableModel tablemodel = (TableModel)e.getSource();
-    	int id = (Integer)tablemodel.getValueAt(row, 0);
-    	JTable table = this.table.get(vehicles.get(id).getType().getId()-1);
-    	
-    	switch (column)
+    	if (!noChange)
     	{
-    	case 4:
-    		Object[] choices = makeChoices();
-        	VehicleType chosentype = (VehicleType)JOptionPane.showInputDialog(canvas.getFrame(), "Choose new type:", "Change type", JOptionPane.QUESTION_MESSAGE, null, choices, choices[vehicles.get(id).getType().getId()-1]);
-        	try {
-        		changeType(row, vehicles.get(id).getType().getId()-1, chosentype.getId());
-        	} catch (NullPointerException e1) {
-        		
-        	}
-        	
-    	break;
-    	case 5:
-    		int response = JOptionPane.showConfirmDialog(canvas.getFrame(), questionRemove, titleRemove, JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE);
-			if (response == 0)
-    			removeVehicle(row, table);
-    	break;
-    	default:
-    		
-    	break;
+	    	String questionRemove = "Are you sure you want to remove this vehicle?";
+	    	String titleRemove = "Removing vehicle";
+	    	int row = e.getFirstRow();
+	    	int column = e.getColumn();
+	    	TableModel tablemodel = (TableModel)e.getSource();
+	    	int id = (Integer)tablemodel.getValueAt(row, 0);
+	    	JTable table = this.table.get(vehicles.get(id).getType().getId()-1);
+	    	
+	    	switch (column)
+	    	{
+	    	case 4:
+	    		Object[] choices = makeChoices();
+	        	VehicleType chosentype = (VehicleType)JOptionPane.showInputDialog(canvas.getFrame(), "Choose new type:", "Change type", JOptionPane.QUESTION_MESSAGE, null, choices, choices[vehicles.get(id).getType().getId()-1]);
+	        	try {
+	        		changeType(row, vehicles.get(id).getType().getId()-1, chosentype.getId());
+	        	} catch (NullPointerException e1) {
+	        		
+	        	}
+	        	
+	    	break;
+	    	case 5:
+	    		int response = JOptionPane.showConfirmDialog(canvas.getFrame(), questionRemove, titleRemove, JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE);
+				if (response == 0)
+	    			removeVehicle(row, table);
+	    	break;
+	    	default:
+	    		changeVehicle(row, column, table);
+	    	break;
+	    	}
     	}
     }
     private Object[] makeChoices()
@@ -258,5 +268,50 @@ public class VehicleView extends View {
     		removeFromTable(rowID, table);
     	else
     		JOptionPane.showMessageDialog(canvas.getFrame(), "Could not remove vehicle - SQLException", "Error", JOptionPane.ERROR_MESSAGE);
+    }
+    public void changeVehicle(int rowID, int columnID, JTable table)
+    {
+    	Vehicle oldVehicle = vehicles.get(table.getValueAt(rowID, 0));
+    	int arg0 = oldVehicle.getId();
+    	String arg1 = oldVehicle.getMake();
+    	String arg2 = oldVehicle.getModel();
+    	int arg3 = oldVehicle.getYear();
+    	VehicleType arg4 = oldVehicle.getType();
+    	switch (columnID)
+    	{
+    	case 1:
+    		arg1 = (String)table.getValueAt(rowID, 1);
+    	break;
+    	case 2:
+    		arg2 = (String)table.getValueAt(rowID, 2);
+    	break;
+    	case 3:
+    		arg3 = (Integer)table.getValueAt(rowID, 3);
+    	break;
+    	default:
+    	break;
+    	}
+    	Vehicle newVehicle = new Vehicle(arg0, arg1, arg2, arg3, arg4);
+    	boolean success = controller.editVehicle(newVehicle, oldVehicle);
+    	if (!success)
+    	{
+    		JOptionPane.showMessageDialog(canvas.getFrame(), "Could not change customer - SQLException", "Error", JOptionPane.ERROR_MESSAGE);
+    		noChange = true;
+    		switch (columnID)
+        	{
+        	case 1:
+        		table.setValueAt(oldVehicle.getMake(), rowID, 1);
+        	break;
+        	case 2:
+        		table.setValueAt(oldVehicle.getModel(), rowID, 2);
+        	break;
+        	case 3:
+        		table.setValueAt(oldVehicle.getYear(), rowID, 3);
+        	break;
+        	default:
+        	break;
+        	}
+    		noChange = false;
+    	}
     }
 }

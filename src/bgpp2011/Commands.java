@@ -127,7 +127,7 @@ public class Commands {
 	    public static String updateCustomer(Customer c)
 	    {
 	        return "UPDATE Customer SET name = \"" + c.getName() + "\", "
-	                + "address = \"" + c.getAddress() + "\", phone = " + 
+	                + "address = \"" + c.getAddress() + "\", phonenumber = " + 
 	                c.getNumber() + " where id = " + c.getId() + ";";
 	    }
 	    public static String updateReservation(Reservation r)

@@ -38,9 +38,17 @@ public class CustomerView extends View {
         super.draw();
         String[] columnNames = {"ID", "Name", "Address", "Phone Number", "Account", "Show reservations", "Remove"};
         Object[][] data = parseObjects(customers);
+        HashMap<Integer, Boolean> cellEditable = new HashMap<Integer, Boolean>();
+        cellEditable.put(0, false);
+        cellEditable.put(1, true);
+        cellEditable.put(2, true);
+        cellEditable.put(3, true);
+        cellEditable.put(4, true);
+        cellEditable.put(5, true);
+        cellEditable.put(6, true);
         int[] columnSizes = {20,1000,1000,200,200,100, 100};
        
-        table = createTable(columnNames, data, columnSizes);
+        table = createTable(columnNames, data, cellEditable, columnSizes);
         JScrollPane scrollPane = new JScrollPane(table);
         
         scrollPane.setBorder(BorderFactory.createEmptyBorder(0,10,0,10));
@@ -136,34 +144,78 @@ public class CustomerView extends View {
     }
     public void tableChanged(TableModelEvent e)
     {
-    	String questionRemove = "Are you sure you want to remove this customer?";
-    	String titleRemove = "Removing customer";
-    	int row = e.getFirstRow();
-    	int column = e.getColumn();
-    	
-    	switch (column)
+    	if (!noChange)
     	{
-    	case 5:
-    		canvas.changeView(new ReservationView(canvas, (int)table.getValueAt(row, 0)));
-    	break;
-    	case 6:
-    		int response = JOptionPane.showConfirmDialog(canvas.getFrame(), questionRemove, titleRemove, JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE);
-			if (response == 0)
-    			removeCustomer(row, table);
-    	break;
-    	default:
-    		changeCustomer(row, table);
-    	break;
+	    	String questionRemove = "Are you sure you want to remove this customer?";
+	    	String titleRemove = "Removing customer";
+	    	int row = e.getFirstRow();
+	    	int column = e.getColumn();
+	    	
+	    	switch (column)
+	    	{
+	    	case 5:
+	    		canvas.changeView(new ReservationView(canvas, (Integer)table.getValueAt(row, 0)));
+	    	break;
+	    	case 6:
+	    		int response = JOptionPane.showConfirmDialog(canvas.getFrame(), questionRemove, titleRemove, JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE);
+				if (response == 0)
+	    			removeCustomer(row, table);
+	    	break;
+	    	default:
+	    		changeCustomer(row, column, table);
+	    	break;
+	    	}
     	}
     }
-    public void changeCustomer(int rowID, JTable table)
+    public void changeCustomer(int rowID, int columnID, JTable table)
     {
     	Customer oldCustomer = customers.get(table.getValueAt(rowID, 0));
-    	Customer newCustomer = new Customer((Integer)table.getValueAt(rowID, 0),
-    										(String)table.getValueAt(rowID, 1),
-    										(Integer)table.getValueAt(rowID, 2),
-    										(String)table.getValueAt(rowID, 3),
-    										(String)table.getValueAt(rowID, 4)
-    										);
+    	int arg0 = oldCustomer.getId();
+    	String arg1 = oldCustomer.getName();
+    	int arg2 = oldCustomer.getNumber();
+    	String arg3 = oldCustomer.getAddress();
+    	String arg4 = oldCustomer.getBankAccount();
+    	switch (columnID)
+    	{
+    	case 1:
+    		arg1 = (String)table.getValueAt(rowID, 1);
+    	break;
+    	case 2:
+    		arg2 = (Integer)table.getValueAt(rowID, 3);
+    	break;
+    	case 3:
+    		arg4 = (String)table.getValueAt(rowID, 4);
+    	break;
+    	case 4:
+    		arg3 = (String)table.getValueAt(rowID, 2);
+    	break;
+    	default:
+    	break;
+    	}
+    	Customer newCustomer = new Customer(arg0, arg1, arg2, arg3, arg4);
+    	boolean success = controller.editCustomer(newCustomer, oldCustomer);
+    	if (!success)
+    	{
+    		JOptionPane.showMessageDialog(canvas.getFrame(), "Could not change customer - SQLException", "Error", JOptionPane.ERROR_MESSAGE);
+    		noChange = true;
+    		switch (columnID)
+        	{
+        	case 1:
+        		table.setValueAt(oldCustomer.getName(), rowID, 1);
+        	break;
+        	case 2:
+        		table.setValueAt(oldCustomer.getAddress(), rowID, 2);
+        	break;
+        	case 3:
+        		table.setValueAt(oldCustomer.getNumber(), rowID, 3);
+        	break;
+        	case 4:
+        		table.setValueAt(oldCustomer.getBankAccount(), rowID, 4);
+        	break;
+        	default:
+        	break;
+        	}
+    		noChange = false;
+    	}
     }
 }

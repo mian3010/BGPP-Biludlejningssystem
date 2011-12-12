@@ -1,9 +1,12 @@
 package bgpp2011;
 import java.awt.*;
 import java.awt.event.*;
+
 import javax.swing.*;
 import javax.swing.event.TableModelEvent;
 
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 import java.util.*;
 import java.util.Map.Entry;
 
@@ -18,6 +21,7 @@ public class ReservationView extends View {
 	private HashMap<Integer, Customer> customers;
     private JTable table;
     private int id;
+    private boolean drawGraphical = false;
     
     public ReservationView(Canvas canvas)
     {
@@ -42,20 +46,51 @@ public class ReservationView extends View {
     {
         updateReservations();
         super.draw();
-        String[] columnNames = {"ID","Customer","Vehicle","Start date","End date", "Change vehicletype", "Remove"};
-        Object[][] data = parseObjects(reservations);
-        int[] columnSizes = {20,1000,1000,200,200,100, 100};
-       
-        table = createTable(columnNames, data, columnSizes);
-        JScrollPane scrollPane = new JScrollPane(table);
-        
-        scrollPane.setBorder(BorderFactory.createEmptyBorder(0,10,0,10));
-        contentPane.add(scrollPane, BorderLayout.CENTER);
-        
-        JPanel boxLayout = createButtons();
-        contentPane.add(boxLayout, BorderLayout.WEST);
-        
+        if (!drawGraphical)
+        {
+	        String[] columnNames = {"ID","Customer","Vehicle","Start date","End date", "Change vehicletype", "Remove"};
+	        Object[][] data = parseObjects(reservations);
+	        int[] columnSizes = {20,1000,1000,200,200,100, 100};
+	        HashMap<Integer, Boolean> cellEditable = new HashMap<Integer, Boolean>();
+	        cellEditable.put(0, false);
+	        cellEditable.put(1, false);
+	        cellEditable.put(2, false);
+	        cellEditable.put(3, true);
+	        cellEditable.put(4, true);
+	        cellEditable.put(5, true);
+	        cellEditable.put(6, true);
+	       
+	        table = createTable(columnNames, data, cellEditable, columnSizes);
+	        JScrollPane scrollPane = new JScrollPane(table);
+	        
+	        scrollPane.setBorder(BorderFactory.createEmptyBorder(0,10,0,10));
+	        contentPane.add(scrollPane, BorderLayout.CENTER);
+	        
+	        JPanel boxLayout = createButtons();
+	        contentPane.add(boxLayout, BorderLayout.WEST);
+        }
+        else
+        {
+        	ReservationGraphical graphics = drawGraphical();
+        	contentPane.add(graphics, BorderLayout.WEST);
+        	JPanel boxLayout = createButtons();
+	        contentPane.add(boxLayout, BorderLayout.WEST);
+        }
         return contentPane;
+    }
+    public void graphical()
+    {
+    	drawGraphical = true;
+    	this.draw();
+    }
+    public ReservationGraphical drawGraphical()
+    {
+    	ReservationGraphical graphic = new ReservationGraphical();
+    	return graphic;
+    }
+    public void paint(Graphics g)
+    {
+
     }
     public Object[][] parseObjects(HashMap<Integer, Reservation> dataObjects)
     {
@@ -179,7 +214,7 @@ public class ReservationView extends View {
     			removeReservation(row, table);
     	break;
     	default:
-    		
+    		changeReservation(row, column, table);
     	break;
     	}
     }
@@ -194,5 +229,59 @@ public class ReservationView extends View {
     		removeFromTable(rowID, table);
     	else
     		JOptionPane.showMessageDialog(canvas.getFrame(), "Could not remove reservation - SQLException", "Error", JOptionPane.ERROR_MESSAGE);
+    }
+    public void changeReservation(int rowID, int columnID, JTable table)
+    {
+    	Reservation oldReservation = reservations.get(table.getValueAt(rowID, 0));
+    	int arg0 = oldReservation.getId();
+    	Customer arg1 = oldReservation.getCustomer();
+    	Vehicle arg2 = oldReservation.getVehicle();
+    	Date arg3 = new Date(oldReservation.getStartdate());
+    	Date arg4 = new Date(oldReservation.getEnddate());
+    	switch (columnID)
+    	{
+    	case 3:
+    		arg3 = new Date((String)table.getValueAt(rowID, 3));
+    	break;
+    	case 4:
+    		arg4 = new Date((String)table.getValueAt(rowID, 4));
+    	break;
+    	default:
+    	break;
+    	}
+    	Reservation newReservation = new Reservation(arg0, arg1, arg2, arg3, arg4);
+    	boolean success = controller.editReservation(newReservation, oldReservation);
+    	if (!success)
+    	{
+    		JOptionPane.showMessageDialog(canvas.getFrame(), "Could not change reservation - SQLException", "Error", JOptionPane.ERROR_MESSAGE);
+    		noChange = true;
+    		switch (columnID)
+        	{
+        	case 3:
+        		table.setValueAt(oldReservation.getStartdate(), rowID, 3);
+        	break;
+        	case 4:
+        		table.setValueAt(oldReservation.getEnddate(), rowID, 4);
+        	break;
+        	default:
+        	break;
+        	}
+    		noChange = false;
+    	}
+    }
+    public JPanel createButtons()
+    {
+    	JPanel boxLayout = super.createButtons();
+    	JButton button = new JButton("Graphical");
+    	button.setMaximumSize(new Dimension(130,30));
+        boxLayout.add(button);
+        final ReservationView view = this;
+        button.addActionListener(new ActionListener() {
+        	@Override
+        	public void actionPerformed(ActionEvent e) {
+        		view.graphical();
+            }
+        });
+    	return boxLayout;
     }
 }
