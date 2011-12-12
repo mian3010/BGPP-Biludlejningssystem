@@ -114,8 +114,10 @@ public class ListHolder {
 			return types;
 		}
 		
+		//Adds an Item to the hashmap.
 		public void add(int id, Object o)
 		{
+			//Checks if the item is an instance of a rservation, vehicle, vehicletype or customer.
 			if(o instanceof Reservation)
 				reservations.put(id,(Reservation)o);
 			else if(o instanceof Vehicle)
@@ -126,20 +128,24 @@ public class ListHolder {
 				customers.put(id,(Customer)o);
 			else
 				throw new IllegalArgumentException("This class can't hold that kind of object");
+			//Returns the item.
 		
 		}	
 		
-		public void remove(int id, Object o)
+		//Deletes an item from the hashmaps.
+		public Object delete(int id, Object o)
 		{
+			//Checks if Item is an istance of a reservation, vehicle, vehicletype or customer.
 			if(o instanceof Reservation)
-				reservations.remove(id);
+				return reservations.remove(id);
 			else if(o instanceof Vehicle)
-				vehicles.remove(id);
+				return vehicles.remove(id);
 			else if(o instanceof VehicleType)
-				types.remove(id);
+				return types.remove(id);
 			else if(o instanceof Customer)	
-				customers.remove(id);
+				return customers.remove(id);
 			else
 				throw new IllegalArgumentException("This class can't hold that kind of object");
+			//Returns the item.
 		}
 }
