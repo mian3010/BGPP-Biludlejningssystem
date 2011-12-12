@@ -1,5 +1,6 @@
 package bgpp2011;
 
+import java.sql.Date;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -64,7 +65,7 @@ public class Commands {
 	    {
 	          return "INSERT INTO Reservation VALUES(null,"
 	                    + r.getCustomer().getId() + "," + r.getVehicle().getId()
-	                    + ",\"" + r.getStartdate() + "\",\"" + r.getEnddate()
+	                    + ",\"" + r.getDateStart() + "\",\"" + r.getDateEnd()
 	                            + "\");";
 	    }	 
 	   
@@ -134,7 +135,7 @@ public class Commands {
 	    {
 	        return "UPDATE Reservation SET customerID = " + r.getCustomer().getId() +
 	                ", vehicleID = " + r.getVehicle().getId() + ", startdate = \""
-	                + r.getStartdate() + "\", enddate = \"" + r.getEnddate()
+	                + r.getDateStart() + "\", enddate = \"" + r.getDateEnd()
 	                + "\" where id = " + r.getId() + ";";
 	    }
 	    public static String updateVehicleType(VehicleType t)
@@ -156,8 +157,8 @@ public class Commands {
 	          {
 	            int cid = r.getInt("Customerid");
 	            int vid = r.getInt("VehicleId");
-	            Date startDate = new Date(r.getString("startdate"));
-	            Date endDate = new Date(r.getString("enddate"));
+	            Date startDate = Date.valueOf(r.getString("startdate"));
+	            Date endDate = Date.valueOf(r.getString("enddate"));
 	            int id = r.getInt("id");
 	            Reservation tmp = new Reservation(id,cmap.get(cid), 
 	                              vmap.get(vid), startDate, endDate);

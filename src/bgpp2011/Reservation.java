@@ -3,7 +3,7 @@
  * and open the template in the editor.
  */
 package bgpp2011;
-
+import java.sql.Date;
 
 /**
 
@@ -56,7 +56,7 @@ public class Reservation {
      */
     public String getStartdate()
     {
-        return startdate.getDateString();
+        return startdate.toString();
     }
     /*
      * Return the information of the End Date object as a String.
@@ -64,9 +64,17 @@ public class Reservation {
      */
     public String getEnddate()
     {
-        return enddate.getDateString();
+        return enddate.toString();
     }
     
+    public Date getDateStart()
+    {
+    	return startdate;
+    }
+    public Date getDateEnd()
+    {
+    	return enddate;
+    }
     /*
      * Returns the unique id of the reservation.
      * @return id

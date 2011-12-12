@@ -45,7 +45,7 @@ public class Nexus {
 	    public Reservation createEntryReservation(Reservation r) throws SQLException
 	    {
 	    	int id = Commands.getDbID(db.create(Commands.createReservation(r)));
-	    	return new Reservation(id,r.getCustomer(),r.getVehicle(),new Date(r.getStartdate()),new Date(r.getEnddate()));
+	    	return new Reservation(id,r.getCustomer(),r.getVehicle(),r.getDateStart(),r.getDateEnd());
    
 	    }
 	 	/*
@@ -194,7 +194,7 @@ public class Nexus {
 	        return Commands.makeMapReservation(r, cmap, vmap);
 	        		
 	    }
-	    public HashMap<Integer, VehicleType> getTypes() throws SQLException
+	    public HashMap<Integer, VehicleType> getTypes() throws SQLException	
 	    // Independent results from the database.
 	    {
 	       return Commands.makeMapTypes(db.get(Commands.getTypes()));

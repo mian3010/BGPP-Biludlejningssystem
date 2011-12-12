@@ -4,7 +4,7 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Collection;
 import static org.junit.Assert.*;
-
+import java.sql.Date;
 import org.junit.Test;
 
 public class ControllerTest {
@@ -38,8 +38,8 @@ public class ControllerTest {
 	{
 		try {
 		Controller con = new Controller();
-		Date d1 = new Date("110928");
-		Date d2 = new Date("111023");
+		Date d1 = Date.valueOf("2011-09-28");
+		Date d2 = Date.valueOf("2011-10-23");
 		Customer ce = con.createCustomer("Jax Teller", 27879809, "Charming Road 102", "2109-84938492");
 		VehicleType v = con.getListholder().getTypes().get(1);
 		System.out.println(v.getName());

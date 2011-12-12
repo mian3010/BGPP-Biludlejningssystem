@@ -3,6 +3,7 @@ package bgpp2011;
 
 
 import java.sql.SQLException;
+import java.sql.Date;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -70,8 +71,8 @@ public class TestSetupTables {
         db.update("CREATE TABLE Customer (id INT PRIMARY KEY AUTO_INCREMENT, "
                + "name TEXT," + "phonenumber INT, address TEXT, bankaccount TEXT)");
         db.update("CREATE TABLE Reservation (id INT PRIMARY KEY AUTO_INCREMENT,"
-    		   + " customerID INT," + " vehicleID INT, startdate TEXT, "
-               + "enddate TEXT, FOREIGN KEY" + "(customerID) REFERENCES "
+    		   + " customerID INT," + " vehicleID INT, startdate DATE, "
+               + "enddate DATE, FOREIGN KEY" + "(customerID) REFERENCES "
                + "Customer (id), FOREIGN KEY" + "(vehicleID) "
                + "REFERENCES Vehicle (id))");
         db.close();
@@ -160,16 +161,16 @@ public class TestSetupTables {
 	  
 	   }
 	   
-	   Reservation r1 = new Reservation(1,c1,v1,new Date("2011-05-20"),new Date("2011-06-20"));
-	   Reservation r2 = new Reservation(2,c1,v2, new Date("2011-05-20"),new Date("2011-06-20"));
-	   Reservation r3 = new Reservation(3,c2,v2, new Date("2011-06-21"),new Date("2011-06-24"));
-	   Reservation r4 = new Reservation(4,c2,v2, new Date("2001-04-17"), new Date("2001-02-17"));
-	   Reservation r5 = new Reservation(5,c3,v3,new Date("1999-02-17"), new Date("2000-02-17"));
-	   Reservation r6 = new Reservation(6,c4,v4, new Date("1993-05-31"), new Date("1993-06-20"));
-	   Reservation r7 = new Reservation(7,c5,v4, new Date("2011-11-11"),new Date("2011-11-12"));
-	   Reservation r8 = new Reservation(8,c6,v6, new Date("2011-12-12"), new Date("2012-12-12"));
-	   Reservation r9 = new Reservation(9,c7,v7, new Date("2003-10-12"),new Date("2002-10-11"));
-	   Reservation r10 = new Reservation(10,c1,v1, new Date("2006-03-05"), new Date("2006-04-06"));
+	   Reservation r1 = new Reservation(1,c1,v1,Date.valueOf("2011-05-20"),Date.valueOf("2011-06-20"));
+	   Reservation r2 = new Reservation(2,c1,v2, Date.valueOf("2011-05-20"),Date.valueOf("2011-06-20"));
+	   Reservation r3 = new Reservation(3,c2,v2, Date.valueOf("2011-06-21"),Date.valueOf("2011-06-24"));
+	   Reservation r4 = new Reservation(4,c2,v2, Date.valueOf("2001-04-17"), Date.valueOf("2001-02-17"));
+	   Reservation r5 = new Reservation(5,c3,v3,Date.valueOf("1999-02-17"), Date.valueOf("2000-02-17"));
+	   Reservation r6 = new Reservation(6,c4,v4, Date.valueOf("1993-05-31"), Date.valueOf("1993-06-20"));
+	   Reservation r7 = new Reservation(7,c5,v4, Date.valueOf("2011-11-11"),Date.valueOf("2011-11-12"));
+	   Reservation r8 = new Reservation(8,c6,v6, Date.valueOf("2011-12-12"), Date.valueOf("2012-12-12"));
+	   Reservation r9 = new Reservation(9,c7,v7, Date.valueOf("2003-10-12"),Date.valueOf("2002-10-11"));
+	   Reservation r10 = new Reservation(10,c1,v1, Date.valueOf("2006-03-05"), Date.valueOf("2006-04-06"));
 	  ArrayList<Reservation> rlist = new ArrayList<Reservation>();
 	  rlist.add(r1);
 	  rlist.add(r2);
