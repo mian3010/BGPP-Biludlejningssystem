@@ -2,9 +2,9 @@
 package bgpp2011;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.Collection;
 import java.util.Iterator;
+import java.sql.Date;
 
 public class Controller
 {
@@ -23,23 +23,12 @@ public class Controller
 	public Controller()
 	{
 		
-		try
-		{
 			nexus = new Nexus();	
-			HashMap<Integer, VehicleType> types = nexus.getTypes();
-			HashMap<Integer, Vehicle> vehicles = nexus.getVehicles();
-			HashMap<Integer, Customer> customers = nexus.getCostumers();
-			HashMap<Integer, Reservation> reservations = nexus.getReservations();	
-			listholder = new ListHolder(types, vehicles, customers, reservations);
-			
-		}
+			listholder = new ListHolder(nexus);
+			System.out.println("SQLException in controller");
 		
-		catch(SQLException e)
-		{
-			System.out.println("SQLException in boot()");
-		}
 	}
-	//Method that loads the HashMaps with data from the database. Uses the getmethods() from the nexus.
+	//Method that loads the HashMaps with data from the database. Uses the getMethods() from the nexus.
 	
 	
 	/*
@@ -163,7 +152,7 @@ public class Controller
 					if(re != null)
 					{
 					//The reservation is added to the HashMap reservations. It returns the vehicle.
-					listholder.getReservations().put(re.getId(), re);
+					listholder.add(re.getId(), re);
 					return re;
 					}
 				
@@ -201,7 +190,7 @@ public class Controller
 			//Creates a customer using the createEntryCustomer() in the nexus.
 				try {
 					Customer returnC = nexus.createEntryCustomer(c);
-					listholder.getCustomers().put(returnC.getId(), returnC);
+					listholder.add(returnC.getId(), returnC);
 					//Returns the customer.
 					return returnC;
 				    }
@@ -238,7 +227,7 @@ public class Controller
 			//If the type exist, it creates the vehicle, puts it in the HashMap and returns it.
 			try {
 				Vehicle returnV = nexus.createEntryVehicle(ve);
-				listholder.getVehicles().put(returnV.getId(), ve);
+				listholder.add(returnV.getId(), ve);
 				return returnV;
 				}
 			catch(Exception e) {
@@ -270,7 +259,7 @@ public class Controller
 			try{
 				VehicleType returnT = nexus.createEntryVehicleType(vee);
 				
-				listholder.getTypes().put(returnT.getId(), returnT);
+				listholder.add(returnT.getId(), returnT);
 				return true;
 				}
 			catch(Exception e)
@@ -359,7 +348,7 @@ public class Controller
 			{
 				int id = oldR.getId();
 				//Creates a new reservation and with the data from newR and id from oldR.
-				Reservation res = new Reservation(id, newR.getCustomer(), newR.getVehicle(), new Date(newR.getStartdate()), new Date(newR.getEnddate()));			
+				Reservation res = new Reservation(id, newR.getCustomer(), newR.getVehicle(), Date.valueOf(newR.getStartdate()), Date.valueOf(newR.getEnddate()));			
 				if(nexus.editReservation(res))
 				{
 					listholder.getReservations().remove(id);

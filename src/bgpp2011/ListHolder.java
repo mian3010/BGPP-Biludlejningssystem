@@ -1,5 +1,6 @@
 package bgpp2011;
 
+import java.sql.SQLException;
 import java.util.HashMap;
 
 public class ListHolder {
@@ -9,12 +10,18 @@ public class ListHolder {
 	private HashMap<Integer, Customer> customers;
 	private HashMap<Integer, Reservation> reservations;
 	
-	public ListHolder(HashMap<Integer, VehicleType> types, HashMap<Integer, Vehicle> vehicles, HashMap<Integer, Customer> customers, HashMap<Integer, Reservation> reservations)
+	public ListHolder(Nexus n)
 	{
-		this.types = types;
-		this.vehicles = vehicles;
-		this.customers = customers;
-		this.reservations = reservations;
+		try {
+		this.types = n.getTypes();
+		this.vehicles = n.getVehicles();
+		this.customers = n.getCostumers();
+		this.reservations = n.getReservations();
+		}
+		catch(SQLException s)
+		{
+			System.out.println("Listholder construktor sql error.");
+		}
 	}
 	
 	//Returns a given reservation.
@@ -121,4 +128,18 @@ public class ListHolder {
 				throw new IllegalArgumentException("This class can't hold that kind of object");
 		
 		}	
+		
+		public void remove(int id, Object o)
+		{
+			if(o instanceof Reservation)
+				reservations.remove(id);
+			else if(o instanceof Vehicle)
+				vehicles.remove(id);
+			else if(o instanceof VehicleType)
+				types.remove(id);
+			else if(o instanceof Customer)	
+				customers.remove(id);
+			else
+				throw new IllegalArgumentException("This class can't hold that kind of object");
+		}
 }

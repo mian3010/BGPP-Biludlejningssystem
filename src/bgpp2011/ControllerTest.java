@@ -149,7 +149,7 @@ public class ControllerTest {
 		Controller con = new Controller();
 		Customer ce = con.createCustomer("Peter Pan", 25938479, "Shotway 22", "343-345345345");
 		Vehicle ve = con.createVehicle("Ellert", "el200", 1990, con.getListholder().getTypes().get(1));
-		Reservation r = new Reservation(100, ce, ve, new Date("140811"), new Date("151011"));
+		Reservation r = new Reservation(100, ce, ve, Date.valueOf("2014-08-11"), Date.valueOf("2015-10-11"));
 		int id = con.getListholder().getReservation(1).getId();
 		System.out.println("Status");
 		con.editReservation(r, con.getListholder().getReservation(1));
@@ -165,7 +165,7 @@ public class ControllerTest {
 		Reservation r2 = con.getListholder().getReservation(4);
 		Customer ce = con.createCustomer("Jack Sparrow", 426374858, "Tortuga", "343-3454545345");
 		Vehicle ve = con.createVehicle("The black Pearl", "Glory42", 1990, con.getListholder().getTypes().get(1));
-		Reservation r3 = new Reservation(100, ce, ve, new Date("880811"), new Date("891011"));
+		Reservation r3 = new Reservation(100, ce, ve, Date.valueOf("1988-08-11"), Date.valueOf("1989-10-11"));
 		boolean a = con.checkReservation(r);
 		boolean b = con.checkReservation(r2);
 		boolean c = con.checkReservation(r3);
@@ -180,10 +180,10 @@ public class ControllerTest {
 		Controller con = new Controller();
 		VehicleType v = con.getListholder().getType(2);
 		VehicleType v2 = con.getListholder().getType(3);
-		Date d1 = new Date("110202");
-		Date d2 = new Date("110303");
-		Date d3 = new Date("120303");
-		Date d4 = new Date("120404");
+		Date d1 = Date.valueOf("2011-02-02");
+		Date d2 = Date.valueOf("2011-03-03");
+		Date d3 = Date.valueOf("2012-03-03");
+		Date d4 = Date.valueOf("2012-04-04");
 		Vehicle ve = con.findCar(v, d1, d2);
 		Vehicle ve2 = con.findCar(v2, d3, d4);
 		assertEquals(ve.getType().getId(), v.getId());
@@ -199,7 +199,7 @@ public class ControllerTest {
 		boolean a = con.deleteReservation(r);
 		Customer ce = new Customer(100, "Clay Morrow", 25438479, "Charming cenemtary 22", "343-34545455345");
 		Vehicle ve = new Vehicle(100, "Harley Davidson", "3000", 1962, con.getListholder().getTypes().get(1));
-		Reservation re = new Reservation(100, ce, ve, new Date("140811"), new Date("151011"));
+		Reservation re = new Reservation(100, ce, ve, Date.valueOf("2014-08-11"), Date.valueOf("2015-10-11"));
 		boolean b = con.deleteReservation(re);
 		assertEquals(a, true);
 		assertEquals(b, false);
