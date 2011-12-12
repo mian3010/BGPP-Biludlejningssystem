@@ -25,7 +25,7 @@ public class Controller
 		
 			nexus = new Nexus();	
 			listholder = new ListHolder(nexus);
-			System.out.println("SQLException in controller");
+			
 		
 	}
 	//Method that loads the HashMaps with data from the database. Uses the getMethods() from the nexus.
@@ -273,16 +273,18 @@ public class Controller
 	public boolean deleteReservation(Reservation r)
 	{
 		try {
-		Reservation rescheck = listholder.getReservations().remove(r.getId());
-		if(rescheck != null)
-			return nexus.deleteReservation(rescheck);
-		else
-			return false;
-		}
-		catch(SQLException e)
-		{
-			return false;
-		}
+			//Calls the delete() method from ListHolder. Cast the class to be a Reservation.
+			Reservation rescheck = (Reservation)listholder.delete(r.getId(), r);
+			//Checks if it i not null.
+			if(rescheck != null)
+				return nexus.deleteReservation(rescheck);
+			else
+				return false;
+			}
+			catch(SQLException e)
+			{
+				return false;
+			}
 	
 		
 	}
@@ -290,7 +292,7 @@ public class Controller
 	{
 		try
 		{
-			Customer cuscheck = listholder.getCustomers().remove(c.getId());
+			Customer cuscheck = (Customer)listholder.delete(c.getId(), c);
 			if(cuscheck != null)
 				return nexus.deleteCustomer(cuscheck);
 			else
@@ -306,7 +308,7 @@ public class Controller
 	{
 		try 
 		{
-			Vehicle vcheck = listholder.getVehicles().remove(v.getId());
+			Vehicle vcheck = (Vehicle)listholder.delete(v.getId(), v);
 			if(vcheck != null)
 				return nexus.deleteVehicle(vcheck);
 			else
@@ -322,7 +324,7 @@ public class Controller
 	{
 		try
 		{
-			VehicleType vtcheck = listholder.getTypes().remove(vt.getId());
+			VehicleType vtcheck = (VehicleType)listholder.delete(vt.getId(), vt);
 			if(vtcheck != null)
 				return nexus.deleteVehicleType(vtcheck);
 			else
@@ -335,7 +337,7 @@ public class Controller
 		}
 	}
 	/*
-	 * This method takes a new reservation as a parameter and puts it in Hashmap, with a key equal to
+	 * This method takes a new reservation as a parameter and puts it in HashMap, with a key equal to
 	 * the id of the reservation. 
 	 */
  	
@@ -437,9 +439,8 @@ public class Controller
 
 	
 	/*
-	 * Closes the connection to the database. Uses the close database method from the Nexusclass.
+	 * Closes the connection to the database. Uses the close database method from the NexusClass.
 	 */
-	
 	public ListHolder getListholder()
 	{
 		return listholder;

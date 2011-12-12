@@ -36,8 +36,9 @@ public class ControllerTest {
 	@Test
 	public void testCreateReservation()
 	{
-		try {
 		Controller con = new Controller();
+		try {
+		
 		Date d1 = Date.valueOf("2011-09-28");
 		Date d2 = Date.valueOf("2011-10-23");
 		Customer ce = con.createCustomer("Jax Teller", 27879809, "Charming Road 102", "2109-84938492");
@@ -62,6 +63,7 @@ public class ControllerTest {
 			System.out.println("Null pointer exeption");
 		
 		}
+		con.close();
 		
 }
 	@Test
@@ -83,6 +85,7 @@ public class ControllerTest {
 			}
 				assertEquals(a, true);
 				assertEquals(b, true);
+			con.close();
 	}
 	
 	@Test
@@ -105,6 +108,7 @@ public class ControllerTest {
 		
 		assertEquals(a, true);
 		assertEquals(b, true);
+		con.close();
 	}
 	
 	@Test
@@ -115,6 +119,7 @@ public class ControllerTest {
 		boolean b = con.createVehicleType(con.getListholder().getType(1).getName(), 2000000);
 		assertEquals(a, true);
 		assertEquals(b, false);
+		con.close();
 		
 	}
 	
@@ -154,7 +159,7 @@ public class ControllerTest {
 		System.out.println("Status");
 		con.editReservation(r, con.getListholder().getReservation(1));
 		System.out.println("Edit: " + con.getListholder().getReservation(id).getCustomer().getName() + " " + con.getListholder().getReservation(id).getVehicle().getMake());
-		
+		con.close();
 	}
 	
 	@Test
@@ -172,6 +177,7 @@ public class ControllerTest {
 		assertEquals(a,false);
 		assertEquals(b, false);
 		assertEquals(c, true);
+		con.close();
 	}
 	
 	@Test
@@ -188,6 +194,7 @@ public class ControllerTest {
 		Vehicle ve2 = con.findCar(v2, d3, d4);
 		assertEquals(ve.getType().getId(), v.getId());
 		assertEquals(ve2.getType().getId(), v2.getId());
+		con.close();
 	}
 	
 	@Test
@@ -222,6 +229,7 @@ public class ControllerTest {
 		boolean h = con.deleteVehicleType(vt2);
 		assertEquals(g, true);
 		assertEquals(h, false);
+		con.close();
 		
 	}
 }
