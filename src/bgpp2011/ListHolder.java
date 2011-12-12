@@ -4,8 +4,8 @@ import java.util.HashMap;
 
 public class ListHolder {
 	
-	private HashMap<Integer, VehicleType> types;
 	private HashMap<Integer, Vehicle> vehicles;
+	private HashMap<Integer, VehicleType> types;
 	private HashMap<Integer, Customer> customers;
 	private HashMap<Integer, Reservation> reservations;
 	
@@ -106,5 +106,19 @@ public class ListHolder {
 		{
 			return types;
 		}
-
+		
+		public void add(int id, Object o)
+		{
+			if(o instanceof Reservation)
+				reservations.put(id,(Reservation)o);
+			else if(o instanceof Vehicle)
+				vehicles.put(id, (Vehicle)o);
+			else if(o instanceof VehicleType)
+				types.put(id, (VehicleType)o);
+			else if(o instanceof Customer)	
+				customers.put(id,(Customer)o);
+			else
+				throw new IllegalArgumentException("This class can't hold that kind of object");
+		
+		}	
 }
