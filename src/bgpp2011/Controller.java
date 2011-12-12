@@ -40,7 +40,7 @@ public class Controller
 	public boolean checkReservation(Reservation re)
 	{
 		//Checks if the startdate is before the enddate.
-		int o = re.getStartdate().compareTo(re.getEnddate());
+		int o = re.getDateStart().compareTo(re.getDateEnd());
 		if( o<0 )
 		{
 		
@@ -55,9 +55,9 @@ public class Controller
 				if(vt.getId() == re.getVehicle().getId()) 
 				{
 					//Checks if the stardate of re is after the enddate of ra.
-					int startValue = re.getStartdate().compareTo(ra.getEnddate());
+					int startValue = re.getDateStart().compareTo(ra.getDateEnd());
 					//Checks if the enddate of re is before the startdate of ra.
-					int endValue = re.getEnddate().compareTo(ra.getStartdate());
+					int endValue = re.getDateEnd().compareTo(ra.getDateStart());
 					//If this if-statement is true, the dates are overlapping. Returns false.
 						if(startValue < 0 && endValue > 0)
 						{
@@ -338,7 +338,7 @@ public class Controller
 	 * This method takes a new reservation as a parameter and puts it in Hashmap, with a key equal to
 	 * the id of the reservation. 
 	 */
-	
+ 	
 	public boolean editReservation(Reservation newR, Reservation oldR)
 	{
 		try
