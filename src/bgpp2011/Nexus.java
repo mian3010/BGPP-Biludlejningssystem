@@ -42,6 +42,7 @@ public class Nexus {
 	     * @param Reservation A valid reservation with or without id, won't matter.
 	     * @return Reservation The same reservation but with a database-generated ID.
 	     */
+	    	
 	    public Reservation createEntryReservation(Reservation r) throws SQLException
 	    {
 	    	int id = Commands.getDbID(db.create(Commands.createReservation(r)));
@@ -59,7 +60,7 @@ public class Nexus {
 	    public Customer createEntryCustomer(Customer c) throws SQLException
 	    {
 	    	int id = Commands.getDbID(db.create(Commands.createCustomer(c)));
-	    			return new Customer(id, c.getName(), c.getNumber(), c.getAddress(),c.getBankAccount());
+			return new Customer(id, c.getName(), c.getNumber(), c.getAddress(),c.getBankAccount());
 	   			
 	    }
 	    /*
