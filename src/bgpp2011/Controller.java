@@ -44,7 +44,7 @@ public class Controller
 		if( o<0 )
 		{
 		
-			Collection<Reservation> c = model.getReservations().values();
+			Collection<Reservation> c = model.reservationCollection();
 			Iterator<Reservation> i = c.iterator();
 			
 			while(i.hasNext())
@@ -86,7 +86,7 @@ public class Controller
 	public ArrayList<Vehicle> vehiclesByType(VehicleType v)
 	{
 		ArrayList<Vehicle> vlist = new ArrayList<Vehicle>();
-		Collection<Vehicle> vehiclec = model.getVehicles().values();
+		Collection<Vehicle> vehiclec = model.vehicleCollection();
 		Iterator<Vehicle> it = vehiclec.iterator();
 		while(it.hasNext())
 		{  
@@ -103,11 +103,11 @@ public class Controller
 	
 	public int typeCounting(VehicleType v, Date start, Date end)
 	{
-		return findCar(v,start,end).size();
+		return vacantVehicles(v,start,end).size();
 	}
 	
 	
-	public ArrayList<Vehicle> findCar(VehicleType v, Date start, Date end)
+	public ArrayList<Vehicle> vacantVehicles(VehicleType v, Date start, Date end)
 	{
 		
 		ArrayList<Vehicle> tmp = vehiclesByType(v);
@@ -136,7 +136,7 @@ public class Controller
 	//This method simply calls the findcar() method and returns the first given vehicle.
 	public Vehicle searchVehicles(VehicleType v, Date start, Date end)
 	{
-			ArrayList<Vehicle> vlist = findCar(v,start,end);
+			ArrayList<Vehicle> vlist = vacantVehicles(v,start,end);
 				if(vlist!=null)
 					return vlist.get(0);
 				else 
@@ -263,7 +263,7 @@ public class Controller
 	{
 		//Creates a temporary vehicleType with the parameters.
 		VehicleType vee = new VehicleType(0, name, price);
-		Collection<VehicleType> c = model.getTypes().values(); 
+		Collection<VehicleType> c = model.typeCollection(); 
 		Iterator<VehicleType> itt = c.iterator();
 		//Checks of a type with the same name does exist. 
 			while(itt.hasNext())

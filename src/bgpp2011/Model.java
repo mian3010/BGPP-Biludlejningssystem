@@ -1,6 +1,7 @@
 package bgpp2011;
 
 import java.sql.SQLException;
+import java.util.Collection;
 import java.util.HashMap;
 
 public class Model {
@@ -27,49 +28,20 @@ public class Model {
 	//Returns a given reservation.
 		public Reservation getReservation(int id)
 		{
-			
-				if(id < reservations.size() && id>0)
-				{
-				return reservations.get(id);
-				
-				}
-				else 
-				{
-					throw new IllegalArgumentException("No reservations in that position!");
-				}
-			
-				
+			return reservations.get(id);
 		}
 		
 		//Returns a given customer.
 		public Customer getCustomer(int id)
 		{
-			
-				if(id < customers.size() && id>0)
-				{
-				return customers.get(id);
-				
-				}
-				else 
-				{
-					throw new IllegalArgumentException("No reservations in that position!");
-				}
+			return customers.get(id);
 			
 		}
 		
 		//Returns a given vehicle.
 		public Vehicle getVehicle(int id)
 		{
-			
-				if(id < vehicles.size() && id>0)
-				{
-				return vehicles.get(id);
-				
-				}
-				else 
-				{
-					throw new IllegalArgumentException("No reservations in that position!");
-				}
+			return vehicles.get(id);
 			
 		}
 		
@@ -77,18 +49,7 @@ public class Model {
 		public VehicleType getType(int id)
 
 		{
-			
-				if(id < types.size() && id>0)
-				{
-				return types.get(id);
-				
-				}
-				else 
-				{
-					throw new IllegalArgumentException("No reservations in that position!");
-				}
-			
-			
+			return types.get(id);
 		}
 		
 		/*
@@ -148,4 +109,24 @@ public class Model {
 				throw new IllegalArgumentException("This class can't hold that kind of object");
 			//Returns the item.
 		}
+		
+		public Collection<Vehicle> vehicleCollection()
+		{
+			return vehicles.values();
+		}
+		
+		public Collection<Reservation> reservationCollection()
+		{
+			return reservations.values();
+		}
+		public Collection<Customer> customerCollection()
+		{
+			return customers.values();
+		}
+		public Collection<VehicleType> typeCollection()
+		{
+			return types.values();
+		}
+		
+		
 }

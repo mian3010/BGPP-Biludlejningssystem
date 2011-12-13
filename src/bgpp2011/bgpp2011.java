@@ -11,5 +11,7 @@ public class bgpp2011 {
      */
     public static void main(String[] args) {
         Canvas canvas = new Canvas();
+        
+        
     }
 }
