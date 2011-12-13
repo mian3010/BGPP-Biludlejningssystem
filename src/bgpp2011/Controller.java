@@ -46,23 +46,23 @@ public class Controller
 		
 			Collection<Reservation> c = model.reservationCollection();
 			Iterator<Reservation> i = c.iterator();
-			System.out.println("edit1");
+		
 			while(i.hasNext())
 			{
 				Reservation ra = i.next();
-				System.out.println("edit2");
+			
 				Vehicle vt = ra.getVehicle();
 				//Checks if the the vehicle re is the same as the vehicle ra.
-				System.out.println("edit3");
+			
 				if(vt.getId() == re.getVehicle().getId()) 
 				{
 					//Checks if the stardate of re is after the enddate of ra.
-					System.out.println("edit4");
+		
 					int startValue = re.getDateStart().compareTo(ra.getDateEnd());
 					//Checks if the enddate of re is before the startdate of ra.
-					System.out.println("edit5");
+				
 					int endValue = re.getDateEnd().compareTo(ra.getDateStart());
-					System.out.println("edit6");
+		
 					//If this if-statement is true, the dates are overlapping. Returns false.
 						if(startValue < 0 && endValue > 0)
 						{

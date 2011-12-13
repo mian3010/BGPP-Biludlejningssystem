@@ -49,10 +49,8 @@ public class testControllerChecks {
 		Customer ce = con.createCustomer("Peter Pan", 25938479, "Shotway 22", "343-345345345");
 		Vehicle ve = con.createVehicle("Ellert", "el200", 1990, con.getModel().getTypes().get(1));
 		Reservation r = new Reservation(100, ce, ve, Date.valueOf("2014-08-11"), Date.valueOf("2015-10-11"));
-		int id = con.getModel().getReservation(1).getId();
-		System.out.println("testline1");
+		int id = con.getModel().getReservation(1).getId();	
 		con.editReservation(r, con.getModel().getReservation(1));
-		System.out.println("testline2");
 		System.out.println("Edit: " + con.getModel().getReservation(id).getCustomer().getName() + " " + con.getModel().getReservation(id).getVehicle().getMake());
 		con.close();
 	}
