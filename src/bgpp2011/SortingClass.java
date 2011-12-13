@@ -63,4 +63,4 @@ public class SortingClass
 	}
 }
 
-//Author Toke Jensen. tbrj.
+//Author Toke Jensen, tbrj <><><><><><><><><><><><><><><><><><>
