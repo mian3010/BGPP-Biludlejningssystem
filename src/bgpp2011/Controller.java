@@ -83,26 +83,39 @@ public class Controller
 	 *  the check reservation method on it. If it is true, it will return that car. If there is no car 
 	 *  avaliable. It will return null.
 	 */
-	public Vehicle findCar(VehicleType v, Date start, Date end)
+	public ArrayList<Vehicle> vehiclesByType(VehicleType v)
 	{
-		ArrayList<Vehicle> tmp = new ArrayList<Vehicle>();
-		
-		Collection<Vehicle> vehicleC = listholder.getVehicles().values();
-		Iterator<Vehicle> it = vehicleC.iterator();
-		//Tmp is an ArrayList of cars with the same VehicleType as v.
+		ArrayList<Vehicle> vlist = new ArrayList<Vehicle>();
+		Collection<Vehicle> vehiclec = listholder.getVehicles().values();
+		Iterator<Vehicle> it = vehiclec.iterator();
 		while(it.hasNext())
-			{  
-			Vehicle v1 = it.next();
-			int id = v1.getType().getId();
-			   if(id == v.getId())
-			   	{
-				   
-				   tmp.add(v1);
-			   	}   
-			}
+		{  
+		Vehicle v1 = it.next();
+		int id = v1.getType().getId();
+		   if(id == v.getId())
+		   	{
+			   
+			   vlist.add(v1);
+		   	}   
+		}
+		return vlist;
+	}
+	
+	public int typeCounting(VehicleType v, Date start, Date end)
+	{
+		return findCar(v,start,end).size();
+	}
+	
+	
+	public ArrayList<Vehicle> findCar(VehicleType v, Date start, Date end)
+	{
+		
+		ArrayList<Vehicle> tmp = vehiclesByType(v);
+		ArrayList<Vehicle> tmp1 = new ArrayList<Vehicle>();
 		/*The for-each-loop creates a reservation containing the same VehicleType, start and enddate
 		 * as given in the parameters. 
 		 */
+		
 		for(Vehicle va : tmp)
 		{
 			Customer tmpCustomer = new Customer(0,"tmp", 1, "tmp", "tmp");
@@ -110,18 +123,24 @@ public class Controller
 			//It runs the check reservation method on the Reservation res.
 				if(checkReservation(res)) 
 				{
-					//If check reservation returns true, the vehicle is available and returns. 
-					return va;
+					
+					tmp1.add(va);
 				}
 	    }
-					//If there is no available vehicle it returns null;
-					return null;
+			if(tmp1.size() == 0)
+				return null;
+			else
+				return tmp1; // Returns the first vehicle that was added to the map
 }
 	
-	//This method simply calls the findcar() method and returns the given vehicle.
+	//This method simply calls the findcar() method and returns the first given vehicle.
 	public Vehicle searchVehicles(VehicleType v, Date start, Date end)
 	{
-		return findCar(v, start, end);
+			ArrayList<Vehicle> vlist = findCar(v,start,end);
+				if(vlist!=null)
+					return vlist.get(0);
+				else 
+					return null;
 	}
 
 	/*
@@ -134,7 +153,7 @@ public class Controller
 		//Runs the find car method to see if a car is avaliable.
 		try
 		{
-			if(findCar(t, start, end) == null)
+			if(searchVehicles(t, start, end) == null)
 			{
 			 		return null;
 			}
@@ -145,7 +164,7 @@ public class Controller
 					/*If a car is available it creates a temporary reservation and calls the
 					 * createEntryReservation() method on it. 
 					 */
-					Vehicle v = findCar(t, start, end);
+					Vehicle v = searchVehicles(t, start, end);
 					Reservation r = new Reservation(0,c,v,start,end);
 					Reservation re = nexus.createEntryReservation(r);
 					//If it doesnt return null, the reservation has been registered by the database.
