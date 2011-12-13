@@ -9,7 +9,7 @@ import java.sql.Date;
 public class Controller
 {
 	private Nexus nexus;
-	private ListHolder listholder;
+	private Model model;
 	/*
 	 * Controlleren must execute operations given by the user. It must do all the checking and ordering.
 	 * 
@@ -24,7 +24,7 @@ public class Controller
 	{
 		
 			nexus = new Nexus();	
-			listholder = new ListHolder(nexus);
+			model = new Model(nexus);
 			
 		
 	}
@@ -44,7 +44,7 @@ public class Controller
 		if( o<0 )
 		{
 		
-			Collection<Reservation> c = listholder.getReservations().values();
+			Collection<Reservation> c = model.getReservations().values();
 			Iterator<Reservation> i = c.iterator();
 			
 			while(i.hasNext())
@@ -86,7 +86,7 @@ public class Controller
 	public ArrayList<Vehicle> vehiclesByType(VehicleType v)
 	{
 		ArrayList<Vehicle> vlist = new ArrayList<Vehicle>();
-		Collection<Vehicle> vehiclec = listholder.getVehicles().values();
+		Collection<Vehicle> vehiclec = model.getVehicles().values();
 		Iterator<Vehicle> it = vehiclec.iterator();
 		while(it.hasNext())
 		{  
@@ -171,7 +171,7 @@ public class Controller
 					if(re != null)
 					{
 					//The reservation is added to the HashMap reservations. It returns the vehicle.
-					listholder.add(re.getId(), re);
+					model.add(re.getId(), re);
 					return re;
 					}
 				
@@ -193,7 +193,7 @@ public class Controller
 	{
 		//Creates a temporary customer with the parameters given in the constructor.
 		Customer c = new Customer(0, name, phonenumber, address, bankaccount);
-		Collection<Customer> customerC = listholder.getCustomers().values();
+		Collection<Customer> customerC = model.getCustomers().values();
 		Iterator<Customer> itt = customerC.iterator();
 		//Runs through the customer HashMap and checks if there is a customer with same name and number.
 			while(itt.hasNext())
@@ -209,7 +209,7 @@ public class Controller
 			//Creates a customer using the createEntryCustomer() in the nexus.
 				try {
 					Customer returnC = nexus.createEntryCustomer(c);
-					listholder.add(returnC.getId(), returnC);
+					model.add(returnC.getId(), returnC);
 					//Returns the customer.
 					return returnC;
 				    }
@@ -223,11 +223,11 @@ public class Controller
 	 * Creates a new vehicle. It check if the type is correct and already in the system.
 	 * It sends a vehicle to the database which deligates an id to it. 
 	 */
-	public Vehicle createVehicle(String make, String model, int year, VehicleType v)
+	public Vehicle createVehicle(String make, String vmodel, int year, VehicleType v)
 	{
 		//Creates a temporary vehicle with the parameters of the constructor.
-		Vehicle ve = new Vehicle(0, make, model, year, v);		
-		Collection<VehicleType> vehicleTypes = listholder.getTypes().values();
+		Vehicle ve = new Vehicle(0, make, vmodel, year, v);		
+		Collection<VehicleType> vehicleTypes = model.getTypes().values();
 		Iterator<VehicleType> itt = vehicleTypes.iterator();
 		boolean typeExists = false;
 			//The while loop runs through the types HashMap. It checks if the given type exists.
@@ -246,7 +246,7 @@ public class Controller
 			//If the type exist, it creates the vehicle, puts it in the HashMap and returns it.
 			try {
 				Vehicle returnV = nexus.createEntryVehicle(ve);
-				listholder.add(returnV.getId(), ve);
+				model.add(returnV.getId(), ve);
 				return returnV;
 				}
 			catch(Exception e) {
@@ -263,7 +263,7 @@ public class Controller
 	{
 		//Creates a temporary vehicleType with the parameters.
 		VehicleType vee = new VehicleType(0, name, price);
-		Collection<VehicleType> c = listholder.getTypes().values(); 
+		Collection<VehicleType> c = model.getTypes().values(); 
 		Iterator<VehicleType> itt = c.iterator();
 		//Checks of a type with the same name does exist. 
 			while(itt.hasNext())
@@ -278,7 +278,7 @@ public class Controller
 			try{
 				VehicleType returnT = nexus.createEntryVehicleType(vee);
 				
-				listholder.add(returnT.getId(), returnT);
+				model.add(returnT.getId(), returnT);
 				return true;
 				}
 			catch(Exception e)
@@ -292,8 +292,8 @@ public class Controller
 	public boolean deleteReservation(Reservation r)
 	{
 		try {
-			//Calls the delete() method from ListHolder. Cast the class to be a Reservation.
-			Reservation rescheck = (Reservation)listholder.delete(r.getId(), r);
+			//Calls the delete() method from Model. Cast the class to be a Reservation.
+			Reservation rescheck = (Reservation)model.delete(r.getId(), r);
 			//Checks if it i not null.
 			if(rescheck != null)
 				return nexus.deleteReservation(rescheck);
@@ -311,7 +311,7 @@ public class Controller
 	{
 		try
 		{
-			Customer cuscheck = (Customer)listholder.delete(c.getId(), c);
+			Customer cuscheck = (Customer)model.delete(c.getId(), c);
 			if(cuscheck != null)
 				return nexus.deleteCustomer(cuscheck);
 			else
@@ -327,7 +327,7 @@ public class Controller
 	{
 		try 
 		{
-			Vehicle vcheck = (Vehicle)listholder.delete(v.getId(), v);
+			Vehicle vcheck = (Vehicle)model.delete(v.getId(), v);
 			if(vcheck != null)
 				return nexus.deleteVehicle(vcheck);
 			else
@@ -343,7 +343,7 @@ public class Controller
 	{
 		try
 		{
-			VehicleType vtcheck = (VehicleType)listholder.delete(vt.getId(), vt);
+			VehicleType vtcheck = (VehicleType)model.delete(vt.getId(), vt);
 			if(vtcheck != null)
 				return nexus.deleteVehicleType(vtcheck);
 			else
@@ -372,8 +372,8 @@ public class Controller
 				Reservation res = new Reservation(id, newR.getCustomer(), newR.getVehicle(), Date.valueOf(newR.getStartdate()), Date.valueOf(newR.getEnddate()));			
 				if(nexus.editReservation(res))
 				{
-					listholder.getReservations().remove(id);
-					listholder.getReservations().put(id,res);
+					model.getReservations().remove(id);
+					model.getReservations().put(id,res);
 					return true;
 			}		
 					return false;
@@ -399,8 +399,8 @@ public class Controller
 			Vehicle v = new Vehicle(id, newV.getMake(), newV.getModel(), newV.getYear(), newV.getType());
 			if(nexus.editVehicle(v))
 			{
-			listholder.getVehicles().remove(id);
-			listholder.getVehicles().put(id,v);
+			model.getVehicles().remove(id);
+			model.getVehicles().put(id,v);
 			return true;
 			}
 			return false;
@@ -423,8 +423,8 @@ public class Controller
 			VehicleType vt = new VehicleType(id, vtnew.getName(), vtnew.getPrice());
 			if(nexus.editVehicleType(vt))
 			{
-				listholder.getTypes().remove(id);
-				listholder.getTypes().put(id,vt);
+				model.getTypes().remove(id);
+				model.getTypes().put(id,vt);
 				return true;
 			}
 			return false;
@@ -444,8 +444,8 @@ public class Controller
 			Customer c = new Customer(id, newC.getName(), newC.getNumber(), newC.getAddress(), newC.getBankAccount());
 			if(nexus.editCustomer(c))
 			{
-				listholder.getCustomers().remove(id);
-				listholder.getCustomers().put(id, c);
+				model.getCustomers().remove(id);
+				model.getCustomers().put(id, c);
 				return true;
 			}
 				return false;
@@ -460,9 +460,9 @@ public class Controller
 	/*
 	 * Closes the connection to the database. Uses the close database method from the NexusClass.
 	 */
-	public ListHolder getListholder()
+	public Model getModel()
 	{
-		return listholder;
+		return model;
 	}
 	public void close()
 	{

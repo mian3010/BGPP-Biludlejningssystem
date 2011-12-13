@@ -3,14 +3,14 @@ package bgpp2011;
 import java.sql.SQLException;
 import java.util.HashMap;
 
-public class ListHolder {
+public class Model {
 	
 	private HashMap<Integer, Vehicle> vehicles;
 	private HashMap<Integer, VehicleType> types;
 	private HashMap<Integer, Customer> customers;
 	private HashMap<Integer, Reservation> reservations;
 	
-	public ListHolder(Nexus n)
+	public Model(Nexus n)
 	{
 		try {
 		this.types = n.getTypes();
