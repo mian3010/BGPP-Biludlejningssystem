@@ -4,14 +4,27 @@ import java.sql.SQLException;
 import java.util.Collection;
 import java.util.HashMap;
 
+/*
+ * This class models the data from the database and stores them into HashMaps.
+ * This class is modeled after the Singleton pattern 
+ */
+
 public class Model {
 	
 	private HashMap<Integer, Vehicle> vehicles;
 	private HashMap<Integer, VehicleType> types;
 	private HashMap<Integer, Customer> customers;
 	private HashMap<Integer, Reservation> reservations;
+	private static Model instance;
 	
-	public Model(Nexus n)
+	public static Model getInstance(Nexus n)
+	{
+		if(instance == null)
+			instance = new Model(n);
+		return instance;
+	}
+	
+	private Model(Nexus n)
 	{
 		try {
 		this.types = n.getTypes();

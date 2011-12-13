@@ -24,7 +24,7 @@ public class Controller
 	{
 		
 			nexus = new Nexus();	
-			model = new Model(nexus);
+			model = Model.getInstance(nexus);
 			
 		
 	}
