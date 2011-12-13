@@ -7,7 +7,7 @@ package bgpp2011;
  * and the type.
  * @author Toke Jensen
  */
-public class Vehicle
+public class Vehicle implements Comparable<Vehicle>
 {
      
     private int id;
@@ -78,6 +78,12 @@ public class Vehicle
     public String toString()
     {
      return vehicletype.toString() + ": " + year + " " + make + " " + model;
+    }
+    
+    public int compareTo(Vehicle v)
+    {
+    	int i = make.compareTo(v.getMake());
+    	return i;
     }
     
 

@@ -7,7 +7,7 @@ package bgpp2011;
  * and a decimal number containing the supposed price per day.
  * @author Toke Jensen
  */
-public class VehicleType
+public class VehicleType implements Comparable<VehicleType>
 {
     
 	private int id;
@@ -60,5 +60,11 @@ public class VehicleType
     public int getId()
     {
         return id;
+    }
+    
+    public int compareTo(VehicleType vt)
+    {
+    	int i = name.compareTo(vt.getName());
+    	return i;
     }
 }
