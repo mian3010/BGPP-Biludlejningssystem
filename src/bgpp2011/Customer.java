@@ -10,7 +10,7 @@ package bgpp2011;
  * Also, this has a special toString() method to easily show in GUI's.
  * @author tbrj
  */
-public class Customer
+public class Customer implements Comparable<Customer>
 {
     
     private int id;
@@ -71,6 +71,13 @@ public class Customer
      */
     public String toString()
     {
-     return name + ": " + phonenumber;
+     return name + ": " + phonenumber; 
     }
+    
+    public int compareTo(Customer c)
+    {
+    	int i = name.compareTo(c.getName());
+    	return i;
+    }
+    
 }

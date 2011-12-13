@@ -13,7 +13,7 @@ import java.sql.Date;
  * is to contain all information about a reservation.
  * @author tokejensen.
  */
-public class Reservation 
+public class Reservation implements Comparable<Reservation>
 {
     
 	private int id;
@@ -83,5 +83,12 @@ public class Reservation
     public int getId()
     {
         return id;
+    }
+    
+    public int compareTo(Reservation r)
+    {
+    	int i = startdate.compareTo(r.getDateStart());
+    	return i;
+    	
     }
 }
