@@ -92,7 +92,7 @@ public class Commands {
 	    	return "DELETE FROM VehicleType WHERE id = " + vt.getId() + ";";
 	    }
 	    /*
-	     * The following methods are SQL-command for retrieving entire tables as ResultSets, usable in the Nexus.
+	     * The following methods are SQL-commands for retrieving entire tables as ResultSets, usable in the Nexus.
 	     */
 	    
 	    public static String getReservations()
