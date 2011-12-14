@@ -24,6 +24,15 @@ public class TestSortingClass {
 			{
 				System.out.println(c.toString() + "");
 			}
+			int i1 = a.get(0).toString().compareTo("4-d¿rs: 2001 Audi A4");
+			assertEquals(i1, 0);
+			int i2 = a.get(3).toString().compareTo("4-d¿rs: 3333 BMW MichaelsBimmer");
+			assertEquals(i2, 0);
+			boolean b = false;
+			int i3 = a.get(4).toString().compareTo("999");
+			if(i3 < 0)
+				b = true;
+			assertEquals(b, true);
 			}
 		catch(ClassCastException e)
 			{
@@ -87,3 +96,5 @@ public class TestSortingClass {
 	}
 
 }
+
+//Toke, tbrj----.--.--.-...-.-.-.-l-.-l.-l.-l.-l.-l.-l-.l.-l.l-.l-.-l.-l.-l-.l-.

@@ -22,11 +22,15 @@ public class Customer implements Comparable<Customer>
     
     public Customer(int id, String name, int number, String address, String account)
     {
-        this.name = name;
-        this.phonenumber = number;
-        this.address = address;
-        this.bankaccount = account;
-        this.id = id;
+    	if(id < 0)
+    		throw new IllegalArgumentException("Invalid id in Customer");
+    	if(number < 0)
+    		throw new IllegalArgumentException("Invalid phonenumber in customer");
+    		this.name = name;
+        	this.phonenumber = number;
+        	this.address = address;
+        	this.bankaccount = account;
+        	this.id = id;
     }
     
     /* Returns the name of the customer.

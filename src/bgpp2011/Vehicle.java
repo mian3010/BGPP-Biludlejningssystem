@@ -24,12 +24,15 @@ public class Vehicle implements Comparable<Vehicle>
      */
     public Vehicle(int id, String make, String model, int year, VehicleType type)
     {
-        vehicletype = type;
-        this.make = make;
-        this.model = model;
-        this.year = year;
-        this.id = id;
-        
+    	if(id < 0)
+    		throw new IllegalArgumentException("Invalid id in vehicle");  
+    	if(year < 0)
+    		throw new IllegalArgumentException("Invalid year in vehicle");
+    		this.vehicletype = type;
+        	this.make = make;
+        	this.model = model;
+        	this.year = year;
+        	this.id = id;     	
     }
     /*
      * Returns the VehicleType object referenced in the vehicle.
