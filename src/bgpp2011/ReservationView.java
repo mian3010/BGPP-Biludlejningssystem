@@ -8,6 +8,7 @@ import javax.swing.event.TableModelEvent;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.sql.Date;
+import java.text.DateFormat;
 import java.util.*;
 import java.util.Map.Entry;
 
@@ -22,7 +23,8 @@ public class ReservationView extends View {
 	private HashMap<Integer, Customer> customers;
     private JTable table;
     private int id;
-    private boolean drawGraphical;
+    private boolean drawGraphical = true;
+    private ReservationGraphical graphical; 
     
     public ReservationView(Canvas canvas)
     {
@@ -72,16 +74,16 @@ public class ReservationView extends View {
         }
         else
         {
-        	ReservationGraphical graphics = new ReservationGraphical(controller);
-        	contentPane.add(graphics, BorderLayout.CENTER);
+        	graphical = new ReservationGraphical(controller, new Date(System.currentTimeMillis()), 15);
+        	contentPane.add(graphical, BorderLayout.CENTER);
         	JPanel boxLayout = createButtons();
 	        contentPane.add(boxLayout, BorderLayout.WEST);
         }
         return contentPane;
     }
-    public void graphical()
+    public void graphical(boolean graphical)
     {
-    	drawGraphical = true;
+    	drawGraphical = graphical;
     	canvas.changeView(this);
     }
     public void paint(Graphics g)
@@ -268,16 +270,55 @@ public class ReservationView extends View {
     public JPanel createButtons()
     {
     	JPanel boxLayout = super.createButtons();
-    	JButton button = new JButton("Graphical");
-    	button.setMaximumSize(new Dimension(130,30));
-        boxLayout.add(button);
-        final ReservationView view = this;
-        button.addActionListener(new ActionListener() {
-        	@Override
-        	public void actionPerformed(ActionEvent e) {
-        		view.graphical();
-            }
-        });
-    	return boxLayout;
+    	if (!drawGraphical)
+    	{
+	    	JButton button = new JButton("Graphical");
+	    	button.setMaximumSize(new Dimension(130,30));
+	        boxLayout.add(button);
+	        final ReservationView view = this;
+	        button.addActionListener(new ActionListener() {
+	        	@Override
+	        	public void actionPerformed(ActionEvent e) {
+	        		view.graphical(true);
+	            }
+	        });
+	    	return boxLayout;
+    	}
+    	else
+    	{
+	    	JButton button1 = new JButton("Textual");
+	    	button1.setMaximumSize(new Dimension(130,30));
+	        boxLayout.add(button1);
+	        
+	        final JFormattedTextField textfield1 = new JFormattedTextField(DateFormat.getDateInstance(DateFormat.SHORT));
+	        textfield1.setValue(new Date(System.currentTimeMillis()));
+	        boxLayout.add(textfield1);
+	        
+	        final JFormattedTextField textfield2 = new JFormattedTextField(Integer.class);
+	        textfield2.setValue(15);
+	        boxLayout.add(textfield2);
+	        
+	        final ReservationView view = this;
+	        final ReservationGraphical graphical = this.graphical;
+	        button1.addActionListener(new ActionListener() {
+	        	@Override
+	        	public void actionPerformed(ActionEvent e) {
+	        		view.graphical(false);
+	            }
+	        });
+	       textfield1.addActionListener(new ActionListener() {
+	        	@Override
+	        	public void actionPerformed(ActionEvent e) {
+	        		graphical.setStartDate((Date)textfield1.getValue());
+	            }
+	        });
+	        textfield2.addActionListener(new ActionListener() {
+	        	@Override
+	        	public void actionPerformed(ActionEvent e) {
+	        		graphical.setDays((Integer)textfield2.getValue());
+	            }
+	        });
+	    	return boxLayout;
+    	}
     }
 }

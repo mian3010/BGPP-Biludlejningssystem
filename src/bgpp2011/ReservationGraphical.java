@@ -13,12 +13,10 @@ public class ReservationGraphical extends JPanel{
 	private int days;
 	private GregorianCalendar date = new GregorianCalendar();
 	
-	public ReservationGraphical(Controller controller)
+	public ReservationGraphical(Controller controller, Date startdate, int days)
 	{
-		startdate = new Date(System.currentTimeMillis());
-		GregorianCalendar calendar = new GregorianCalendar();
-		calendar.add(GregorianCalendar.DATE, 15);
-		enddate = new Date(calendar.getTimeInMillis());
+		setDays(days);
+		setStartDate(startdate);
 		this.controller = controller;
 		types = this.controller.getModel().getTypes();
 	}
@@ -27,10 +25,6 @@ public class ReservationGraphical extends JPanel{
 		this.removeAll();
 		super.paintComponent(g);
 		this.setDoubleBuffered(false);
-	//	GregorianCalendar cal = new GregorianCalendar();
-	//	cal.setTimeInMillis(enddate.getTime()-startdate.getTime());
-	//	days = cal.get(GregorianCalendar.DATE);
-		days = 15;
 		paintAll(startdate, enddate, g);
 	}
 	public void paintAll(Date startdate, Date enddate, Graphics g)
@@ -43,7 +37,6 @@ public class ReservationGraphical extends JPanel{
 			paintTypes(g, i, currentdate);
 			date.add(GregorianCalendar.DATE, 1);
 			currentdate.setTime(date.getTimeInMillis());
-			System.out.println(i);
 		}
 		
 		paintTypes(g);
@@ -60,11 +53,9 @@ public class ReservationGraphical extends JPanel{
 		while (i.hasNext())
 		{
 			Map.Entry<Integer, VehicleType> object = (Map.Entry<Integer, VehicleType>)i.next();
-			g.setColor(Color.BLUE);
+			g.setColor(getColor(currentdate,object.getValue()));
 			g.fillRect(x, y, width, height);
 			
-			g.setColor(Color.BLACK);
-			//g.drawRect(x, y, width, height);
 			y += (680/types.size());
 		}
 		g.setColor(Color.BLACK);
@@ -77,16 +68,41 @@ public class ReservationGraphical extends JPanel{
 		Iterator<Entry<Integer, VehicleType>> i = types.entrySet().iterator();
 		int offset = 20+(680/types.size()/2);
 		g.setColor(Color.LIGHT_GRAY);
-		g.drawLine(25, 20, 900, 20);
+		g.drawLine(25, 20, 885, 20);
 		while (i.hasNext())
 		{
 			g.setColor(Color.LIGHT_GRAY);
-			g.drawLine(25, offset+(680/types.size()/2), 900, offset+(680/types.size()/2));
+			g.drawLine(25, offset+(680/types.size()/2), 885, offset+(680/types.size()/2));
 			Map.Entry<Integer, VehicleType> object = (Map.Entry<Integer, VehicleType>)i.next();
 			g.setColor(Color.BLACK);
 			g.drawString(object.getValue().getName(), 25, offset);
 			offset += 680/types.size();
 		}
 	}
-	
+	public Color getColor(Date date, VehicleType type)
+	{
+		int avail = controller.typeCounting(type, date, date);
+		switch (avail)
+		{
+		case 0:
+			return Color.RED;
+		case 1:
+			return Color.YELLOW;
+		default:
+			return Color.GREEN;
+		}
+	}
+	public void setDays(int days)
+	{
+		this.days = days;
+		repaint();
+	}
+	public void setStartDate(Date startdate)
+	{
+		this.startdate = startdate;
+		GregorianCalendar calendar = new GregorianCalendar();
+		calendar.setTimeInMillis(startdate.getTime());
+		calendar.add(GregorianCalendar.DATE, days);
+		this.enddate = new Date(calendar.getTimeInMillis());
+	}
 }
