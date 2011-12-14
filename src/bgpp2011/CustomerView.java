@@ -29,7 +29,7 @@ public class CustomerView extends View {
     public void updateCustomers()
     {
     	controller = new Controller();
-    	customers = controller.getCustomers();
+    	customers = controller.getModel().getCustomers();
     }
     @Override
     public JPanel draw()

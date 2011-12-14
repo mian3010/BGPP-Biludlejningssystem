@@ -27,8 +27,8 @@ public class VehicleView extends View {
     public void updateVehicles()
     {
     	controller = new Controller();
-    	vehicletypes = controller.getTypes();
-        vehicles = controller.getVehicles();
+    	vehicletypes = controller.getModel().getTypes();
+        vehicles = controller.getModel().getVehicles();
     }
     @Override
     public JPanel draw()

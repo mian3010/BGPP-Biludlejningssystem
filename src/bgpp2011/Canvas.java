@@ -1,6 +1,8 @@
 package bgpp2011;
 import java.awt.*;
 import java.awt.event.*;
+import java.awt.image.ImageObserver;
+
 import javax.swing.*;
 
 /**
@@ -11,7 +13,7 @@ import javax.swing.*;
  * @time 10:30
  * 
  */
-public class Canvas {
+public class Canvas{
     private Container contentPane;
     private JFrame frame;
     public Canvas()

@@ -7,6 +7,7 @@ import javax.swing.event.TableModelEvent;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
+import java.sql.Date;
 import java.util.*;
 import java.util.Map.Entry;
 
@@ -21,7 +22,7 @@ public class ReservationView extends View {
 	private HashMap<Integer, Customer> customers;
     private JTable table;
     private int id;
-    private boolean drawGraphical = false;
+    private boolean drawGraphical;
     
     public ReservationView(Canvas canvas)
     {
@@ -32,9 +33,9 @@ public class ReservationView extends View {
     public void updateReservations()
     {
     	controller = new Controller();
-    	reservations = controller.getReservations();
-    	vehicletypes = controller.getTypes();
-    	customers = controller.getCustomers();
+    	reservations = controller.getModel().getReservations();
+    	vehicletypes = controller.getModel().getTypes();
+    	customers = controller.getModel().getCustomers();
     }
     public ReservationView(Canvas canvas, int customerID)
     {
@@ -71,8 +72,8 @@ public class ReservationView extends View {
         }
         else
         {
-        	ReservationGraphical graphics = drawGraphical();
-        	contentPane.add(graphics, BorderLayout.WEST);
+        	ReservationGraphical graphics = new ReservationGraphical(controller);
+        	contentPane.add(graphics, BorderLayout.CENTER);
         	JPanel boxLayout = createButtons();
 	        contentPane.add(boxLayout, BorderLayout.WEST);
         }
@@ -81,12 +82,7 @@ public class ReservationView extends View {
     public void graphical()
     {
     	drawGraphical = true;
-    	this.draw();
-    }
-    public ReservationGraphical drawGraphical()
-    {
-    	ReservationGraphical graphic = new ReservationGraphical();
-    	return graphic;
+    	canvas.changeView(this);
     }
     public void paint(Graphics g)
     {
@@ -115,8 +111,8 @@ public class ReservationView extends View {
     {
     	Reservation success = controller.createReservation((Customer)((JComboBox)input[0]).getSelectedItem(),
     														(VehicleType)((JComboBox)input[1]).getSelectedItem(),
-    														new Date(((JTextField)input[2]).getText()),
-    														new Date(((JTextField)input[3]).getText()));
+    														Date.valueOf(((JTextField)input[2]).getText()),
+    														Date.valueOf(((JTextField)input[3]).getText()));
     	updateReservations();
     	
     	if (success != null)
@@ -236,15 +232,15 @@ public class ReservationView extends View {
     	int arg0 = oldReservation.getId();
     	Customer arg1 = oldReservation.getCustomer();
     	Vehicle arg2 = oldReservation.getVehicle();
-    	Date arg3 = new Date(oldReservation.getStartdate());
-    	Date arg4 = new Date(oldReservation.getEnddate());
+    	Date arg3 = Date.valueOf(oldReservation.getStartdate());
+    	Date arg4 = Date.valueOf(oldReservation.getEnddate());
     	switch (columnID)
     	{
     	case 3:
-    		arg3 = new Date((String)table.getValueAt(rowID, 3));
+    		arg3 = Date.valueOf((String)table.getValueAt(rowID, 3));
     	break;
     	case 4:
-    		arg4 = new Date((String)table.getValueAt(rowID, 4));
+    		arg4 = Date.valueOf((String)table.getValueAt(rowID, 4));
     	break;
     	default:
     	break;
