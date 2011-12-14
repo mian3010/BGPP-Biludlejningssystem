@@ -29,6 +29,8 @@ public class Reservation implements Comparable<Reservation>
      */
     public Reservation(int id, Customer customer, Vehicle vehicle, Date start, Date end)
     {
+    	if(id < 0)
+    		throw new IllegalArgumentException("Invalid id in Reservation.");
         this.customer = customer;
         this.vehicle = vehicle;
         this.startdate = start;
