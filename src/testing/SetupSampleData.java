@@ -150,16 +150,16 @@ public class SetupSampleData {
  	  
  	   }
  	   
- 	   Reservation r1 = new Reservation(1,c1,v1,Date.valueOf("2011-05-20"),Date.valueOf("2011-06-20"));
- 	   Reservation r2 = new Reservation(2,c1,v2, Date.valueOf("2011-05-20"),Date.valueOf("2011-06-20"));
- 	   Reservation r3 = new Reservation(3,c2,v2, Date.valueOf("2011-06-21"),Date.valueOf("2011-06-24"));
- 	   Reservation r4 = new Reservation(4,c2,v2, Date.valueOf("2001-04-17"), Date.valueOf("2001-02-17"));
- 	   Reservation r5 = new Reservation(5,c3,v3,Date.valueOf("1999-02-17"), Date.valueOf("2000-02-17"));
- 	   Reservation r6 = new Reservation(6,c4,v4, Date.valueOf("1993-05-31"), Date.valueOf("1993-06-20"));
- 	   Reservation r7 = new Reservation(7,c5,v4, Date.valueOf("2011-11-11"),Date.valueOf("2011-11-12"));
- 	   Reservation r8 = new Reservation(8,c6,v6, Date.valueOf("2011-12-12"), Date.valueOf("2012-12-12"));
- 	   Reservation r9 = new Reservation(9,c7,v7, Date.valueOf("2003-10-12"),Date.valueOf("2002-10-11"));
- 	   Reservation r10 = new Reservation(10,c1,v1, Date.valueOf("2006-03-05"), Date.valueOf("2006-04-06"));
+ 	   Reservation r1 = new Reservation(1,c1,v1,Date.valueOf("2011-12-16"),Date.valueOf("2011-12-20"));
+ 	   Reservation r2 = new Reservation(2,c1,v2, Date.valueOf("2011-12-16"),Date.valueOf("2011-12-20"));
+ 	   Reservation r3 = new Reservation(3,c2,v3, Date.valueOf("2011-12-12"),Date.valueOf("2011-12-20"));
+ 	   Reservation r4 = new Reservation(4,c2,v4, Date.valueOf("2011-12-16"), Date.valueOf("2011-12-20"));
+ 	   Reservation r5 = new Reservation(5,c3,v8,Date.valueOf("2011-12-10"), Date.valueOf("2000-12-20"));
+ 	   Reservation r6 = new Reservation(6,c4,v9, Date.valueOf("2011-12-20"), Date.valueOf("2011-12-31"));
+ 	   Reservation r7 = new Reservation(7,c5,v10, Date.valueOf("2012-01-01"),Date.valueOf("2012-01-31"));
+ 	   Reservation r8 = new Reservation(8,c6,v11, Date.valueOf("2011-02-05"), Date.valueOf("2012-02-23"));
+ 	 //  Reservation r9 = new Reservation(9,c7,v7, Date.valueOf("2003-10-12"),Date.valueOf("2002-10-11"));
+ 	 //  Reservation r10 = new Reservation(10,c1,v1, Date.valueOf("2006-03-05"), Date.valueOf("2006-04-06"));
  	  ArrayList<Reservation> rlist = new ArrayList<Reservation>();
  	  rlist.add(r1);
  	  rlist.add(r2);
@@ -169,8 +169,8 @@ public class SetupSampleData {
  	  rlist.add(r6);
  	  rlist.add(r7);
  	  rlist.add(r8);
- 	  rlist.add(r9);
- 	  rlist.add(r10);
+ //	  rlist.add(r9);
+ //	  rlist.add(r10);
  	  for(Reservation r : rlist)
  	  {
  		  n.createEntryReservation(r);

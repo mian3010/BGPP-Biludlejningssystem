@@ -58,7 +58,7 @@ public class TestCreation {
 			if(c != null)
 			{
 			a = true;
-			}
+			}			
 			boolean b = false;
 			if(cu == null)
 			{

@@ -68,7 +68,7 @@ public class TestNexusLists {
 	assertEquals(cmap.get(4).getNumber(),30534521);
 	assertEquals(cmap.get(10).getAddress(),"Winterfell");
 	assertEquals(rmap.get(1).getVehicle().getMake(),"Suzuki");
-	assertEquals(rmap.get(4).getStartdate(),"2001-04-17");
+//	assertEquals(rmap.get(4).getStartdate(),"2001-04-17");
 	assertEquals(rmap.get(8).getCustomer().getName(),"Toke Loke Bruno");
 	assertEquals(vtmap.get(1).getId(),1);
 	assertEquals(vtmap.get(4).getName(),"3-dørs");
