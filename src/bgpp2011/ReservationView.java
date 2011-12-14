@@ -287,16 +287,32 @@ public class ReservationView extends View {
     	else
     	{
 	    	JButton button1 = new JButton("Textual");
-	    	button1.setMaximumSize(new Dimension(130,30));
+	    	button1.setMaximumSize(new Dimension(200,30));
 	        boxLayout.add(button1);
+	        
+	        JPanel dummy = new JPanel();
+	        dummy.setMaximumSize(new Dimension(200,30));
+	        boxLayout.add(dummy);
+	        
+	        JPanel buttons = new JPanel();
+	        buttons.setLayout(new BoxLayout(buttons, BoxLayout.Y_AXIS));
+	        buttons.setMaximumSize(new Dimension(200,60));
+	        buttons.setBorder(BorderFactory.createEmptyBorder(0,10,0,0));
 	        
 	        final JFormattedTextField textfield1 = new JFormattedTextField(DateFormat.getDateInstance(DateFormat.SHORT));
 	        textfield1.setValue(new Date(System.currentTimeMillis()));
-	        boxLayout.add(textfield1);
+	        textfield1.setMaximumSize(new Dimension(200,30));
+	        buttons.add(textfield1);
 	        
 	        final JFormattedTextField textfield2 = new JFormattedTextField(Integer.class);
 	        textfield2.setValue(15);
-	        boxLayout.add(textfield2);
+	        textfield2.setMaximumSize(new Dimension(200,30));
+	        buttons.add(textfield2);
+	        
+	        boxLayout.add(buttons);
+	        JButton button2 = new JButton("Change");
+	    	button2.setMaximumSize(new Dimension(130,30));
+	        boxLayout.add(button2);
 	        
 	        final ReservationView view = this;
 	        final ReservationGraphical graphical = this.graphical;
@@ -306,15 +322,10 @@ public class ReservationView extends View {
 	        		view.graphical(false);
 	            }
 	        });
-	       textfield1.addActionListener(new ActionListener() {
+	       button2.addActionListener(new ActionListener() {
 	        	@Override
 	        	public void actionPerformed(ActionEvent e) {
-	        		graphical.setStartDate((Date)textfield1.getValue());
-	            }
-	        });
-	        textfield2.addActionListener(new ActionListener() {
-	        	@Override
-	        	public void actionPerformed(ActionEvent e) {
+	        		graphical.setStartDate(new Date(((java.util.Date)textfield1.getValue()).getTime()));
 	        		graphical.setDays((Integer)textfield2.getValue());
 	            }
 	        });
