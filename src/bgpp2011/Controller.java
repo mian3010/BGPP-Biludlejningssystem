@@ -41,7 +41,7 @@ public class Controller
 	{
 		//Checks if the startdate is before the enddate.
 		int o = re.getDateStart().compareTo(re.getDateEnd());
-		if( o<0 )
+		if( o<=0 )
 		{
 		
 			Collection<Reservation> c = model.reservationCollection();

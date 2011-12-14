@@ -6,7 +6,9 @@ import java.util.HashMap;
 
 /*
  * This class models the data from the database and stores them into HashMaps.
- * This class is modeled after the Singleton pattern 
+ * This class is modeled after the Singleton pattern as it is better to only have
+ * a single instance of the data from the database.
+ * @author msta & tbrj
  */
 
 public class Model {
@@ -109,7 +111,7 @@ public class Model {
 		//Deletes an item from the hashmaps.
 		public Object delete(int id, Object o)
 		{
-			//Checks if Item is an istance of a reservation, vehicle, vehicletype or customer.
+			//Checks if Item is an instance of a reservation, vehicle, vehicletype or customer.
 			if(o instanceof Reservation)
 				return reservations.remove(id);
 			else if(o instanceof Vehicle)
