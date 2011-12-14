@@ -22,7 +22,10 @@ public class VehicleType implements Comparable<VehicleType>
      */
     public VehicleType(int id, String name, double price)
     {
-        
+        if(id < 0)
+        	throw new IllegalArgumentException("Invalid id in VehicleType");
+        if(price < 0) 
+        	throw new IllegalArgumentException("Invalid price on type");
         this.name = name;
         this.price = price;
         this.id = id;
