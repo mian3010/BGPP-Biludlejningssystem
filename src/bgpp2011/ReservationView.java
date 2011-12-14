@@ -8,7 +8,7 @@ import javax.swing.event.TableModelEvent;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.sql.Date;
-import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.*;
 import java.util.Map.Entry;
 
@@ -23,7 +23,7 @@ public class ReservationView extends View {
 	private HashMap<Integer, Customer> customers;
     private JTable table;
     private int id;
-    private boolean drawGraphical = true;
+    private boolean drawGraphical = false;
     private ReservationGraphical graphical; 
     
     public ReservationView(Canvas canvas)
@@ -299,7 +299,8 @@ public class ReservationView extends View {
 	        buttons.setMaximumSize(new Dimension(200,60));
 	        buttons.setBorder(BorderFactory.createEmptyBorder(0,10,0,0));
 	        
-	        final JFormattedTextField textfield1 = new JFormattedTextField(DateFormat.getDateInstance(DateFormat.SHORT));
+	        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+	        final JFormattedTextField textfield1 = new JFormattedTextField(format);
 	        textfield1.setValue(new Date(System.currentTimeMillis()));
 	        textfield1.setMaximumSize(new Dimension(200,30));
 	        buttons.add(textfield1);
@@ -327,6 +328,7 @@ public class ReservationView extends View {
 	        	public void actionPerformed(ActionEvent e) {
 	        		graphical.setStartDate(new Date(((java.util.Date)textfield1.getValue()).getTime()));
 	        		graphical.setDays((Integer)textfield2.getValue());
+	        		graphical.repaint();
 	            }
 	        });
 	    	return boxLayout;

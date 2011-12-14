@@ -29,7 +29,7 @@ public class ReservationGraphical extends JPanel{
 	}
 	public void paintAll(Date startdate, Date enddate, Graphics g)
 	{
-		Date currentdate = startdate;
+		Date currentdate = new Date(startdate.getTime());
 		
 		for (int i = 0; i < days; i++)
 		{
@@ -95,7 +95,6 @@ public class ReservationGraphical extends JPanel{
 	public void setDays(int days)
 	{
 		this.days = days;
-		repaint();
 	}
 	public void setStartDate(Date startdate)
 	{
