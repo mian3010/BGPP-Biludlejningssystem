@@ -108,6 +108,9 @@ public class Controller
 	
 	public int typeCounting(VehicleType v, Date start, Date end)
 	{
+		ArrayList<Vehicle> vlist = vacantVehicles(v,start,end);
+		if(vlist == null)
+			return 0;
 		return vacantVehicles(v,start,end).size();
 	}
 	
