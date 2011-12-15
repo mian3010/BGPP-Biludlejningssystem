@@ -264,12 +264,15 @@ public class ReservationView extends View {
     	int arg0 = oldReservation.getId();
     	Customer arg1 = oldReservation.getCustomer();
     	Vehicle arg2 = oldReservation.getVehicle();
-    	Date arg3 = Date.valueOf(oldReservation.getStartdate());
-    	Date arg4 = Date.valueOf(oldReservation.getEnddate());
+    	Date arg3 = oldReservation.getDateStart();
+    	Date arg4 = oldReservation.getDateEnd();
+    	Date arg10 = null;
     	switch (columnID)
     	{
     	case 3:
-    		arg3 = Date.valueOf((String)table.getValueAt(rowID, 3));
+    		System.out.println(Date.valueOf((String)table.getValueAt(rowID, 3)));
+    		arg10 = Date.valueOf((String)table.getValueAt(rowID, 3));
+    		
     	break;
     	case 4:
     		arg4 = Date.valueOf((String)table.getValueAt(rowID, 4));

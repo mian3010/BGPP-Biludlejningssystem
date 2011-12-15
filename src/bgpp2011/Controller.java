@@ -462,20 +462,26 @@ public class Controller
 		try
 		{
 			//Runs the checkReservation on newR to see if the reservation is possible.
+			// Removes the old reservation to allow a check of all reservations % the old one.
+			
+			int id = oldR.getId();
+			model.getReservations().remove(id);
 			if(checkReservation(newR))
 			{
-				int id = oldR.getId();
 				//Creates a new reservation and with the data from newR and id from oldR.
 				Reservation res = new Reservation(id, newR.getCustomer(), newR.getVehicle(), Date.valueOf(newR.getStartdate()), Date.valueOf(newR.getEnddate()));			
 				if(nexus.editReservation(res))
 				{
-					model.getReservations().remove(id);
+					// model.getReservations().remove(id);
 					model.getReservations().put(id,res);
 					return true;
 			}		
+				// In case there was an error with the database insertion, returns the old reservation to the maps.
+					model.getReservations().put(id,oldR);
 					return false;
 		 }
-			
+			// In case the new reservation cannot be edited at all, preserves the old reservation.
+			model.getReservations().put(id, oldR);
 		    return false;
 		}
 		
