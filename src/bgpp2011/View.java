@@ -8,6 +8,8 @@ import javax.swing.event.*;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.*;
 
 /**
@@ -193,4 +195,17 @@ public abstract class View implements TableModelListener
     {
     	g.drawRect(0, 0, 100, 100);
     }
+    
+    public ImageIcon generateIcon(String s)
+    {
+    	if(s.equals("delete"))
+    		return new ImageIcon("img/delete.gif");		
+		else if(s.equals("update"))
+			return new ImageIcon("img/update.png");
+    	return new ImageIcon();
+    
+    }
+    
+    
+    
 }

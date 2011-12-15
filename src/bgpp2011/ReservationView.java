@@ -103,8 +103,8 @@ public class ReservationView extends View {
             data[j][2] = object.getValue().getVehicle().toString();
             data[j][3] = object.getValue().getStartdate();
             data[j][4] = object.getValue().getEnddate();
-            data[j][5] = (Boolean)false;
-            data[j][6] = (Boolean)false;
+            data[j][5] = generateIcon("update");
+            data[j][6] = generateIcon("delete");
             j++;
         }
         return data;

@@ -48,8 +48,8 @@ public class VehicleView extends View {
         cellEditable.put(1, true);
         cellEditable.put(2, true);
         cellEditable.put(3, true);
-        cellEditable.put(4, true);
-        cellEditable.put(5, true);
+        cellEditable.put(4, false);
+        cellEditable.put(5, false);
         ArrayList<JLabel> label = new ArrayList<JLabel>();
         table = new ArrayList<JTable>();
         ArrayList<JPanel> panel = new ArrayList<JPanel>();
@@ -116,8 +116,8 @@ public class VehicleView extends View {
             data[j][1] = object2.getValue().getMake();
             data[j][2] = object2.getValue().getModel();
             data[j][3] = object2.getValue().getYear();
-            data[j][4] = (Boolean)false;
-            data[j][5] = (Boolean)false;
+            data[j][4] = generateIcon("update");
+            data[j][5] = generateIcon("delete");
             j++;
         }
         return data;

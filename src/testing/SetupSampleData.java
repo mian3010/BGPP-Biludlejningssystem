@@ -43,7 +43,6 @@ public class SetupSampleData {
     @Test
     public void TestdropAndSetupAllTables()
     {
-    	
     	try {
         DataBaseCom db = new DataBaseCom();
 		db.update("DROP TABLE Vehicle;");
@@ -120,7 +119,6 @@ public class SetupSampleData {
  	   {
  		   n.createEntryVehicleType(vt);
  	   }
- 	   System.out.println("No exceptions so far? All vehicletypes created");
  	   Vehicle v1 = new Vehicle(1,"Suzuki","1000ccm",1990,vt1);
  	   Vehicle v2 = new Vehicle(2,"Harley Davidson","Outlaw",1975,vt1);
  	   Vehicle v3 = new Vehicle(3,"BMW","MichaelsBimmer",3333,vt2);

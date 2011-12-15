@@ -6,19 +6,20 @@ import java.util.Collection;
 import java.util.Iterator;
 import java.sql.Date;
 
+import testing.SetupSampleData;
+
 public class Controller
 {
 	private Nexus nexus;
 	private Model model;
 	/*
-	 * Controlleren must execute operations given by the user. It must do all the checking and ordering.
-	 * 
-	 * The checkreservation() method checks if there is an overlap with another reservation. It takes a
-	 * reservation as a parameter. First, it checks whether the startdate is before the enddate. Second,
+	 * Controlleren must execute operations given by the user (as requested in the user interface).
+	 * It must do all the checking and ordering.
+	 * The CheckReservation() method checks if there is an overlap with another reservation. It takes a
+	 * reservation as a parameter. First, it checks whether the Start date is before the End date. Second,
 	 * It checks whether the Vehicle of the Reservations re is the same as i the ArrayList. Then it checks
-	 * whether the startdate is after the enddate, or if the enddate is before the startdate. If that is true,
+	 * whether the Start date is after the End date, or if the End date is before the Start date. If that is true,
 	 * the reservation is possible and it will return true.
-	 * New commit to help TOKE
 	 */
 	public Controller()
 	{
@@ -29,7 +30,6 @@ public class Controller
 		
 	}
 	//Method that loads the HashMaps with data from the database. Uses the getMethods() from the nexus.
-	
 	
 	/*
 	 * This method check if a reservation overlaps another reservation. It compares the dates of the
@@ -82,11 +82,10 @@ public class Controller
 	
 	
 	/*
-	 * This code is very VERY abstract. It start out by making an arrayList containing the cars of
-	 *  a given type. Then it runs a for-each loop that checks if there is a car that has no reservations.
-	 *  If that is not the case, it runs a for-each loop, that creates a temporary reservation and runs
-	 *  the check reservation method on it. If it is true, it will return that car. If there is no car 
-	 *  avaliable. It will return null.
+	 *This code returns an ArrayList of vehicles grouped by the type they belong to,
+	 *which is specified in the parameter.
+	 *@param v a the VehicleType which selects the vehicles
+	 *@return ArrayList<Vehicle> an ArrayList containing the vehicles grouped by type
 	 */
 	public ArrayList<Vehicle> vehiclesByType(VehicleType v)
 	{
@@ -106,15 +105,29 @@ public class Controller
 		return vlist;
 	}
 	
+	/*
+	 * This method is used when counting the number of vehicles avalaible in a certain date-range.
+	 * @param v the VehicleType of which the vehicles should be counted
+	 * @param start the Date object containing information about the Start of the range
+	 * @param end the Date object containing information about the End of the date-range.
+	 * @return int an Integer counting the number of free vehicles in the type.
+	 */
 	public int typeCounting(VehicleType v, Date start, Date end)
 	{
 		ArrayList<Vehicle> vlist = vacantVehicles(v,start,end);
 		if(vlist == null)
 			return 0;
-		return vacantVehicles(v,start,end).size();
+		return vlist.size();
 	}
 	
-	
+	/*
+	 * This method is used to fetch an arraylist of vehicles containing vehicles
+	 * which are free to rent in the specified daterange, grouped by type.
+	 * @param v the VehicleType of which the vehicles should be selected.
+	 * @param start the Date object containing information about the Start of the range
+	 * @param end the Date object containing information about the End of the date-range.
+	 * @return ArrayList<Vehicle> a list containing the avalaible vehicles.
+	 */
 	public ArrayList<Vehicle> vacantVehicles(VehicleType v, Date start, Date end)
 	{
 		
@@ -152,6 +165,7 @@ public class Controller
 	}
 
 	/*
+
 	 * This method is called by the GUI and it checks if a reservation is avaliable, and return it 
 	 * if it is. Else it returns null.
 	 */
