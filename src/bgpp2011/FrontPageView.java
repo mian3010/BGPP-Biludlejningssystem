@@ -1,6 +1,7 @@
 package bgpp2011;
 import java.awt.*;
 import java.awt.event.*;
+
 import javax.swing.*;
 
 import java.util.*;
@@ -24,7 +25,7 @@ public class FrontPageView extends View {
     @Override
     public JPanel draw()
     {
-        super.draw();
+        JPanel contentPane = super.draw();
         //The tree elements of the borderlayout (North, Center, South)
         JPanel gridLayout = new JPanel(new GridLayout(1,3,50,50));
         gridLayout.setBorder(BorderFactory.createEmptyBorder(100,100,100,100));
@@ -67,4 +68,29 @@ public class FrontPageView extends View {
         
         return contentPane;
     }
+    @Override
+	public void mouseClicked(MouseEvent e) {
+		
+		
+	}
+	@Override
+	public void mouseEntered(MouseEvent e) {
+		
+		
+	}
+	@Override
+	public void mouseExited(MouseEvent e) {
+		
+		
+	}
+	@Override
+	public void mousePressed(MouseEvent e) {
+		
+		
+	}
+	@Override
+	public void mouseReleased(MouseEvent e) {
+		
+		
+	}
 }

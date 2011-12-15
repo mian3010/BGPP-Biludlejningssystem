@@ -1,7 +1,6 @@
 package bgpp2011;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+import java.awt.event.*;
 
 import javax.swing.*;
 import javax.swing.event.*;
@@ -20,11 +19,9 @@ import java.util.*;
  * @time 10:23
  * 
  */
-public abstract class View implements TableModelListener
+public abstract class View implements TableModelListener, MouseListener
 {
-	private static final long serialVersionUID = -2198358766333127667L;
 	//Instance variables
-    public JPanel contentPane = new JPanel();
     public String topText;
     public JLabel welcomeText;
     public JLabel copyrightText;
@@ -43,7 +40,8 @@ public abstract class View implements TableModelListener
     //Draw method
     public JPanel draw()
     {
-        contentPane.setLayout(new BorderLayout());
+        JPanel contentPane = new JPanel();
+    	contentPane.setLayout(new BorderLayout());
         
         welcomeText = new JLabel(topText);
         welcomeText.setFont(new Font("Arial", Font.PLAIN, 24));
@@ -63,6 +61,7 @@ public abstract class View implements TableModelListener
     {
         JTable table = new JTable(data, columnNames);
         table.setModel(new TableModel(data,columnNames, cellEditable));
+        table.addMouseListener(this);
         table.getModel().addTableModelListener(this);
         for (int i = 0; i < columnSizes.length; i++)
         {
@@ -195,7 +194,6 @@ public abstract class View implements TableModelListener
     {
     	g.drawRect(0, 0, 100, 100);
     }
-    
     public ImageIcon generateIcon(String s)
     {
     	if(s.equals("delete"))
@@ -205,7 +203,30 @@ public abstract class View implements TableModelListener
     	return new ImageIcon();
     
     }
-    
-    
+    @Override
+	public void mouseClicked(MouseEvent e) {
+		
+		
+	}
+	@Override
+	public void mouseEntered(MouseEvent e) {
+		
+		
+	}
+	@Override
+	public void mouseExited(MouseEvent e) {
+		
+		
+	}
+	@Override
+	public void mousePressed(MouseEvent e) {
+		
+		
+	}
+	@Override
+	public void mouseReleased(MouseEvent e) {
+		
+		
+	}
     
 }

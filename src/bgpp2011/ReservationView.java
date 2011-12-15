@@ -48,12 +48,12 @@ public class ReservationView extends View {
     public JPanel draw()
     {
         updateReservations();
-        super.draw();
+        JPanel contentPane = super.draw();
         if (!drawGraphical)
         {
-	        String[] columnNames = {"ID","Customer","Vehicle","Start date","End date", "Change vehicletype", "Remove"};
+	        String[] columnNames = {"ID","Customer","Vehicle","Start date","End date", "Remove"};
 	        Object[][] data = parseObjects(reservations);
-	        int[] columnSizes = {20,1000,1000,200,200,100, 100};
+	        int[] columnSizes = {30,1000,1000,300,300,30};
 	        HashMap<Integer, Boolean> cellEditable = new HashMap<Integer, Boolean>();
 	        cellEditable.put(0, false);
 	        cellEditable.put(1, false);
@@ -61,7 +61,6 @@ public class ReservationView extends View {
 	        cellEditable.put(3, true);
 	        cellEditable.put(4, true);
 	        cellEditable.put(5, false);
-	        cellEditable.put(6, false);
 	       
 	        table = createTable(columnNames, data, cellEditable, columnSizes);
 	        JScrollPane scrollPane = new JScrollPane(table);
@@ -103,8 +102,7 @@ public class ReservationView extends View {
             data[j][2] = object.getValue().getVehicle().toString();
             data[j][3] = object.getValue().getStartdate();
             data[j][4] = object.getValue().getEnddate();
-            data[j][5] = generateIcon("update");
-            data[j][6] = generateIcon("delete");
+            data[j][5] = generateIcon("delete");
             j++;
         }
         return data;
@@ -196,29 +194,61 @@ public class ReservationView extends View {
     }
     public void tableChanged(TableModelEvent e)
     {
-    	String questionRemove = "Are you sure you want to remove this reservation?";
-    	String titleRemove = "Removing reservation";
-    	int row = e.getFirstRow();
-    	int column = e.getColumn();
-    	
-    	switch (column)
+    	if (!noChange)
     	{
-    	case 5:
-    		changeCustomer();
-    	break;
-    	case 6:
-    		int response = JOptionPane.showConfirmDialog(canvas.getFrame(), questionRemove, titleRemove, JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE);
-			if (response == 0)
-    			removeReservation(row, table);
-    	break;
-    	default:
-    		changeReservation(row, column, table);
-    	break;
+	    	int row = e.getFirstRow();
+	    	int column = e.getColumn();
+	    	if(column != 5 && column != 6)
+	    		changeReservation(row, column, table);
     	}
     }
-    public void changeCustomer()
+    public void changeCustomer(int rowID, int newCustomer)
     {
+    	Reservation newR = new Reservation(reservations.get(table.getValueAt(rowID, 0)).getId(),
+    										customers.get(newCustomer),
+    										reservations.get(table.getValueAt(rowID, 0)).getVehicle(),
+    										reservations.get(table.getValueAt(rowID, 0)).getDateStart(),
+    										reservations.get(table.getValueAt(rowID, 0)).getDateEnd()
+    										);
+    	Reservation oldR = new Reservation(reservations.get(table.getValueAt(rowID, 0)).getId(),
+    										reservations.get(table.getValueAt(rowID, 0)).getCustomer(),
+											reservations.get(table.getValueAt(rowID, 0)).getVehicle(),
+											reservations.get(table.getValueAt(rowID, 0)).getDateStart(),
+											reservations.get(table.getValueAt(rowID, 0)).getDateEnd()
+											);
+
     	
+    	boolean success = controller.editReservation(newR, oldR);
+    	if (success)
+    		table.setValueAt(newR.getCustomer().toString(), rowID, 1);
+    	else
+    		JOptionPane.showMessageDialog(canvas.getFrame(), "Could not change customer on the reservation - SQLException", "Error", JOptionPane.ERROR_MESSAGE);
+    }
+    public void changeType(int rowID, int newType)
+    {
+    	Vehicle vehicle = controller.searchVehicles(vehicletypes.get(newType), reservations.get(table.getValueAt(rowID, 0)).getDateStart(), reservations.get(table.getValueAt(rowID, 0)).getDateEnd());
+    	if (vehicle != null)
+    	{
+    		Reservation newR = new Reservation(reservations.get(table.getValueAt(rowID, 0)).getId(),
+    											reservations.get(table.getValueAt(rowID, 0)).getCustomer(),
+												vehicle,
+												reservations.get(table.getValueAt(rowID, 0)).getDateStart(),
+												reservations.get(table.getValueAt(rowID, 0)).getDateEnd()
+												);
+			Reservation oldR = new Reservation(reservations.get(table.getValueAt(rowID, 0)).getId(),
+												reservations.get(table.getValueAt(rowID, 0)).getCustomer(),
+												reservations.get(table.getValueAt(rowID, 0)).getVehicle(),
+												reservations.get(table.getValueAt(rowID, 0)).getDateStart(),
+												reservations.get(table.getValueAt(rowID, 0)).getDateEnd()
+												);
+			boolean success = controller.editReservation(newR, oldR);
+			if (success)
+				table.setValueAt(newR.getVehicle().toString(), rowID, 2);
+			else
+				JOptionPane.showMessageDialog(canvas.getFrame(), "Could not change vehicle type on the reservation - SQLException", "Error", JOptionPane.ERROR_MESSAGE);
+    	}
+    	else
+    		JOptionPane.showMessageDialog(canvas.getFrame(), "No available car of that type", "Error", JOptionPane.ERROR_MESSAGE);
     }
     public void removeReservation(int rowID, JTable table)
     {
@@ -334,4 +364,88 @@ public class ReservationView extends View {
 	    	return boxLayout;
     	}
     }
+    @Override
+	public void mouseClicked(MouseEvent e) {
+    	int column = table.columnAtPoint(e.getPoint());
+    	int row = table.rowAtPoint(e.getPoint());
+    	int numClicks = e.getClickCount();
+    	String questionRemove = "Are you sure you want to remove this reservation?";
+    	String titleRemove = "Removing reservation";
+    	switch (column)
+    	{
+    	case 1:
+    		if (numClicks == 2)
+    		{
+	    		Object[] choices = makeCustomerChoices();
+	        	Customer chosencustomer = (Customer)JOptionPane.showInputDialog(canvas.getFrame(), "Choose new customer:", "Change customer", JOptionPane.QUESTION_MESSAGE, null, choices, choices[reservations.get(table.getValueAt(row, 0)).getCustomer().getId()-1]);
+	        	try {
+	        		changeCustomer(row, chosencustomer.getId());
+	        	} catch (NullPointerException e1) {
+	        		
+	        	}
+    		}
+    	break;
+    	case 2:
+    		if (numClicks == 2)
+    		{
+	    		Object[] choices = makeTypeChoices();
+	        	VehicleType chosentype = (VehicleType)JOptionPane.showInputDialog(canvas.getFrame(), "Choose new vehicle type:", "Change vehicle type", JOptionPane.QUESTION_MESSAGE, null, choices, choices[reservations.get(table.getValueAt(row, 0)).getVehicle().getType().getId()-1]);
+	        	try {
+	        		changeType(row, chosentype.getId());
+	        	} catch (NullPointerException e1) {
+	        		
+	        	}
+    		}
+    	break;
+    	case 5:
+    		int response = JOptionPane.showConfirmDialog(canvas.getFrame(), questionRemove, titleRemove, JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE);
+			if (response == 0)
+    			removeReservation(row, table);
+    	break;
+    	}
+	}
+	@Override
+	public void mouseEntered(MouseEvent e) {
+		
+		
+	}
+	@Override
+	public void mouseExited(MouseEvent e) {
+		
+		
+	}
+	@Override
+	public void mousePressed(MouseEvent e) {
+		
+		
+	}
+	@Override
+	public void mouseReleased(MouseEvent e) {
+		
+		
+	}
+	public Object[] makeCustomerChoices()
+	{
+		Object[] choices = new Object[customers.size()];
+    	Iterator<Entry<Integer, Customer>> i = customers.entrySet().iterator();
+    	int j = 0;
+    	while (i.hasNext())
+    	{
+    		Map.Entry<Integer, Customer> object = (Map.Entry<Integer, Customer>)i.next();
+    		choices[j++] = object.getValue();
+    	}
+    	return choices;
+	}
+	public Object[] makeTypeChoices()
+	{
+		Object[] choices = new Object[vehicletypes.size()];
+    	Iterator<Entry<Integer, VehicleType>> i = vehicletypes.entrySet().iterator();
+    	int j = 0;
+    	while (i.hasNext())
+    	{
+    		Map.Entry<Integer, VehicleType> object = (Map.Entry<Integer, VehicleType>)i.next();
+    		choices[j++] = object.getValue();
+    	}
+    	return choices;
+	}
 }

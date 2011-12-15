@@ -35,7 +35,7 @@ public class CustomerView extends View {
     public JPanel draw()
     {
     	updateCustomers();
-        super.draw();
+        JPanel contentPane = super.draw();
         String[] columnNames = {"ID", "Name", "Address", "Phone Number", "Account", "Show reservations", "Remove"};
         Object[][] data = parseObjects(customers);
         HashMap<Integer, Boolean> cellEditable = new HashMap<Integer, Boolean>();
@@ -44,11 +44,12 @@ public class CustomerView extends View {
         cellEditable.put(2, true);
         cellEditable.put(3, true);
         cellEditable.put(4, true);
-        cellEditable.put(5, true);
-        cellEditable.put(6, true);
-        int[] columnSizes = {20,1000,1000,200,200,100, 100};
+        cellEditable.put(5, false);
+        cellEditable.put(6, false);
+        int[] columnSizes = {30,1000,1000,300,300,30,30};
        
         table = createTable(columnNames, data, cellEditable, columnSizes);
+        table.doLayout();
         JScrollPane scrollPane = new JScrollPane(table);
         
         scrollPane.setBorder(BorderFactory.createEmptyBorder(0,10,0,10));
@@ -72,8 +73,8 @@ public class CustomerView extends View {
             data[j][2] = object.getValue().getAddress();
             data[j][3] = object.getValue().getNumber();
             data[j][4] = object.getValue().getBankAccount();
-            data[j][5] = (Boolean)false;
-            data[j][6] = (Boolean)false;
+            data[j][5] = generateIcon("update");
+            data[j][6] = generateIcon("delete");
             j++;
         }
         return data;
@@ -146,25 +147,10 @@ public class CustomerView extends View {
     {
     	if (!noChange)
     	{
-	    	String questionRemove = "Are you sure you want to remove this customer?";
-	    	String titleRemove = "Removing customer";
 	    	int row = e.getFirstRow();
 	    	int column = e.getColumn();
-	    	
-	    	switch (column)
-	    	{
-	    	case 5:
-	    		canvas.changeView(new ReservationView(canvas, (Integer)table.getValueAt(row, 0)));
-	    	break;
-	    	case 6:
-	    		int response = JOptionPane.showConfirmDialog(canvas.getFrame(), questionRemove, titleRemove, JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE);
-				if (response == 0)
-	    			removeCustomer(row, table);
-	    	break;
-	    	default:
+	    	if (column != 5 && column != 6)
 	    		changeCustomer(row, column, table);
-	    	break;
-	    	}
     	}
     }
     public void changeCustomer(int rowID, int columnID, JTable table)
@@ -218,4 +204,42 @@ public class CustomerView extends View {
     		noChange = false;
     	}
     }
+    public void mouseClicked(MouseEvent e)
+    {
+    	int column = table.columnAtPoint(e.getPoint());
+    	int row = table.rowAtPoint(e.getPoint());
+    	String questionRemove = "Are you sure you want to remove this customer?";
+    	String titleRemove = "Removing customer";
+    	switch (column)
+    	{
+    	case 5:
+    		canvas.changeView(new ReservationView(canvas, (Integer)table.getValueAt(row, 0)));
+    	break;
+    	case 6:
+    		int response = JOptionPane.showConfirmDialog(canvas.getFrame(), questionRemove, titleRemove, JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE);
+			if (response == 0)
+    			removeCustomer(row, table);
+    	break;
+    	}
+    }
+	@Override
+	public void mouseEntered(MouseEvent e) {
+		
+		
+	}
+	@Override
+	public void mouseExited(MouseEvent e) {
+		
+		
+	}
+	@Override
+	public void mousePressed(MouseEvent e) {
+		
+		
+	}
+	@Override
+	public void mouseReleased(MouseEvent e) {
+		
+		
+	}
 }

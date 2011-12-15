@@ -1,6 +1,8 @@
 package bgpp2011;
 import java.awt.*;
 import java.awt.event.*;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 import java.util.*;
 import java.util.Map.Entry;
 
@@ -34,7 +36,7 @@ public class VehicleView extends View {
     public JPanel draw()
     {
     	updateVehicles();
-        super.draw();
+        JPanel contentPane = super.draw();
         columnNames = new String[6];
         columnNames[0] = "ID";
         columnNames[1] = "Make";
@@ -42,7 +44,7 @@ public class VehicleView extends View {
         columnNames[3] = "Year";
         columnNames[4] = "Change Type";
         columnNames[5] = "Remove";
-        int[] columnSizes = {20,1000,1000,200,100,100};
+        int[] columnSizes = {30,1000,1000,300,30,30};
         HashMap<Integer, Boolean> cellEditable = new HashMap<Integer, Boolean>();
         cellEditable.put(0, false);
         cellEditable.put(1, true);
@@ -59,7 +61,24 @@ public class VehicleView extends View {
         	Map.Entry<Integer, VehicleType> entry = (Map.Entry<Integer, VehicleType>)i.next();
         	label.add(new JLabel(entry.getValue().getName()+":"));
         	Object[][] data = parseObjects(vehicles, entry.getValue());
-        	table.add(createTable(columnNames, data, cellEditable, columnSizes));
+        	final JTable temp = createTable(columnNames, data, cellEditable, columnSizes);
+        	temp.removeMouseListener(temp.getMouseListeners()[0]);
+        	final VehicleView view = this;
+        	temp.addMouseListener(new MouseListener() {
+                @Override
+                public void mouseClicked(MouseEvent e) {
+                	view.mouseClicked(e, temp);
+                }
+				@Override
+				public void mouseEntered(MouseEvent e) {}
+				@Override
+				public void mouseExited(MouseEvent e) {}
+				@Override
+				public void mousePressed(MouseEvent e) {}
+				@Override
+				public void mouseReleased(MouseEvent e) {}
+            });
+        	table.add(temp);
         	panel.add(new JPanel());
         }
         
@@ -147,35 +166,14 @@ public class VehicleView extends View {
     {
     	if (!noChange)
     	{
-	    	String questionRemove = "Are you sure you want to remove this vehicle?";
-	    	String titleRemove = "Removing vehicle";
 	    	int row = e.getFirstRow();
 	    	int column = e.getColumn();
 	    	TableModel tablemodel = (TableModel)e.getSource();
 	    	int id = (Integer)tablemodel.getValueAt(row, 0);
 	    	JTable table = this.table.get(vehicles.get(id).getType().getId()-1);
 	    	
-	    	switch (column)
-	    	{
-	    	case 4:
-	    		Object[] choices = makeChoices();
-	        	VehicleType chosentype = (VehicleType)JOptionPane.showInputDialog(canvas.getFrame(), "Choose new type:", "Change type", JOptionPane.QUESTION_MESSAGE, null, choices, choices[vehicles.get(id).getType().getId()-1]);
-	        	try {
-	        		changeType(row, vehicles.get(id).getType().getId()-1, chosentype.getId());
-	        	} catch (NullPointerException e1) {
-	        		
-	        	}
-	        	
-	    	break;
-	    	case 5:
-	    		int response = JOptionPane.showConfirmDialog(canvas.getFrame(), questionRemove, titleRemove, JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE);
-				if (response == 0)
-	    			removeVehicle(row, table);
-	    	break;
-	    	default:
+	    	if (column != 5 && column != 6) 
 	    		changeVehicle(row, column, table);
-	    	break;
-	    	}
     	}
     }
     private Object[] makeChoices()
@@ -314,4 +312,52 @@ public class VehicleView extends View {
     		noChange = false;
     	}
     }
+    public void mouseClicked(MouseEvent e, JTable table) {
+    	int column = table.columnAtPoint(e.getPoint());
+    	int row = table.rowAtPoint(e.getPoint());
+    	String questionRemove = "Are you sure you want to remove this vehicle?";
+    	String titleRemove = "Removing vehicle";
+    	int id = (Integer)table.getModel().getValueAt(row, 0);
+		switch (column)
+		{
+		case 4:
+			Object[] choices = makeChoices();
+        	VehicleType chosentype = (VehicleType)JOptionPane.showInputDialog(canvas.getFrame(), "Choose new type:", "Change type", JOptionPane.QUESTION_MESSAGE, null, choices, choices[vehicles.get(id).getType().getId()-1]);
+        	try {
+        		changeType(row, vehicles.get(id).getType().getId()-1, chosentype.getId());
+        	} catch (NullPointerException e1) {
+        		
+        	}
+		break;
+		case 5:
+			int response = JOptionPane.showConfirmDialog(canvas.getFrame(), questionRemove, titleRemove, JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE);
+			if (response == 0)
+    			removeVehicle(row, table);
+		break;
+		}
+    	
+	}
+    public void mouseClicked(MouseEvent e) {
+    	
+	}
+	@Override
+	public void mouseEntered(MouseEvent e) {
+		
+		
+	}
+	@Override
+	public void mouseExited(MouseEvent e) {
+		
+		
+	}
+	@Override
+	public void mousePressed(MouseEvent e) {
+		
+		
+	}
+	@Override
+	public void mouseReleased(MouseEvent e) {
+		
+		
+	}
 }
