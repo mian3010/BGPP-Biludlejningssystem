@@ -50,8 +50,9 @@ public class testControllerChecks {
 		Vehicle ve = con.createVehicle("Ellert", "el200", 1990, con.getModel().getTypes().get(1));
 		Reservation r = new Reservation(100, ce, ve, Date.valueOf("2014-08-11"), Date.valueOf("2015-10-11"));
 		int id = con.getModel().getReservation(1).getId();	
-		con.editReservation(r, con.getModel().getReservation(1));
-		System.out.println("Edit: " + con.getModel().getReservation(id).getCustomer().getName() + " " + con.getModel().getReservation(id).getVehicle().getMake());
+		assertEquals(con.editReservation(r, con.getModel().getReservation(1)),true);
+		assertEquals(con.getModel().getReservation(id).getCustomer().getName(), "Peter Pan");
+		assertEquals(con.getModel().getReservation(id).getVehicle().getMake(), "Ellert");
 		con.close();
 	}
 	

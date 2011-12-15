@@ -24,7 +24,8 @@ public class TestCreation {
 		Date d2 = Date.valueOf("2011-10-23");
 		Customer ce = con.createCustomer("Jax Teller", 27879809, "Charming Road 102", "2109-84938492");
 		VehicleType v = con.getModel().getTypes().get(1);
-		System.out.println(v.getName());
+		// This print should say "Motorcykel"
+		// System.out.println(v.getName());
 		Reservation r = con.createReservation(ce, v, d1, d2);
 		if(r==null)
 		{
@@ -33,10 +34,8 @@ public class TestCreation {
 		}
 		else
 		{
-		System.out.println(r.getCustomer().getName());
-		System.out.println(r.getVehicle().getMake());
-		System.out.println(r.getStartdate());
-		System.out.println(r.getEnddate());
+		assertEquals(r.getCustomer().getName(), "Jax Teller");
+		assertEquals(r.getVehicle().getMake(), "Suzuki");
 		con.close();
 	    }
 		}
