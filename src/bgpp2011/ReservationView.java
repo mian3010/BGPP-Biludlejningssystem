@@ -60,8 +60,8 @@ public class ReservationView extends View {
 	        cellEditable.put(2, false);
 	        cellEditable.put(3, true);
 	        cellEditable.put(4, true);
-	        cellEditable.put(5, true);
-	        cellEditable.put(6, true);
+	        cellEditable.put(5, false);
+	        cellEditable.put(6, false);
 	       
 	        table = createTable(columnNames, data, cellEditable, columnSizes);
 	        JScrollPane scrollPane = new JScrollPane(table);
