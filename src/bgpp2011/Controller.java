@@ -13,10 +13,16 @@ public class Controller
 	private Nexus nexus;
 	private Model model;
 	/*
+<<<<<<< HEAD
+	 * Controlleren must execute operations given by the user. It must do all the checking and ordering.
+	 * The checkreservation() method checks if there is an overlap with another reservation. It takes a
+	 * reservation as a parameter. First, it checks whether the startdate is before the enddate. Second,
+=======
 	 * Controlleren must execute operations given by the user (as requested in the user interface).
 	 * It must do all the checking and ordering.
 	 * The CheckReservation() method checks if there is an overlap with another reservation. It takes a
 	 * reservation as a parameter. First, it checks whether the Start date is before the End date. Second,
+>>>>>>> branch 'master' of ssh://git@github.com/mian3010/bgpp2011.git
 	 * It checks whether the Vehicle of the Reservations re is the same as i the ArrayList. Then it checks
 	 * whether the Start date is after the End date, or if the End date is before the Start date. If that is true,
 	 * the reservation is possible and it will return true.
@@ -51,7 +57,7 @@ public class Controller
 			{
 				Reservation ra = i.next();
 			
-				Vehicle vt = ra.getVehicle();
+				Vehicle vt = ra.getVehicle(); 
 				//Checks if the the vehicle re is the same as the vehicle ra.
 			
 				if(vt.getId() == re.getVehicle().getId()) 
@@ -312,6 +318,7 @@ public class Controller
 	
 	//Deletes a reservation.
 	public boolean deleteReservation(Reservation r)
+
 	{
 		try {
 			//Calls the delete() method from Model. Cast the class to be a Reservation.
@@ -329,15 +336,49 @@ public class Controller
 	
 		
 	}
+	//Deletes a Customer
 	public boolean deleteCustomer(Customer c)
+
 	{
 		try
 		{
+			//Calls delete from model. It returns a Customer.
 			Customer cuscheck = (Customer)model.delete(c.getId(), c);
+			boolean boo = false;
+			//If cuscheck-customer is not null.
 			if(cuscheck != null)
-				return nexus.deleteCustomer(cuscheck);
-			else
+			{
+			//Nexus deletes the customer from the database. Returns true if successfull.
+				boo = nexus.deleteCustomer(cuscheck);
+			//If database-delete was successful.
+				if(boo == true)
+				{
+					//Runs through every reservation
+				Collection<Reservation> co = model.reservationCollection();
+				ArrayList<Reservation> a = new ArrayList<Reservation>();
+					for(Reservation r : co)
+					{
+						//Adds all Reservations with the same customerIs as c to an ArrayList.
+						if(r.getCustomer().getId() == c.getId())
+						{
+							a.add(r);
+						}
+					}
+					
+						//Deletes all the reservations in the ArrayList a.
+					for(Reservation re : a)
+					{
+						deleteReservation(re);
+					}
+					return true;
+				}
 				return false;
+			}
+				
+			else 
+			{
+				return false;
+			}
 		}
 		
 		catch(SQLException e)
@@ -345,15 +386,49 @@ public class Controller
 				return false;
 		}
 	}
+	
+	//Deletes a Vehicle.
 	public boolean deleteVehicle(Vehicle v)
 	{
 		try 
 		{
+			//Deletes a customer from the model. Model returns a vehicle.
 			Vehicle vcheck = (Vehicle)model.delete(v.getId(), v);
+			boolean boo = false;
+			//If vcheck vehicle is not null.
 			if(vcheck != null)
-				return nexus.deleteVehicle(vcheck);
-			else
+			{
+				//Nexus deletes the vehicle from the database.
+				boo = nexus.deleteVehicle(vcheck);
+				//If database delete is successful.
+				if(boo == true)
+				{
+					//Runs through all reservations. 
+					Collection<Reservation> co = model.reservationCollection();
+					ArrayList<Reservation> a = new ArrayList<Reservation>();
+					for(Reservation r : co)
+					{
+						//Adds all reservations with the same VehicleId as v to the ArrayList a.
+						if(r.getVehicle().getId() == v.getId())
+						{
+							a.add(r);
+						}
+						
+					}
+					//Runs through the ArrayList a and deletes all the reservations in the ArrayList.
+					for(Reservation re : a)
+					{
+						deleteReservation(re);
+					}
+					return true;
+				}
 				return false;
+			}
+			
+			else
+			{
+				return false;
+			}
 		}
 		
 		catch(SQLException e)
