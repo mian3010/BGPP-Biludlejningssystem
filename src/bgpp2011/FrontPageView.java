@@ -40,9 +40,9 @@ public class FrontPageView extends View {
         buttons.add(new JButton("Customers"));
         buttons.add(new JButton("Reservations"));
         
-        views.add(new VehicleView(canvas));
-        views.add(new CustomerView(canvas));
-        views.add(new ReservationView(canvas));
+        views.add(canvas.getView("vehicle"));
+        views.add(canvas.getView("customer"));
+        views.add(canvas.getView("reservation"));
         
         //Setting size and font and adding to layout
         Iterator<JButton> i1 = buttons.iterator();

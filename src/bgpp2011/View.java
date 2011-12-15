@@ -99,7 +99,7 @@ public abstract class View implements TableModelListener, MouseListener
         buttons.add(new JButton("< Back"));
         buttons.add(new JButton("Add"));
         
-        views.add(new FrontPageView(canvas));
+        views.add(canvas.getView("frontpage"));
         views.add("drawAddFrame");
         
         Iterator<JButton> i1 = buttons.iterator();

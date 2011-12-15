@@ -1,7 +1,5 @@
 package bgpp2011;
 import java.awt.*;
-import java.awt.event.*;
-import java.awt.image.ImageObserver;
 
 import javax.swing.*;
 
@@ -16,6 +14,7 @@ import javax.swing.*;
 public class Canvas{
     private Container contentPane;
     private JFrame frame;
+    private View frontpageview, vehicleview, customerview, reservationview;
     public Canvas()
     {
         //Setting up frame and contentpane
@@ -26,7 +25,12 @@ public class Canvas{
         contentPane.setLayout(new GridLayout(1,1));
         contentPane.setPreferredSize(new Dimension(1000,800));
         
-        changeView(new FrontPageView(this));
+        frontpageview = new FrontPageView(this);
+        vehicleview = new VehicleView(this);
+        customerview = new CustomerView(this);
+        reservationview = new ReservationView(this);
+        
+        changeView(frontpageview);
         
         frame.pack();
         frame.setVisible(true);
@@ -41,5 +45,18 @@ public class Canvas{
     public JFrame getFrame()
     {
     	return frame;
+    }
+    public View getView(String view)
+    {
+    	if (view == "frontpage")
+    		return frontpageview;
+    	else if (view == "vehicle")
+    		return vehicleview;
+    	else if (view == "customer")
+    		return customerview;
+    	else if (view == "reservation")
+    		return reservationview;
+    	else
+    		return null;
     }
 }
