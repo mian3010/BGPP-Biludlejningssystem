@@ -5,7 +5,6 @@
 package model;
 import java.sql.Date;
 
-import bgpp2011.Vehicle;
 
 
 /**

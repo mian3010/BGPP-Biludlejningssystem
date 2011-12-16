@@ -4,9 +4,9 @@ import java.util.HashMap;
 
 import model.Customer;
 import model.Reservation;
+import model.Vehicle;
+import model.VehicleType;
 
-import bgpp2011.Vehicle;
-import bgpp2011.VehicleType;
 
 
 

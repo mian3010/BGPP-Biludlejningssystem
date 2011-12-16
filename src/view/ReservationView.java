@@ -7,11 +7,11 @@ import javax.swing.event.TableModelEvent;
 
 import model.Customer;
 import model.Reservation;
+import model.Vehicle;
+import model.VehicleType;
 
 import bgpp2011.Canvas;
 import bgpp2011.Controller;
-import bgpp2011.Vehicle;
-import bgpp2011.VehicleType;
 
 
 import java.lang.reflect.InvocationTargetException;

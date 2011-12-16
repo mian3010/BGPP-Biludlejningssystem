@@ -8,12 +8,12 @@ import java.sql.Date;
 
 import model.Customer;
 import model.Reservation;
+import model.Vehicle;
+import model.VehicleType;
 
 import org.junit.Test;
 
 import bgpp2011.Controller;
-import bgpp2011.Vehicle;
-import bgpp2011.VehicleType;
 
 public class testControllerChecks {
 
@@ -77,7 +77,7 @@ public class testControllerChecks {
 	}
 	
 	@Test
-	public void testFindCar()
+	public void testSearchVehicles()
 	{
 		Controller con = new Controller();
 		VehicleType v = con.getModel().getType(2);

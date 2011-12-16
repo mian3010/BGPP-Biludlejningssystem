@@ -1,5 +1,5 @@
 
-package bgpp2011;
+package model;
 
 /**
  * The class used to represent groups of vehicles, here known as VehicleTypes.

@@ -4,8 +4,6 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.ArrayList;
 
-import bgpp2011.Vehicle;
-import bgpp2011.VehicleType;
 
 
 public class SortingClass

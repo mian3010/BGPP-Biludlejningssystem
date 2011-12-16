@@ -8,6 +8,8 @@ import java.util.ArrayList;
 
 import model.Customer;
 import model.Reservation;
+import model.Vehicle;
+import model.VehicleType;
 
 import org.junit.After;
 import org.junit.AfterClass;
@@ -18,8 +20,6 @@ import org.junit.Test;
 import database.DataBaseCom;
 import database.Nexus;
 
-import bgpp2011.Vehicle;
-import bgpp2011.VehicleType;
 
 public class SetupSampleData {
 

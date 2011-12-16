@@ -9,6 +9,8 @@ import java.sql.Date;
 import model.Customer;
 import model.Model;
 import model.Reservation;
+import model.Vehicle;
+import model.VehicleType;
 
 import database.Nexus;
 

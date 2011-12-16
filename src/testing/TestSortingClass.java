@@ -7,12 +7,12 @@ import java.util.ArrayList;
 import model.Customer;
 import model.Reservation;
 import model.SortingClass;
+import model.Vehicle;
+import model.VehicleType;
 
 import org.junit.Test;
 
 import bgpp2011.Controller;
-import bgpp2011.Vehicle;
-import bgpp2011.VehicleType;
 
 public class TestSortingClass {
 

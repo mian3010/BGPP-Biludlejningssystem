@@ -9,10 +9,11 @@ import java.util.Map.Entry;
 import javax.swing.*;
 import javax.swing.event.TableModelEvent;
 
+import model.Vehicle;
+import model.VehicleType;
+
 import bgpp2011.Canvas;
 import bgpp2011.Controller;
-import bgpp2011.Vehicle;
-import bgpp2011.VehicleType;
 
 /**
  *

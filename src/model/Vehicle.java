@@ -1,5 +1,6 @@
 
-package bgpp2011;
+package model;
+
 
 /**
  * Vehicleclass contains information about a car. Make, model, year....ect.

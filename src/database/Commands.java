@@ -8,6 +8,8 @@ import java.util.HashMap;
 
 import model.Customer;
 import model.Reservation;
+import model.Vehicle;
+import model.VehicleType;
 /*
  * This class needs alot of explanation.
  * Basically this is class designed to keep every bit of SQL-syntax-related code separated from the class that 
@@ -18,8 +20,6 @@ import model.Reservation;
  * @authors mainly msta & tbrj.
  */
 
-import bgpp2011.Vehicle;
-import bgpp2011.VehicleType;
 
 
 public class Commands {
