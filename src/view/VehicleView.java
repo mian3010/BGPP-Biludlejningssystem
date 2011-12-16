@@ -1,4 +1,4 @@
-package bgpp2011;
+package view;
 import java.awt.*;
 import java.awt.event.*;
 import java.lang.reflect.InvocationTargetException;
@@ -8,6 +8,11 @@ import java.util.Map.Entry;
 
 import javax.swing.*;
 import javax.swing.event.TableModelEvent;
+
+import bgpp2011.Canvas;
+import bgpp2011.Controller;
+import bgpp2011.Vehicle;
+import bgpp2011.VehicleType;
 
 /**
  *

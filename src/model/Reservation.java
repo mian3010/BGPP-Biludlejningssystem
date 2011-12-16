@@ -2,8 +2,11 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package bgpp2011;
+package model;
 import java.sql.Date;
+
+import bgpp2011.Vehicle;
+
 
 /**
 

@@ -1,5 +1,5 @@
 
-package bgpp2011;
+package database;
 
 import java.sql.*;
 /**

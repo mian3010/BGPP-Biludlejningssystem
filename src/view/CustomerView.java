@@ -1,9 +1,15 @@
-package bgpp2011;
+package view;
 import java.awt.*;
 import java.awt.event.*;
 
 import javax.swing.*;
 import javax.swing.event.TableModelEvent;
+
+import model.Customer;
+
+import bgpp2011.Canvas;
+import bgpp2011.Controller;
+
 
 import java.util.*;
 import java.util.Map.Entry;

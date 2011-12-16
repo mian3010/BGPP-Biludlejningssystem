@@ -7,16 +7,18 @@ import java.sql.Date;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import model.Customer;
+import model.Reservation;
+
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
-import bgpp2011.Customer;
-import bgpp2011.DataBaseCom;
-import bgpp2011.Nexus;
-import bgpp2011.Reservation;
+import database.DataBaseCom;
+import database.Nexus;
+
 import bgpp2011.Vehicle;
 import bgpp2011.VehicleType;
 
@@ -63,15 +65,15 @@ public class TestNexusLists {
    HashMap<Integer, Reservation> rmap =  n.getReservations();
 	assertEquals(vmap.get(1).getMake(),"Suzuki");
 	assertEquals(vmap.get(10).getModel(),"TT");
-	assertEquals(vmap.get(5).getYear(),1903);
-	assertEquals(cmap.get(1).getName(),"John Mogensen");
+	assertEquals(vmap.get(5).getYear(),2007);
+	assertEquals(cmap.get(1).getName(),"Roose Bolton");
 	assertEquals(cmap.get(4).getNumber(),30534521);
-	assertEquals(cmap.get(10).getAddress(),"Winterfell");
+	assertEquals(cmap.get(10).getAddress(),"Braavos");
 	assertEquals(rmap.get(1).getVehicle().getMake(),"Suzuki");
 //	assertEquals(rmap.get(4).getStartdate(),"2001-04-17");
-	assertEquals(rmap.get(8).getCustomer().getName(),"Toke Loke Bruno");
+	assertEquals(rmap.get(8).getCustomer().getName(),"Tyrion Lannister");
 	assertEquals(vtmap.get(1).getId(),1);
-	assertEquals(vtmap.get(4).getName(),"3-dørs");
+	assertEquals(vtmap.get(4).getName(),"3-door");
 	n.closeDatabase();  
    }
    catch(SQLException exn)

@@ -1,8 +1,14 @@
-package bgpp2011;
+package model;
 
 import java.sql.SQLException;
 import java.util.Collection;
 import java.util.HashMap;
+
+import bgpp2011.Vehicle;
+import bgpp2011.VehicleType;
+
+
+import database.Nexus;
 
 /*
  * This class models the data from the database and stores them into HashMaps.

@@ -4,11 +4,12 @@ import static org.junit.Assert.*;
 
 import java.sql.Date;
 
+import model.Customer;
+import model.Reservation;
+
 import org.junit.Test;
 
 import bgpp2011.Controller;
-import bgpp2011.Customer;
-import bgpp2011.Reservation;
 import bgpp2011.Vehicle;
 import bgpp2011.VehicleType;
 

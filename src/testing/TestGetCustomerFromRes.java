@@ -5,11 +5,12 @@ import static org.junit.Assert.*;
 import java.util.Collection;
 import java.util.Iterator;
 
+import model.Customer;
+import model.Reservation;
+
 import org.junit.Test;
 
 import bgpp2011.Controller;
-import bgpp2011.Customer;
-import bgpp2011.Reservation;
 
 /*
  * This test was made to test the link between customer and reservation in the map containing 

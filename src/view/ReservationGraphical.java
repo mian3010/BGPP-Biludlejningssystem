@@ -1,6 +1,10 @@
-package bgpp2011;
+package view;
 import java.awt.*;
 import javax.swing.*;
+
+import bgpp2011.Controller;
+import bgpp2011.VehicleType;
+
 import java.sql.Date;
 import java.util.*;
 import java.util.Map.Entry;

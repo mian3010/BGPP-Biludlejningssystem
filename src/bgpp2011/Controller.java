@@ -6,6 +6,12 @@ import java.util.Collection;
 import java.util.Iterator;
 import java.sql.Date;
 
+import model.Customer;
+import model.Model;
+import model.Reservation;
+
+import database.Nexus;
+
 import testing.SetupSampleData;
 
 public class Controller

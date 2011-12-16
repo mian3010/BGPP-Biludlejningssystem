@@ -6,16 +6,18 @@ import java.sql.Date;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
+import model.Customer;
+import model.Reservation;
+
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
-import bgpp2011.Customer;
-import bgpp2011.DataBaseCom;
-import bgpp2011.Nexus;
-import bgpp2011.Reservation;
+import database.DataBaseCom;
+import database.Nexus;
+
 import bgpp2011.Vehicle;
 import bgpp2011.VehicleType;
 
@@ -78,16 +80,16 @@ public class SetupSampleData {
  	   try {
  	   Nexus n = new Nexus();
  	   ArrayList<Customer> clist = new ArrayList<Customer>();
- 	   Customer c1 = new Customer(1, "John Mogensen", 43982342,"Mogensvej","4234890-4324");
- 	   Customer c2 = new Customer(2, "Magnus Stahl", 34235656,"Skodsborggade", "32543634-421");
- 	   Customer c3 = new Customer(3, "Povl Dissing", 34234123, "Lungevej", "3124345-2312");
+ 	   Customer c1 = new Customer(1, "Roose Bolton", 43982342,"Winterfell","4234890-4324");
+ 	   Customer c2 = new Customer(2, "Victarion Greyjoy", 34235656,"Pyke", "32543634-421");
+ 	   Customer c3 = new Customer(3, "Petyr Baelish", 34234123, "The Vale", "3124345-2312");
  	   Customer c4 = new Customer(4, "Kim Larsen", 30534521, "Cancer Allé", "45345345-21311");
- 	   Customer c5 = new Customer(5, "Michael Søby-Andersen", 23982749, "Allerød", "42342-232");
- 	   Customer c6 = new Customer(6, "Toke Loke Bruno", 2342348, "Rådmandsgade", "123124-42545");
- 	   Customer c7 = new Customer(7, "Kjeld Ingrisch", 423498, "SlagerHuset", "4234234-3123");
- 	   Customer c8 = new Customer(8, "Helmut Lotti", 472394, "LegendaryRoad", "534523-1231");
- 	   Customer c9 = new Customer(9, "Michael Jackson", 234234, "6-foot-underRoad", "432434-2312");
- 	   Customer c10 = new Customer(10, "Arya Stark", 234234, "Winterfell", "3123543-8674");
+ 	   Customer c5 = new Customer(5, "Jon Snow", 23982749, "The Wall", "42342-232");
+ 	   Customer c6 = new Customer(6, "Tyrion Lannister", 65439823, "Mereen", "123124-42545");
+ 	   Customer c7 = new Customer(7, "Kjeld Ingrisch", 42349854, "Beer Road", "4234234-3123");
+ 	   Customer c8 = new Customer(8, "Helmut Lotti", 47239414, "Great Music Allé", "534523-1231");
+ 	   Customer c9 = new Customer(9, "Jorah Mormont", 23423428, "Bear Island", "432434-2312");
+ 	   Customer c10 = new Customer(10, "Arya Stark", 53098542, "Braavos", "3123543-8674");
  	   clist.add(c1);
  	   clist.add(c2);
  	   clist.add(c3);
@@ -104,11 +106,11 @@ public class SetupSampleData {
  		   n.createEntryCustomer(c);
  		
  	   }
- 	   VehicleType vt1 = new VehicleType(1,"Motorcykel",700);
- 	   VehicleType vt2 = new VehicleType(2,"4-dørs",550);
- 	   VehicleType vt3 = new VehicleType(3,"5-dørs",650);
- 	   VehicleType vt4 = new VehicleType(4,"3-dørs",450);
- 	   VehicleType vt5 = new VehicleType(5,"2-dørs COUPE",7000);
+ 	   VehicleType vt1 = new VehicleType(1,"Motorcycle",700);
+ 	   VehicleType vt2 = new VehicleType(2,"4-door",550);
+ 	   VehicleType vt3 = new VehicleType(3,"5-door",650);
+ 	   VehicleType vt4 = new VehicleType(4,"3-door",450);
+ 	   VehicleType vt5 = new VehicleType(5,"Coupé",1500);
  	   ArrayList<VehicleType> vtlist = new ArrayList<VehicleType>();
  	   vtlist.add(vt1);
  	   vtlist.add(vt2);
@@ -119,15 +121,15 @@ public class SetupSampleData {
  	   {
  		   n.createEntryVehicleType(vt);
  	   }
- 	   Vehicle v1 = new Vehicle(1,"Suzuki","1000ccm",1990,vt1);
- 	   Vehicle v2 = new Vehicle(2,"Harley Davidson","Outlaw",1975,vt1);
- 	   Vehicle v3 = new Vehicle(3,"BMW","MichaelsBimmer",3333,vt2);
- 	   Vehicle v4 = new Vehicle(4,"Audi","A4",2001,vt2);
- 	   Vehicle v5 = new Vehicle(5,"Ford","Oscars Lortebil",1903,vt2);
- 	   Vehicle v6 = new Vehicle(6,"Porsche","Cayenne",2011,vt3);
- 	   Vehicle v7 = new Vehicle(7,"Audi","Q9",2005,vt3);
- 	   Vehicle v8 = new Vehicle(8,"Suzuki","Swift",2003,vt4);
- 	   Vehicle v9 = new Vehicle(9,"Kia","Caravan",1999,vt4);
+ 	   Vehicle v1 = new Vehicle(1,"Suzuki","GSX-R750",2011,vt1);
+ 	   Vehicle v2 = new Vehicle(2,"Harley Davidson","Fat Boy",2010,vt1);
+ 	   Vehicle v3 = new Vehicle(3,"Toyota","Camry",1999,vt2);
+ 	   Vehicle v4 = new Vehicle(4,"Nissan","Altima",2001,vt2);
+ 	   Vehicle v5 = new Vehicle(5,"Ford","Fusion",2007,vt2);
+ 	   Vehicle v6 = new Vehicle(6,"BMW","M1",2003,vt3);
+ 	   Vehicle v7 = new Vehicle(7,"Saab","NG",2005,vt3);
+ 	   Vehicle v8 = new Vehicle(8,"Kia","Picanto",2009,vt4);
+ 	   Vehicle v9 = new Vehicle(9,"Toyota","Yaris",2002,vt4);
  	   Vehicle v10 = new Vehicle(10,"Audi","TT",2011,vt5);
  	   Vehicle v11 = new Vehicle(11,"Porsche","911",2009,vt5);
  	   ArrayList<Vehicle> vlist = new ArrayList<Vehicle>();

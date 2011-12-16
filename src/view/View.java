@@ -1,9 +1,12 @@
-package bgpp2011;
+package view;
 import java.awt.*;
 import java.awt.event.*;
 
 import javax.swing.*;
 import javax.swing.event.*;
+
+import bgpp2011.Canvas;
+import bgpp2011.Controller;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;

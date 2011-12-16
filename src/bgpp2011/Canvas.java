@@ -3,6 +3,12 @@ import java.awt.*;
 
 import javax.swing.*;
 
+import view.CustomerView;
+import view.FrontPageView;
+import view.ReservationView;
+import view.VehicleView;
+import view.View;
+
 /**
  *
  * @author Michael

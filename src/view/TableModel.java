@@ -1,4 +1,4 @@
-package bgpp2011;
+package view;
 import javax.swing.table.*;
 import java.util.*;
 

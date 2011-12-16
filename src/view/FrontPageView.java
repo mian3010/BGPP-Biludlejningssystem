@@ -1,8 +1,11 @@
-package bgpp2011;
+package view;
 import java.awt.*;
 import java.awt.event.*;
 
 import javax.swing.*;
+
+import bgpp2011.Canvas;
+
 
 import java.util.*;
 

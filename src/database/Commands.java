@@ -1,10 +1,13 @@
-package bgpp2011;
+package database;
 
 import java.sql.Date;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashMap;
+
+import model.Customer;
+import model.Reservation;
 /*
  * This class needs alot of explanation.
  * Basically this is class designed to keep every bit of SQL-syntax-related code separated from the class that 
@@ -14,6 +17,9 @@ import java.util.HashMap;
  * as it because of its 'translate'-like nature can be replaced as long as the parameters are the same.
  * @authors mainly msta & tbrj.
  */
+
+import bgpp2011.Vehicle;
+import bgpp2011.VehicleType;
 
 
 public class Commands {

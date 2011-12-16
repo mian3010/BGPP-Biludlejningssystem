@@ -1,6 +1,13 @@
-package bgpp2011;
+package database;
 import java.sql.*;
 import java.util.HashMap;
+
+import model.Customer;
+import model.Reservation;
+
+import bgpp2011.Vehicle;
+import bgpp2011.VehicleType;
+
 
 
 /*
