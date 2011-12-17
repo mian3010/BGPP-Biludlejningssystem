@@ -219,7 +219,7 @@ public class CustomerView extends View {
     	switch (column)
     	{
     	case 5:
-    		canvas.changeView(new ReservationView(canvas, (Integer)table.getValueAt(row, 0)));
+    		((ReservationView)canvas.getView("reservation")).setID((Integer)table.getValueAt(row, 0));
     	break;
     	case 6:
     		int response = JOptionPane.showConfirmDialog(canvas.getFrame(), questionRemove, titleRemove, JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE);

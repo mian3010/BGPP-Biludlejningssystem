@@ -31,7 +31,7 @@ public class ReservationView extends View {
 	private HashMap<Integer, VehicleType> vehicletypes;
 	private HashMap<Integer, Customer> customers;
     private JTable table;
-    private int id;
+    private int id = -1;
     private boolean drawGraphical = false;
     private ReservationGraphical graphical; 
     
@@ -48,20 +48,22 @@ public class ReservationView extends View {
     	vehicletypes = controller.getModel().getTypes();
     	customers = controller.getModel().getCustomers();
     }
-    public ReservationView(Canvas canvas, int customerID)
+    public void setID(int id)
     {
-        this(canvas);
-        this.id = customerID;
+    	this.id = id;
+    	canvas.changeView(canvas.getView("reservation"));
     }
     @Override
     public JPanel draw()
     {
         updateReservations();
+        if (id != -1)
+        	topText = "Reservations for customer: " + customers.get(id).toString();
         JPanel contentPane = super.draw();
         if (!drawGraphical)
         {
 	        String[] columnNames = {"ID","Customer","Vehicle","Start date","End date", "Remove"};
-	        Object[][] data = parseObjects(reservations);
+	        Object[][] data = parseObjects(reservations, id);
 	        int[] columnSizes = {30,1000,1000,300,300,30};
 	        HashMap<Integer, Boolean> cellEditable = new HashMap<Integer, Boolean>();
 	        cellEditable.put(0, false);
@@ -98,14 +100,25 @@ public class ReservationView extends View {
     {
 
     }
-    public Object[][] parseObjects(HashMap<Integer, Reservation> dataObjects)
+    public Object[][] parseObjects(HashMap<Integer, Reservation> dataObjects, int id)
     {
-        Object[][] data = new Object[dataObjects.size()][7];
-        Iterator<Entry<Integer, Reservation>> i = dataObjects.entrySet().iterator();
-        int j = 0;
-        while (i.hasNext())
-        {
+    	HashMap<Integer, Reservation> reservation = new HashMap<Integer, Reservation>();
+    	Iterator<Entry<Integer, Reservation>> i = dataObjects.entrySet().iterator();
+    	while (i.hasNext())
+    	{
         	Map.Entry<Integer, Reservation> object = (Map.Entry<Integer, Reservation>)i.next();
+    		if (object.getValue().getCustomer().getId() == id)
+    			reservation.put(object.getValue().getId(), object.getValue());
+    		else if (id == -1)
+    			reservation.put(object.getValue().getId(), object.getValue());
+    	}
+    			
+        Object[][] data = new Object[reservation.size()][6];
+        Iterator<Entry<Integer, Reservation>> i2 = reservation.entrySet().iterator();
+        int j = 0;
+        while (i2.hasNext())
+        {
+        	Map.Entry<Integer, Reservation> object = (Map.Entry<Integer, Reservation>)i2.next();
             data[j][0] = object.getValue().getId();
             data[j][1] = object.getValue().getCustomer().toString();
             data[j][2] = object.getValue().getVehicle().toString();
@@ -128,7 +141,7 @@ public class ReservationView extends View {
     	{
     		HashMap<Integer, Reservation> tempMap = new HashMap<Integer, Reservation>();
     		tempMap.put(success.getId(), success);
-    		Object[][] tempData = parseObjects(tempMap);
+    		Object[][] tempData = parseObjects(tempMap, id);
     		addToTable(tempData[0], table);
     		return true;
     	}
@@ -200,6 +213,130 @@ public class ReservationView extends View {
     	frame.setContentPane(pane);
     	frame.pack();
     	frame.setVisible(true);
+    }
+    public void drawSearchFrame()
+    {
+    	addText = "Search available cars";
+    	JLabel[] labels = new JLabel[2];
+    	labels[0] = new JLabel("Start date: ", JLabel.TRAILING);
+    	labels[1] = new JLabel("End date: ", JLabel.TRAILING);
+    	JFrame frame = new JFrame(addText);
+    	frame.setResizable(false);
+    	JPanel pane = drawAddFrameHead();
+
+    	JPanel panel = new JPanel();
+    	panel.setLayout(new GridLayout(0,2));
+    	
+    	SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+    	JFormattedTextField[] input = new JFormattedTextField[2];
+    	input[0] = new JFormattedTextField(format);
+    	input[1] = new JFormattedTextField(format);
+    	
+    	panel.add(labels[0]);
+    	panel.add(input[0]);
+    	panel.add(labels[1]);
+    	panel.add(input[1]);
+
+    	panel.setAlignmentX(0);
+    	
+    	JPanel foot = drawSearchFrameFoot(frame, input);
+    	
+    	pane.add(panel);
+    	pane.add(foot);
+    	pane.setBorder(BorderFactory.createEmptyBorder(10,10,10,10));
+    	frame.setContentPane(pane);
+    	frame.pack();
+    	frame.setVisible(true);
+    }
+    public JPanel drawSearchFrameFoot(final JFrame frame, final Object[] input)
+    {
+    	
+    	JPanel buttonscont = new JPanel();
+    	buttonscont.setLayout(new FlowLayout(FlowLayout.LEFT));
+    	
+    	JButton[] buttons = new JButton[2];
+    	buttons[0] = new JButton("Search");
+    	buttons[0].addActionListener(new ActionListener() {
+            	@Override
+            	public void actionPerformed(ActionEvent e) {
+            		drawSearchResultFrame(input);
+            		frame.dispose();
+            	} 
+            });
+    	
+    	buttons[1] = new JButton("Cancel");
+    	buttons[1].addActionListener(new ActionListener() {
+        	@Override
+        	public void actionPerformed(ActionEvent e) {
+        		frame.dispose();
+        	} 
+        });
+    	
+    	for (JButton button : buttons)
+    	{
+    		buttonscont.add(button);
+    	}
+    	
+    	buttonscont.setAlignmentX(0);
+    	
+    	return buttonscont;
+    }
+    public void drawSearchResultFrame(Object[] input)
+    {
+    	addText = "Available cars";
+    	JLabel[] labels_left = new JLabel[vehicletypes.size()];
+    	JLabel[] labels_right = new JLabel[vehicletypes.size()];
+    	
+    	JFrame frame = new JFrame(addText);
+    	frame.setResizable(false);
+    	JPanel pane = drawAddFrameHead();
+
+    	JPanel panel = new JPanel();
+    	panel.setLayout(new GridLayout(0,2));
+    	
+    	Iterator<Entry<Integer, VehicleType>> i = vehicletypes.entrySet().iterator();
+    	int j = 0;
+    	while (i.hasNext())
+    	{
+    		Map.Entry<Integer, VehicleType> vehicletype = (Map.Entry<Integer, VehicleType>)i.next();
+    		labels_left[j] = new JLabel(vehicletype.getValue().getName()+": ", JLabel.TRAILING);
+    		panel.add(labels_left[j]);
+    		Date startdate = new Date((((java.util.Date)((JFormattedTextField)input[0]).getValue()).getTime()));
+    		Date enddate = new Date((((java.util.Date)((JFormattedTextField)input[1]).getValue()).getTime()));
+    		labels_right[j] = new JLabel(""+controller.typeCounting(vehicletype.getValue(), startdate, enddate), JLabel.LEADING);
+    		panel.add(labels_right[j]);
+    		j++;
+    	}
+
+    	panel.setAlignmentX(0);
+    	
+    	JPanel foot = drawSearchFrameResultFoot(frame, input);
+    	
+    	pane.add(panel);
+    	pane.add(foot);
+    	pane.setBorder(BorderFactory.createEmptyBorder(10,10,10,10));
+    	frame.setContentPane(pane);
+    	frame.pack();
+    	frame.setVisible(true);
+    }
+    public JPanel drawSearchFrameResultFoot(final JFrame frame, final Object[] input)
+    {
+    	
+    	JPanel buttonscont = new JPanel();
+    	buttonscont.setLayout(new FlowLayout(FlowLayout.LEFT));
+    	
+    	JButton button = new JButton("Close");
+    	button.addActionListener(new ActionListener() {
+            	@Override
+            	public void actionPerformed(ActionEvent e) {
+            		frame.dispose();
+            	} 
+            });
+    	buttonscont.add(button);
+    	
+    	buttonscont.setAlignmentX(0);
+    	
+    	return buttonscont;
     }
     public void tableChanged(TableModelEvent e)
     {
@@ -312,19 +449,30 @@ public class ReservationView extends View {
     public JPanel createButtons()
     {
     	JPanel boxLayout = super.createButtons();
+    	final ReservationView view = this;
     	if (!drawGraphical)
     	{
 	    	JButton button = new JButton("Graphical");
 	    	button.setMaximumSize(new Dimension(130,30));
 	        boxLayout.add(button);
-	        final ReservationView view = this;
 	        button.addActionListener(new ActionListener() {
 	        	@Override
 	        	public void actionPerformed(ActionEvent e) {
 	        		view.graphical(true);
 	            }
 	        });
-	    	return boxLayout;
+	        if (id != -1)
+	        {
+		        JButton button2 = new JButton("Reset customer");
+		    	button2.setMaximumSize(new Dimension(130,30));
+		        boxLayout.add(button2);
+		        button2.addActionListener(new ActionListener() {
+		        	@Override
+		        	public void actionPerformed(ActionEvent e) {
+		        		view.setID(-1);
+		            }
+		        });
+	        }
     	}
     	else
     	{
@@ -357,7 +505,6 @@ public class ReservationView extends View {
 	    	button2.setMaximumSize(new Dimension(130,30));
 	        boxLayout.add(button2);
 	        
-	        final ReservationView view = this;
 	        final ReservationGraphical graphical = this.graphical;
 	        button1.addActionListener(new ActionListener() {
 	        	@Override
@@ -373,8 +520,17 @@ public class ReservationView extends View {
 	        		graphical.repaint();
 	            }
 	        });
-	    	return boxLayout;
     	}
+    	JButton button3 = new JButton("Search vehicles");
+    	button3.setMaximumSize(new Dimension(130,30));
+        boxLayout.add(button3);
+        button3.addActionListener(new ActionListener() {
+        	@Override
+        	public void actionPerformed(ActionEvent e) {
+        		view.drawSearchFrame();
+            }
+        });
+    	return boxLayout;
     }
     @Override
 	public void mouseClicked(MouseEvent e) {
