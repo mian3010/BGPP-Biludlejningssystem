@@ -305,9 +305,9 @@ public abstract class View implements TableModelListener, MouseListener
     public ImageIcon generateIcon(String s)
     {
     	if(s.equals("delete"))
-    		return new ImageIcon(getClass().getResource("img/delete.gif"));		
+    		return new ImageIcon(getClass().getResource("/img/delete.gif"));		
 		else if(s.equals("update"))
-			return new ImageIcon(getClass().getResource("img/update.png"));
+			return new ImageIcon(getClass().getResource("/img/update.png"));
     	return new ImageIcon();
     
     }
