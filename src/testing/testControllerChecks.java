@@ -17,7 +17,7 @@ import bgpp2011.Controller;
 
 public class testControllerChecks {
 
-	/*
+	/**
 	 * This testclass test all the non-trivial methods in the controller class. All test will return true
 	 * In the tables in database has been reset before run. All the test have assertequals that will return
 	 * false and a assertEquals that will return false. This ensures that the checks can both have a 

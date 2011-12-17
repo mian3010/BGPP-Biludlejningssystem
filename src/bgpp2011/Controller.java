@@ -20,7 +20,7 @@ public class Controller
 {
 	private Nexus nexus;
 	private Model model;
-	/*
+	/**
 <<<<<<< HEAD
 	 * Controlleren must execute operations given by the user. It must do all the checking and ordering.
 	 * The checkreservation() method checks if there is an overlap with another reservation. It takes a
@@ -45,7 +45,7 @@ public class Controller
 	}
 	//Method that loads the HashMaps with data from the database. Uses the getMethods() from the nexus.
 	
-	/*
+	/**
 	 * This method check if a reservation overlaps another reservation. It compares the dates of the
 	 * reservation given in the parameter with the dates from all reservations in the HashMap reservations.
 	 * It uses the String-types compare method to check if the dates are overlapping.
@@ -95,7 +95,7 @@ public class Controller
 	}	
 	
 	
-	/*
+	/**
 	 *This code returns an ArrayList of vehicles grouped by the type they belong to,
 	 *which is specified in the parameter.
 	 *@param v a the VehicleType which selects the vehicles
@@ -119,7 +119,7 @@ public class Controller
 		return vlist;
 	}
 	
-	/*
+	/**
 	 * This method is used when counting the number of vehicles avalaible in a certain date-range.
 	 * @param v the VehicleType of which the vehicles should be counted
 	 * @param start the Date object containing information about the Start of the range
@@ -134,7 +134,7 @@ public class Controller
 		return vlist.size();
 	}
 	
-	/*
+	/**
 	 * This method is used to fetch an arraylist of vehicles containing vehicles
 	 * which are free to rent in the specified daterange, grouped by type.
 	 * @param v the VehicleType of which the vehicles should be selected.
@@ -178,7 +178,7 @@ public class Controller
 					return null;
 	}
 
-	/*
+	/**
 
 	 * This method is called by the GUI and it checks if a reservation is avaliable, and return it 
 	 * if it is. Else it returns null.
@@ -222,7 +222,7 @@ public class Controller
 		}
 	}
 	
-	/*
+	/**
 	 * This method creates a new customer. It checks whether the customer is already in the system. 
 	 */
 	public Customer createCustomer(String name, int phonenumber, String address, String bankaccount)
@@ -255,7 +255,7 @@ public class Controller
 					return null;
 					}				
 	}
-	/*
+	/**
 	 * Creates a new vehicle. It check if the type is correct and already in the system.
 	 * It sends a vehicle to the database which deligates an id to it. 
 	 */
@@ -291,7 +291,7 @@ public class Controller
 				}
 		
 	}
-	/*
+	/**
 	 * Method that creates a new vehicletype. It sends a type to Nexus, witch deligates an id to it.
 	 * It checks whether there is already a type with the same name in the system.
 	 */
@@ -460,7 +460,7 @@ public class Controller
 				return false;
 		}
 	}
-	/*
+	/**
 	 * This method takes a new reservation as a parameter and puts it in HashMap, with a key equal to
 	 * the id of the reservation. 
 	 */
@@ -568,7 +568,7 @@ public class Controller
 	}
 
 	
-	/*
+	/**
 	 * Closes the connection to the database. Uses the close database method from the NexusClass.
 	 */
 	public Model getModel()

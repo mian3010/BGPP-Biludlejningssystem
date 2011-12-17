@@ -225,8 +225,7 @@ public class VehicleView extends View {
      * Method tableChanged
      * 
      * This method is called whenever the table has changed. When it has the method
-     * changes the field in the database. If it is not successfull it prints a message
-     * and sets the field back to original.
+     * changes the field via the method changeVehicle
      * 
      * @param e The event
      */
@@ -247,7 +246,7 @@ public class VehicleView extends View {
     /*
      * Method makeChoices
      * 
-     * This method makes an array from the vehiclestypes. The array is required to create a
+     * This method makes an array from the vehicletypes hashmap. The array is required to create a
      * combobox with the vehicletypes
      * 
      * @return Object[] The array for the combobox

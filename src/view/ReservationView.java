@@ -73,13 +73,26 @@ public class ReservationView extends View {
     	customers = controller.getModel().getCustomers();
     }
     /*
+     * Method setID
      * 
+     * This method sets the ID of the customer that reservations should be displayed for
+     * -1 for all customers
+     * 
+     * @param id The id to set
      */
     public void setID(int id)
     {
     	this.id = id;
     	canvas.changeView(canvas.getView("reservation"));
     }
+    /*
+     * Method draw
+     * 
+     * This method draws the entire view for reservations. It overrides the superclass draw
+     * but also calls this. It draws the table, the buttons and everything else
+     * 
+     * @return JPanel The panel that contains the entire view
+     */
     @Override
     public JPanel draw()
     {
@@ -113,6 +126,7 @@ public class ReservationView extends View {
         }
         else
         {
+        	//Graphical layout is selected, create the graphical JPanel
         	graphical = new ReservationGraphical(controller, new Date(System.currentTimeMillis()), 15);
         	contentPane.add(graphical, BorderLayout.CENTER);
         	JPanel boxLayout = createButtons();
@@ -120,15 +134,29 @@ public class ReservationView extends View {
         }
         return contentPane;
     }
+    /*
+     * Method graphical
+     * 
+     * This method sets the boolean for graphical, and reloads the view
+     * 
+     * @param graphical Whether or not graphical or textual should be selected
+     */
     public void graphical(boolean graphical)
     {
     	drawGraphical = graphical;
     	canvas.changeView(this);
     }
-    public void paint(Graphics g)
-    {
-
-    }
+    /*
+     * Method parseObjects
+     * 
+     * This method takes a hashmap containing the reservations, and converts it to
+     * a 2d-array that is required to make a table. It either only takes the customers
+     * defined by id, or all if id is -1
+     * 
+     * @param dataObjects The hashmap containing reservations
+     * @param id The id of the customer, -1 for all
+     * @return Object[][] The 2d-array that the table requires
+     */
     public Object[][] parseObjects(HashMap<Integer, Reservation> dataObjects, int id)
     {
     	HashMap<Integer, Reservation> reservation = new HashMap<Integer, Reservation>();
@@ -158,6 +186,15 @@ public class ReservationView extends View {
         }
         return data;
     }
+    /*
+     * Method addEntry
+     * 
+     * This method adds an entry to the database, and if successfull adds it to the table
+     * aswell. If not successfull it displays a message, and returns false
+     * 
+     * @param input The input fields from add form
+     * @return boolean Whether or not it has been successful
+     */
     public boolean addEntry(Object[] input)
     {
     	Reservation success = controller.createReservation((Customer)((JComboBox)input[0]).getSelectedItem(),
@@ -180,6 +217,11 @@ public class ReservationView extends View {
     		return false;
     	}
     }
+    /*
+     * Method drawAddFrame
+     * 
+     * This method draws the frame used to add reservations
+     */
     public void drawAddFrame()
     {
     	addText = "Add reservation";
@@ -243,6 +285,11 @@ public class ReservationView extends View {
     	frame.pack();
     	frame.setVisible(true);
     }
+    /*
+     * Method drawSearchFrame
+     * 
+     * This method draws the frame used to search for available vehicles
+     */
     public void drawSearchFrame()
     {
     	addText = "Search available vehicles";
@@ -277,6 +324,16 @@ public class ReservationView extends View {
     	frame.pack();
     	frame.setVisible(true);
     }
+    /*
+     * Method drawSearchFrameFoot
+     * 
+     * This method draws the foot of the frame for searching for available vehicles
+     * It adds actionslisteners to the buttons
+     * 
+     * @param frame The frame that contains head and body
+     * @param input The input-fields from body
+     * @return JPanel The panel containing the foot
+     */
     public JPanel drawSearchFrameFoot(final JFrame frame, final Object[] input)
     {
     	
@@ -310,6 +367,14 @@ public class ReservationView extends View {
     	
     	return buttonscont;
     }
+    /*
+     * Method drawSearchResultFrame
+     * 
+     * This method draws the frame for showing the results from searching
+     * for available vehicles
+     * 
+     * @param input The input fields from the search form
+     */
     public void drawSearchResultFrame(Object[] input)
     {
     	addText = "Available vehicles";
@@ -348,6 +413,16 @@ public class ReservationView extends View {
     	frame.pack();
     	frame.setVisible(true);
     }
+    /*
+     * Method drawSearchFrameResultFoot
+     * 
+     * This method draws the foot of the frame for displaying results from searching
+     * It adds actionslisteners to the button
+     * 
+     * @param frame The frame that contains head and body
+     * @param input The input-fields from body
+     * @return JPanel The panel containing the foot
+     */
     public JPanel drawSearchFrameResultFoot(final JFrame frame, final Object[] input)
     {
     	
@@ -367,6 +442,14 @@ public class ReservationView extends View {
     	
     	return buttonscont;
     }
+    /*
+     * Method tableChanged
+     * 
+     * This method is called whenever the table has changed. When it has the method
+     * changes the field via the method changeReservation
+     * 
+     * @param e The event
+     */
     public void tableChanged(TableModelEvent e)
     {
     	if (!noChange)
@@ -377,6 +460,15 @@ public class ReservationView extends View {
 	    		changeReservation(row, column, table);
     	}
     }
+    /*
+     * Method changeCustomer
+     * 
+     * This method changes the customer of a reservation.
+     * Called by doubleclick on customer in table
+     * 
+     * @param rowID The row that has been changed
+     * @param newCustomer The customer to change to
+     */
     public void changeCustomer(int rowID, int newCustomer)
     {
     	Reservation newR = new Reservation(reservations.get(table.getValueAt(rowID, 0)).getId(),
@@ -399,6 +491,15 @@ public class ReservationView extends View {
     	else
     		JOptionPane.showMessageDialog(canvas.getFrame(), "Could not change customer on the reservation - SQLException", "Error", JOptionPane.ERROR_MESSAGE);
     }
+    /*
+     * Method changeType
+     * 
+     * This method changes the vehicle type of a reservation.
+     * Called by doubleclick on vehicle in table
+     * 
+     * @param rowID The row that has changed
+     * @param newType The type to change to
+     */
     public void changeType(int rowID, int newType)
     {
     	Vehicle vehicle = controller.searchVehicles(vehicletypes.get(newType), reservations.get(table.getValueAt(rowID, 0)).getDateStart(), reservations.get(table.getValueAt(rowID, 0)).getDateEnd());
@@ -425,6 +526,15 @@ public class ReservationView extends View {
     	else
     		JOptionPane.showMessageDialog(canvas.getFrame(), "No available vehicles of that type", "Error", JOptionPane.ERROR_MESSAGE);
     }
+    /*
+     * Method removeReservation
+     * 
+     * This method removes a reservation. On success it removes it from
+     * the table aswell. On fail it displays a messagebox
+     * 
+     * @param rowID The row to be removed
+     * @param table The table to remove from
+     */
     public void removeReservation(int rowID, JTable table)
     {
     	boolean success = controller.deleteReservation(reservations.get(table.getValueAt(rowID, 0)));
@@ -433,6 +543,16 @@ public class ReservationView extends View {
     	else
     		JOptionPane.showMessageDialog(canvas.getFrame(), "Could not remove reservation - SQLException", "Error", JOptionPane.ERROR_MESSAGE);
     }
+    /*
+     * Method changeReservation
+     * 
+     * This method changes a reservation. On fail it displays a messagebox and
+     * reverts the field to the original content
+     * 
+     * @param rowID The row that has been changed
+     * @param columnID The column that has been changed
+     * @param table The table that has been changed
+     */
     public void changeReservation(int rowID, int columnID, JTable table)
     {
     	Reservation oldReservation = reservations.get(table.getValueAt(rowID, 0));
@@ -472,6 +592,15 @@ public class ReservationView extends View {
     		noChange = false;
     	}
     }
+    /*
+     * Method createButtons
+     * 
+     * This method creates the buttons specific for reservation view. It puts them in a 
+     * JPanel and return that. It also adds actionlisteners to them
+     * Overrides super createButtons and calls this
+     * 
+     * @return JPanel The panel containing the buttons
+     */
     public JPanel createButtons()
     {
     	JPanel boxLayout = super.createButtons();
@@ -558,6 +687,15 @@ public class ReservationView extends View {
         });
     	return boxLayout;
     }
+    /*
+     * Method mouseClicked
+     * 
+     * This method is called whenever the table is clicked. It checks what has been
+     * clicked and calls the appropriate method. Either remove reservation or change
+     * customer/type
+     * 
+     * @param e The event
+     */
     @Override
 	public void mouseClicked(MouseEvent e) {
     	int column = table.columnAtPoint(e.getPoint());
@@ -598,27 +736,51 @@ public class ReservationView extends View {
     	break;
     	}
 	}
-	@Override
+    /*
+     * Required when implementing MouseListener
+     * Not used
+     */
+    @Override
 	public void mouseEntered(MouseEvent e) {
 		
 		
 	}
-	@Override
+    /*
+     * Required when implementing MouseListener
+     * Not used
+     */
+    @Override
 	public void mouseExited(MouseEvent e) {
 		
 		
 	}
-	@Override
+    /*
+     * Required when implementing MouseListener
+     * Not used
+     */
+    @Override
 	public void mousePressed(MouseEvent e) {
 		
 		
 	}
-	@Override
+    /*
+     * Required when implementing MouseListener
+     * Not used
+     */
+    @Override
 	public void mouseReleased(MouseEvent e) {
 		
 		
 	}
-	public Object[] makeCustomerChoices()
+	/*
+	 * Method makeCustomerChoices
+	 * 
+	 * This method makes an array from the customers hashmap. The array is required to create a
+     * combobox with the customers
+     * 
+     * @return Object[] The array for the combobox
+	 */
+    public Object[] makeCustomerChoices()
 	{
 		Object[] choices = new Object[customers.size()];
     	Iterator<Entry<Integer, Customer>> i = customers.entrySet().iterator();
@@ -630,7 +792,15 @@ public class ReservationView extends View {
     	}
     	return choices;
 	}
-	public Object[] makeTypeChoices()
+    /*
+	 * Method makeTypeChoices
+	 * 
+	 * This method makes an array from the vehicletypes hashmap. The array is required to create a
+     * combobox with the vehicletypes
+     * 
+     * @return Object[] The array for the combobox
+	 */
+    public Object[] makeTypeChoices()
 	{
 		Object[] choices = new Object[vehicletypes.size()];
     	Iterator<Entry<Integer, VehicleType>> i = vehicletypes.entrySet().iterator();

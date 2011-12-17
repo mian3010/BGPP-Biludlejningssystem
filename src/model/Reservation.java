@@ -1,4 +1,4 @@
-/*
+/**
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
@@ -24,7 +24,7 @@ public class Reservation implements Comparable<Reservation>
     private Date startdate;
     private Date enddate;
     
-    /*
+    /**
      * Standard constructor for the Reservation. Takes in the necessary parameters to create a valid
      * reservation for use in the program.
      * @param id, Object Customer, Object Vehicle, Object Datestart, Object Dateend.
@@ -39,7 +39,7 @@ public class Reservation implements Comparable<Reservation>
         this.enddate = end;
         this.id = id;
     }
-    /*
+    /**
      * Returns the Customer object linked to the reservation.
      * @return Customer
      */
@@ -47,7 +47,7 @@ public class Reservation implements Comparable<Reservation>
     {
         return customer;
     }
-    /*
+    /**
      * Returns the Vehicle object referenced in the reservation.
      * @return Vehicle
      */
@@ -55,7 +55,7 @@ public class Reservation implements Comparable<Reservation>
     {
         return vehicle;
     }
-    /*
+    /**
      * Return the information of the Start Date object as a String.
      * @return String
      */
@@ -63,7 +63,7 @@ public class Reservation implements Comparable<Reservation>
     {
         return startdate.toString();
     }
-    /*
+    /**
      * Return the information of the End Date object as a String.
      * @return String
      */
@@ -80,7 +80,7 @@ public class Reservation implements Comparable<Reservation>
     {
     	return enddate;
     }
-    /*
+    /**
      * Returns the unique id of the reservation.
      * @return id
      */

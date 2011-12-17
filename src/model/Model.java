@@ -8,7 +8,7 @@ import java.util.HashMap;
 
 import database.Nexus;
 
-/*
+/**
  * This class models the data from the database and stores them into HashMaps.
  * This class is modeled after the Singleton pattern as it is better to only have
  * a single instance of the data from the database.
@@ -71,7 +71,7 @@ public class Model {
 			return types.get(id);
 		}
 		
-		/*
+		/**
 		 * Accessor methods for the HashMaps.
 		 */
 		public HashMap<Integer, Reservation> getReservations()

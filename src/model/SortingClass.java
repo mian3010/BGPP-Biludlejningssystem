@@ -8,7 +8,7 @@ import java.util.ArrayList;
 
 public class SortingClass
 
-/*
+/**
  * This class contains static methods that returns sorted ArrayLists. 
  * It can be used by the GUI to get its data sorted.
  */

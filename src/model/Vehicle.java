@@ -18,7 +18,7 @@ public class Vehicle implements Comparable<Vehicle>
     private int year; 
    
 
-    /*
+    /**
      * Basic constructor for the vehicle. Takes in an in, the make and model of the vehicle,
      * the year in which it was constructed and a VehicleType object that contains further information
      * about the class of vehicle.
@@ -35,7 +35,7 @@ public class Vehicle implements Comparable<Vehicle>
         	this.year = year;
         	this.id = id;     	
     }
-    /*
+    /**
      * Returns the VehicleType object referenced in the vehicle.
      * @return VehicleType
      */
@@ -43,7 +43,7 @@ public class Vehicle implements Comparable<Vehicle>
     {
         return vehicletype;
     }
-    /*
+    /**
      * Returns the make of the Vehicle.
      * @return String
      */
@@ -51,7 +51,7 @@ public class Vehicle implements Comparable<Vehicle>
     {
             return make;
     }
-    /*
+    /**
      * Return the model of the vehicle.
      * @return String
      */
@@ -59,7 +59,7 @@ public class Vehicle implements Comparable<Vehicle>
     {
         return model;
     }
-    /*
+    /**
      * Returns the made year of the vehicle.
      * @return int containing the year.
      */
@@ -67,7 +67,7 @@ public class Vehicle implements Comparable<Vehicle>
     {
         return year;
     }
-    /*
+    /**
      * Returns the unique id of the vehicle.
      * @return integer containing the id.
      */
@@ -75,7 +75,7 @@ public class Vehicle implements Comparable<Vehicle>
     {
         return id;
     }
-    /*
+    /**
      * Returns information about the vehicle in a way suitable for a GUI.
      * @return String with the VehicleType's information along with year, make and model.
      */

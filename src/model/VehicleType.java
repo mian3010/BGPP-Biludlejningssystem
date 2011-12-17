@@ -14,7 +14,7 @@ public class VehicleType implements Comparable<VehicleType>
     private String name;
     private double price;
     
-    /*
+    /**
      * Basic constructor of the VehicleType. Takes in a unique id along with a name and a price.
      * @param id Integer containing the id
      * @param name String containing the name
@@ -31,7 +31,7 @@ public class VehicleType implements Comparable<VehicleType>
         this.id = id;
         
     }
-    /*
+    /**
      * This method returns the name of the VehicleType
      * @return String containing the name.
      */
@@ -39,7 +39,7 @@ public class VehicleType implements Comparable<VehicleType>
     {
      return name;
     }
-    /*
+    /**
      * This method returns the name of the vehicletype. However, it uses
      * a method signature that's convenient for working with GUI's.
      * @return String containing the name
@@ -56,7 +56,7 @@ public class VehicleType implements Comparable<VehicleType>
     {
         return price;
     }
-    /*
+    /**
      * This method returns the value of the id field.
      * @return int containing the id.
      */
