@@ -2,7 +2,7 @@ package view;
 import javax.swing.table.*;
 import java.util.*;
 
-/*
+/**
  * This class is used to override the regular tablemodel. We have changed methods for 
  * addRow and removeRow and isCellEditable
  */
@@ -40,7 +40,7 @@ class TableModel extends AbstractTableModel {
     	Object value=this.getValueAt(0,column);   
     	return (value==null?Object.class:value.getClass());   
     }  
-    /*
+    /**
      * Method isCellEditable
      * 
      * This method sets the rows and columns editable in the table
@@ -57,7 +57,7 @@ class TableModel extends AbstractTableModel {
         data[row][col] = value;
         fireTableCellUpdated(row, col);
     }
-    /*
+    /**
      * Method addRow
      * 
      * This method adds a row to the table
@@ -76,7 +76,7 @@ class TableModel extends AbstractTableModel {
         data[data.length-1] = dataInsert;
         this.fireTableDataChanged();   
     }
-    /*
+    /**
      * Method removeRow
      * 
      * This method removes a row from the table

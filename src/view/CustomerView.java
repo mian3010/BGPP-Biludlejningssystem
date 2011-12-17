@@ -18,25 +18,52 @@ import java.util.Map.Entry;
  *
  * @author Michael Søby Andersen
  * @mail msoa@itu.dk
- * @date 26/11-2011
- * @time 12:33
+ * 
+ * This class is a subclass to view and draws the customer type of view.
+ * It therefore extends View
  * 
  */
 public class CustomerView extends View {
     
+	/**
+	 * Instance variables
+	 * customers is used to store the customers
+	 * table is used to store the table
+	 */
     private HashMap<Integer, Customer> customers;
     private JTable table;
     
+    /**
+     * Constructor for CustomerView
+     * 
+     * The constructor initiates the controller and set the text to be displayed
+     * at the top of the view
+     * 
+     * @param canvas The canvas
+     */
     public CustomerView(Canvas canvas)
     {
         super(canvas);
         topText = "Customers";
     }
+    /**
+     * Method updateCustomers
+     * 
+     * This method updates the hashmaps containing customers from the controller
+     */
     public void updateCustomers()
     {
     	controller = new Controller();
     	customers = controller.getModel().getCustomers();
     }
+    /**
+     * Method draw
+     * 
+     * This method draws the entire view for customers. It overrides the superclass draw
+     * but also calls this. It draws the table, the buttons and everything else
+     * 
+     * @return JPanel The panel that contains the entire view
+     */
     @Override
     public JPanel draw()
     {
@@ -66,6 +93,15 @@ public class CustomerView extends View {
         
         return contentPane;
     }
+    /**
+     * Method parseObjects
+     * 
+     * This method takes a hashmap containing the customers, and converts it to
+     * a 2d-array that is required to make a table.
+     * 
+     * @param dataObjects The hashmap containing customers
+     * @return Object[][] The 2d-array that the table requires
+     */
     public Object[][] parseObjects(HashMap<Integer, Customer> dataObjects)
     {
         Object[][] data = new Object[dataObjects.size()][7];
@@ -85,6 +121,15 @@ public class CustomerView extends View {
         }
         return data;
     }
+    /**
+     * Method addEntry
+     * 
+     * This method adds an entry to the database, and if successfull adds it to the table
+     * aswell. If not successfull it displays a message, and returns false
+     * 
+     * @param input The input fields
+     * @return boolean Whether or not the method has succeeded
+     */
     public boolean addEntry(Object[] input)
     {
     	Customer success = controller.createCustomer(((JTextField)input[0]).getText(), Integer.parseInt(((JTextField)input[1]).getText()), ((JTextField)input[2]).getText(), ((JTextField)input[3]).getText());
@@ -103,6 +148,11 @@ public class CustomerView extends View {
     		return false;
     	}
     }
+    /**
+     * Method drawAddFrame
+     * 
+     * This method draws the frame used to add customers
+     */
     public void drawAddFrame()
     {
     	addText = "Add customer";
@@ -141,6 +191,15 @@ public class CustomerView extends View {
     	frame.pack();
     	frame.setVisible(true);
     }
+    /**
+     * Method removeCustomer
+     * 
+     * This method removes a customer. On success it removes it from
+     * the table aswell. On fail it displays a messagebox
+     * 
+     * @param rowID The row to be removed
+     * @param table The table to remove from
+     */
     public void removeCustomer(int rowID, JTable table)
     {
     	boolean success = controller.deleteCustomer(customers.get(table.getValueAt(rowID, 0)));
@@ -149,6 +208,14 @@ public class CustomerView extends View {
     	else
     		JOptionPane.showMessageDialog(canvas.getFrame(), "Could not remove customer - SQLException", "Error", JOptionPane.ERROR_MESSAGE);
     }
+    /**
+     * Method tableChanged
+     * 
+     * This method is called whenever the table has changed. When it has the method
+     * changes the field via the method changeCustomer
+     * 
+     * @param e The event
+     */
     public void tableChanged(TableModelEvent e)
     {
     	if (!noChange)
@@ -159,6 +226,16 @@ public class CustomerView extends View {
 	    		changeCustomer(row, column, table);
     	}
     }
+    /**
+     * Method changeCustomer
+     * 
+     * This method changes a customer. On fail it displays a messagebox and
+     * reverts the field to the original content
+     * 
+     * @param rowID The row that has changed
+     * @param columnID The column that has changed
+     * @param table The table that has changed
+     */
     public void changeCustomer(int rowID, int columnID, JTable table)
     {
     	Customer oldCustomer = customers.get(table.getValueAt(rowID, 0));
@@ -210,6 +287,15 @@ public class CustomerView extends View {
     		noChange = false;
     	}
     }
+    /**
+     * Method mouseClicked
+     * 
+     * This method is called whenever the table is clicked. It checks what has been
+     * clicked and calls the appropriate method. Either remove customer or view 
+     * reservations for customer
+     * 
+     * @param e The event
+     */
     public void mouseClicked(MouseEvent e)
     {
     	int column = table.columnAtPoint(e.getPoint());
@@ -228,22 +314,38 @@ public class CustomerView extends View {
     	break;
     	}
     }
-	@Override
+    /**
+     * Required when implementing MouseListener
+     * Not used
+     */
+    @Override
 	public void mouseEntered(MouseEvent e) {
 		
 		
 	}
-	@Override
+    /**
+     * Required when implementing MouseListener
+     * Not used
+     */
+    @Override
 	public void mouseExited(MouseEvent e) {
 		
 		
 	}
-	@Override
+    /**
+     * Required when implementing MouseListener
+     * Not used
+     */
+    @Override
 	public void mousePressed(MouseEvent e) {
 		
 		
 	}
-	@Override
+    /**
+     * Required when implementing MouseListener
+     * Not used
+     */
+    @Override
 	public void mouseReleased(MouseEvent e) {
 		
 		

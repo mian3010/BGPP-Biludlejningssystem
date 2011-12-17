@@ -13,18 +13,34 @@ import java.util.*;
  *
  * @author Michael Søby Andersen
  * @mail msoa@itu.dk
- * @date 27/11-2011
- * @time 12:42
+ * 
+ * This class is a subclass to view and draws the frontpage type of view.
+ * It therefore extends View
  * 
  */
 public class FrontPageView extends View {
     
-    
+    /**
+     * Constructor for FrontPageView
+     * 
+     * The constructor initiates the controller and set the text to be displayed
+     * at the top of the view
+     * 
+     * @param canvas The canvas
+     */
     public FrontPageView(Canvas canvas)
     {
         super(canvas);
         topText = "Welcome to Cartopia";
     }
+    /**
+     * Method draw
+     * 
+     * This method draws the entire view for front page. It overrides the superclass draw
+     * but also calls this. It draws the table, the buttons and everything else
+     * 
+     * @return JPanel The panel that contains the entire view
+     */
     @Override
     public JPanel draw()
     {
@@ -71,27 +87,47 @@ public class FrontPageView extends View {
         
         return contentPane;
     }
+    /**
+     * Required when implementing MouseListener
+     * Not used
+     */
     @Override
 	public void mouseClicked(MouseEvent e) {
 		
 		
 	}
-	@Override
+    /**
+     * Required when implementing MouseListener
+     * Not used
+     */
+    @Override
 	public void mouseEntered(MouseEvent e) {
 		
 		
 	}
-	@Override
+    /**
+     * Required when implementing MouseListener
+     * Not used
+     */
+    @Override
 	public void mouseExited(MouseEvent e) {
 		
 		
 	}
-	@Override
+    /**
+     * Required when implementing MouseListener
+     * Not used
+     */
+    @Override
 	public void mousePressed(MouseEvent e) {
 		
 		
 	}
-	@Override
+    /**
+     * Required when implementing MouseListener
+     * Not used
+     */
+    @Override
 	public void mouseReleased(MouseEvent e) {
 		
 		

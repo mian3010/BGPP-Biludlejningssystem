@@ -25,7 +25,7 @@ import java.util.*;
  */
 public abstract class View implements TableModelListener, MouseListener
 {
-	/*
+	/**
 	 * Instance variables.
 	 * topText, welcomText, copyrightText and addText are all used so that the subclasses can
 	 * set the different texts on the view.
@@ -42,7 +42,7 @@ public abstract class View implements TableModelListener, MouseListener
     public Controller controller;
     public boolean noChange;
     
-    /*
+    /**
      * Constructor for class view
      * The only thing the constructor does is to initiate canvas variable
      * 
@@ -52,7 +52,7 @@ public abstract class View implements TableModelListener, MouseListener
     {
         this.canvas = canvas;
     }   
-    /*
+    /**
      * Method draw
      * This method draws the elements on the page that are the same for all the views
      * welcomeText and copyrightText
@@ -76,7 +76,7 @@ public abstract class View implements TableModelListener, MouseListener
         
         return contentPane;
     }
-    /*
+    /**
      * Method createTable
      * 
      * This method creates a table, adds mouselistener and tablemodellistener and sets
@@ -100,7 +100,7 @@ public abstract class View implements TableModelListener, MouseListener
         }
         return table;
     }
-    /*
+    /**
      * Method addToTable
      * 
      * This method calls the addToTable method with arguments for data and table
@@ -111,7 +111,7 @@ public abstract class View implements TableModelListener, MouseListener
     {
         addToTable(null, table);
     }
-    /*
+    /**
      * Method addToTable
      * 
      * This method adds some data to the table. It gets the tablemodel and uses the method
@@ -125,7 +125,7 @@ public abstract class View implements TableModelListener, MouseListener
         TableModel model = (TableModel)table.getModel();
         model.addRow(data);
     }
-    /*
+    /**
      * Method removeFromTable
      * 
      * This method removes a row from the table. It uses the tablemodels method removeRow
@@ -138,7 +138,7 @@ public abstract class View implements TableModelListener, MouseListener
     	TableModel model = (TableModel)table.getModel();
     	model.removeRow(rowID);
     }
-    /*
+    /**
      * Method tableChanged
      * 
      * This is a super-method for when a table has changed. Overridden in subclasses
@@ -149,7 +149,7 @@ public abstract class View implements TableModelListener, MouseListener
     {
 
     }
-    /*
+    /**
      * Method createButtons
      * 
      * This method creates the buttons that are the same for all the views. It puts them in a 
@@ -210,7 +210,7 @@ public abstract class View implements TableModelListener, MouseListener
         }
         return boxLayout;
     }
-    /*
+    /**
      * Method drawAddFrame
      * 
      * Super method overridden in all the subclasses
@@ -219,7 +219,7 @@ public abstract class View implements TableModelListener, MouseListener
     {
     	
     }
-    /*
+    /**
      * Method drawAddFrameHead
      * 
      * This method creates a panel containing the head of the frame for adding content
@@ -237,7 +237,7 @@ public abstract class View implements TableModelListener, MouseListener
     	
     	return contentPane;
     }
-    /*
+    /**
      * Method drawAddFrameFoot
      * 
      * This method draws the foot for the frame to add content. It draws to buttons. One
@@ -281,7 +281,7 @@ public abstract class View implements TableModelListener, MouseListener
     	
     	return buttonscont;
     }
-    /*
+    /**
      * Method addEntry
      * 
      * Overridden in all the subclasses
@@ -293,7 +293,7 @@ public abstract class View implements TableModelListener, MouseListener
     {
     	return false;
     }
-    /*
+    /**
      * Method generateIcon
      * 
      * This method returns an imageicon to put in the table where you can either update or 
@@ -311,7 +311,7 @@ public abstract class View implements TableModelListener, MouseListener
     	return new ImageIcon();
     
     }
-    /*
+    /**
      * Required when implementing MouseListener
      * Overridden in subclasses
      */
@@ -320,7 +320,7 @@ public abstract class View implements TableModelListener, MouseListener
 		
 		
 	}
-    /*
+    /**
      * Required when implementing MouseListener
      * Not used
      */
@@ -329,7 +329,7 @@ public abstract class View implements TableModelListener, MouseListener
 		
 		
 	}
-    /*
+    /**
      * Required when implementing MouseListener
      * Not used
      */
@@ -338,7 +338,7 @@ public abstract class View implements TableModelListener, MouseListener
 		
 		
 	}
-    /*
+    /**
      * Required when implementing MouseListener
      * Not used
      */
@@ -347,7 +347,7 @@ public abstract class View implements TableModelListener, MouseListener
 		
 		
 	}
-    /*
+    /**
      * Required when implementing MouseListener
      * Not used
      */

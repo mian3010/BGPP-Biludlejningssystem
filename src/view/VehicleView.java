@@ -24,7 +24,7 @@ import bgpp2011.Controller;
  */
 public class VehicleView extends View {
 	
-	/*
+	/**
 	 * Instance variables
 	 * vehicles & vehicletypes are used to store the vehicles and vehicletypes from the database
 	 * table is used to store all the tables created when the view is drawn
@@ -35,7 +35,7 @@ public class VehicleView extends View {
     private ArrayList<JTable> table;
     private String[] columnNames;
     
-    /*
+    /**
      * Constructor for VehicleView
      * 
      * The constructor initializes the canvas and sets the text on top of the page
@@ -48,7 +48,7 @@ public class VehicleView extends View {
         topText = "Vehicles";
         
     }
-    /*
+    /**
      * Method updateVehicles
      * 
      * This method updates the hashmaps containing vehicles and vehicletypes
@@ -60,7 +60,7 @@ public class VehicleView extends View {
     	vehicletypes = controller.getModel().getTypes();
         vehicles = controller.getModel().getVehicles();
     }
-    /*
+    /**
      * Method draw
      * 
      * This method draws the entire view for vehicles. It overrides the superclass draw
@@ -154,7 +154,7 @@ public class VehicleView extends View {
         
         return contentPane;
     }
-    /*
+    /**
      * Method parseObjects
      * 
      * This method takes a hashmap containing the vehicles, and converts it to
@@ -192,7 +192,7 @@ public class VehicleView extends View {
         }
         return data;
     }
-    /*
+    /**
      * Method addEntry
      * 
      * This method adds an entry to the database, and if that was successfull adds it
@@ -221,7 +221,7 @@ public class VehicleView extends View {
     	}
     	
     }
-    /*
+    /**
      * Method tableChanged
      * 
      * This method is called whenever the table has changed. When it has the method
@@ -243,7 +243,7 @@ public class VehicleView extends View {
 	    		changeVehicle(row, column, table);
     	}
     }
-    /*
+    /**
      * Method makeChoices
      * 
      * This method makes an array from the vehicletypes hashmap. The array is required to create a
@@ -263,7 +263,7 @@ public class VehicleView extends View {
     	}
     	return choices;
     }
-    /*
+    /**
      * Method changeType
      * 
      * This method is called when the change type field in the table is clicked
@@ -294,7 +294,7 @@ public class VehicleView extends View {
     		JOptionPane.showMessageDialog(canvas.getFrame(), "Could not change type", "Error", JOptionPane.ERROR_MESSAGE);
     	}
     }
-    /*
+    /**
      * Method drawAddFrame
      * 
      * This method draws the frame used to add vehicles
@@ -340,7 +340,7 @@ public class VehicleView extends View {
     	frame.pack();
     	frame.setVisible(true);
     }
-    /*
+    /**
      * Method removeVehicle
      * 
      * This method removes a vehicle from the database. On success it also removes it 
@@ -357,7 +357,7 @@ public class VehicleView extends View {
     	else
     		JOptionPane.showMessageDialog(canvas.getFrame(), "Could not remove vehicle - SQLException", "Error", JOptionPane.ERROR_MESSAGE);
     }
-    /*
+    /**
      * Method changeVehicle
      * 
      * This method is called from the tableChanged method, and changes a vehicle. On fail
@@ -412,7 +412,7 @@ public class VehicleView extends View {
     		noChange = false;
     	}
     }
-    /*
+    /**
      * Method mouseClicked
      * 
      * This method is called when the user clicks a table. It either tries to change type
@@ -446,14 +446,14 @@ public class VehicleView extends View {
 		}
     	
 	}
-    /*
+    /**
      * Required when implementing MouseListener
      * Not used
      */
     public void mouseClicked(MouseEvent e) {
     	
 	}
-    /*
+    /**
      * Required when implementing MouseListener
      * Not used
      */
@@ -462,7 +462,7 @@ public class VehicleView extends View {
 		
 		
 	}
-	/*
+	/**
      * Required when implementing MouseListener
      * Not used
      */
@@ -471,7 +471,7 @@ public class VehicleView extends View {
 		
 		
 	}
-	/*
+	/**
      * Required when implementing MouseListener
      * Not used
      */
@@ -480,7 +480,7 @@ public class VehicleView extends View {
 		
 		
 	}
-	/*
+	/**
      * Required when implementing MouseListener
      * Not used
      */

@@ -29,7 +29,7 @@ import java.util.Map.Entry;
  */
 public class ReservationView extends View {
 	
-	/*
+	/**
 	 * Instance variables
 	 * 
 	 * reservations, vehicletypes and customers is used to store the data from the database
@@ -47,7 +47,7 @@ public class ReservationView extends View {
     private boolean drawGraphical = false;
     private ReservationGraphical graphical; 
     
-    /*
+    /**
      * Constructor for class ReservationView
      * 
      * The constructor initializes the canvas
@@ -58,7 +58,7 @@ public class ReservationView extends View {
     {
     	super(canvas);
     }
-    /*
+    /**
      * Method updateReservations
      * 
      * This method updates the hashmaps containing reservations, vehicletypes
@@ -72,7 +72,7 @@ public class ReservationView extends View {
     	vehicletypes = controller.getModel().getTypes();
     	customers = controller.getModel().getCustomers();
     }
-    /*
+    /**
      * Method setID
      * 
      * This method sets the ID of the customer that reservations should be displayed for
@@ -85,7 +85,7 @@ public class ReservationView extends View {
     	this.id = id;
     	canvas.changeView(canvas.getView("reservation"));
     }
-    /*
+    /**
      * Method draw
      * 
      * This method draws the entire view for reservations. It overrides the superclass draw
@@ -134,7 +134,7 @@ public class ReservationView extends View {
         }
         return contentPane;
     }
-    /*
+    /**
      * Method graphical
      * 
      * This method sets the boolean for graphical, and reloads the view
@@ -146,7 +146,7 @@ public class ReservationView extends View {
     	drawGraphical = graphical;
     	canvas.changeView(this);
     }
-    /*
+    /**
      * Method parseObjects
      * 
      * This method takes a hashmap containing the reservations, and converts it to
@@ -186,7 +186,7 @@ public class ReservationView extends View {
         }
         return data;
     }
-    /*
+    /**
      * Method addEntry
      * 
      * This method adds an entry to the database, and if successfull adds it to the table
@@ -217,7 +217,7 @@ public class ReservationView extends View {
     		return false;
     	}
     }
-    /*
+    /**
      * Method drawAddFrame
      * 
      * This method draws the frame used to add reservations
@@ -285,7 +285,7 @@ public class ReservationView extends View {
     	frame.pack();
     	frame.setVisible(true);
     }
-    /*
+    /**
      * Method drawSearchFrame
      * 
      * This method draws the frame used to search for available vehicles
@@ -324,7 +324,7 @@ public class ReservationView extends View {
     	frame.pack();
     	frame.setVisible(true);
     }
-    /*
+    /**
      * Method drawSearchFrameFoot
      * 
      * This method draws the foot of the frame for searching for available vehicles
@@ -367,7 +367,7 @@ public class ReservationView extends View {
     	
     	return buttonscont;
     }
-    /*
+    /**
      * Method drawSearchResultFrame
      * 
      * This method draws the frame for showing the results from searching
@@ -413,7 +413,7 @@ public class ReservationView extends View {
     	frame.pack();
     	frame.setVisible(true);
     }
-    /*
+    /**
      * Method drawSearchFrameResultFoot
      * 
      * This method draws the foot of the frame for displaying results from searching
@@ -442,7 +442,7 @@ public class ReservationView extends View {
     	
     	return buttonscont;
     }
-    /*
+    /**
      * Method tableChanged
      * 
      * This method is called whenever the table has changed. When it has the method
@@ -460,7 +460,7 @@ public class ReservationView extends View {
 	    		changeReservation(row, column, table);
     	}
     }
-    /*
+    /**
      * Method changeCustomer
      * 
      * This method changes the customer of a reservation.
@@ -491,7 +491,7 @@ public class ReservationView extends View {
     	else
     		JOptionPane.showMessageDialog(canvas.getFrame(), "Could not change customer on the reservation - SQLException", "Error", JOptionPane.ERROR_MESSAGE);
     }
-    /*
+    /**
      * Method changeType
      * 
      * This method changes the vehicle type of a reservation.
@@ -526,7 +526,7 @@ public class ReservationView extends View {
     	else
     		JOptionPane.showMessageDialog(canvas.getFrame(), "No available vehicles of that type", "Error", JOptionPane.ERROR_MESSAGE);
     }
-    /*
+    /**
      * Method removeReservation
      * 
      * This method removes a reservation. On success it removes it from
@@ -543,7 +543,7 @@ public class ReservationView extends View {
     	else
     		JOptionPane.showMessageDialog(canvas.getFrame(), "Could not remove reservation - SQLException", "Error", JOptionPane.ERROR_MESSAGE);
     }
-    /*
+    /**
      * Method changeReservation
      * 
      * This method changes a reservation. On fail it displays a messagebox and
@@ -592,7 +592,7 @@ public class ReservationView extends View {
     		noChange = false;
     	}
     }
-    /*
+    /**
      * Method createButtons
      * 
      * This method creates the buttons specific for reservation view. It puts them in a 
@@ -687,7 +687,7 @@ public class ReservationView extends View {
         });
     	return boxLayout;
     }
-    /*
+    /**
      * Method mouseClicked
      * 
      * This method is called whenever the table is clicked. It checks what has been
@@ -736,7 +736,7 @@ public class ReservationView extends View {
     	break;
     	}
 	}
-    /*
+    /**
      * Required when implementing MouseListener
      * Not used
      */
@@ -745,7 +745,7 @@ public class ReservationView extends View {
 		
 		
 	}
-    /*
+    /**
      * Required when implementing MouseListener
      * Not used
      */
@@ -754,7 +754,7 @@ public class ReservationView extends View {
 		
 		
 	}
-    /*
+    /**
      * Required when implementing MouseListener
      * Not used
      */
@@ -763,7 +763,7 @@ public class ReservationView extends View {
 		
 		
 	}
-    /*
+    /**
      * Required when implementing MouseListener
      * Not used
      */
@@ -772,7 +772,7 @@ public class ReservationView extends View {
 		
 		
 	}
-	/*
+	/**
 	 * Method makeCustomerChoices
 	 * 
 	 * This method makes an array from the customers hashmap. The array is required to create a
@@ -792,7 +792,7 @@ public class ReservationView extends View {
     	}
     	return choices;
 	}
-    /*
+    /**
 	 * Method makeTypeChoices
 	 * 
 	 * This method makes an array from the vehicletypes hashmap. The array is required to create a
