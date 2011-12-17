@@ -3,35 +3,33 @@ package database;
 import java.sql.Date;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.HashMap;
 
 import model.Customer;
 import model.Reservation;
 import model.Vehicle;
 import model.VehicleType;
-/*
+/**
  * This class needs alot of explanation.
  * Basically this is class designed to keep every bit of SQL-syntax-related code separated from the class that 
  * delivers the data from the database to the controlling part of the system. This is done in a somewhat 
  * cumbersome manner but the idea is that you should be able to change database fairly easy if you edit this class
  * and the CONNECTION part of the 'data-delivering-system' (here called Nexus). This class need not be instantiated anywhere
  * as it because of its 'translate'-like nature can be replaced as long as the parameters are the same.
- * @authors mainly msta & tbrj.
+ * @authors msta & tbrj.
  */
 
 
-
+/**
+ * These first methods takes in objects of different kinds and creates a SQL-command that creates the post in the 
+ * designated table. These commands are returned as strings to be used further in the Nexus.
+ * @param Different objects used in the Javaprogram such as Vehicle, VehicleType, Customer and Reservation
+ * @return String of valid SQL-syntax used to insert into SQL database.
+ */
 public class Commands {
-		/*
-		 * These first methods takes in objects of different kinds and creates a SQL-command that creates the post in the 
-		 * designated table. These commands are returned as strings to be used further in the Nexus.
-		 * @param Different objects used in the Javaprogram such as Vehicle, VehicleType, Customer and Reservation
-		 * @return String of valid SQL-syntax used to insert into SQL database.
-		 */
-	
+		
 
-		/*
+		/***
 		 * Creates valid SQL-syntax for inserting Vehicle data from an object into a database table
 		 * named Vehicle.
 		 */
@@ -42,7 +40,7 @@ public class Commands {
 	        +  v.getType().getId() + ");";  
 	    }
 	    
-		/*
+		/***
 		 * Creates valid SQL-syntax for inserting VehicleType data from an object into a database table
 		 * named VehicleType.
 		 */
@@ -52,7 +50,7 @@ public class Commands {
 	            		+ ",\"" + t.getName() + "\");";
 	    }
 	    
-		/*
+		/**
 		 * Creates valid SQL-syntax for inserting Customer data from an object into a database table
 		 * named Customer.
 		 */
@@ -63,7 +61,7 @@ public class Commands {
 	                + c.getBankAccount() + "\");";    
 	    }
 	    
-		/*
+		/**
 		 * Creates valid SQL-syntax for inserting Reservation data from an object into a database table
 		 * named Reservation.
 		 */
@@ -75,7 +73,7 @@ public class Commands {
 	                            + "\");";
 	    }	 
 	   
-	    /*
+	    /**
 	     * SQL-syntax for deleting a post in the table Vehicle with information corresponding to the
 	     * Vehicle.
 	     * @param Vehicle Vehicle object containing the information that should be deleted from the table.
@@ -97,10 +95,9 @@ public class Commands {
 	    {
 	    	return "DELETE FROM VehicleType WHERE id = " + vt.getId() + ";";
 	    }
-	    /*
+	    /**
 	     * The following methods are SQL-commands for retrieving entire tables as ResultSets, usable in the Nexus.
 	     */
-	    
 	    public static String getReservations()
 	    {
 	          return "SELECT * FROM Reservation;";
@@ -117,7 +114,7 @@ public class Commands {
 	    {
 	        return "SELECT * from VehicleType;";
 	    }
-	    /*
+	    /**
 	     * The following methods are used when editing different types of object in the java structure,
 	     * then wanting to update them in the database.
 	     * Please note that these methods are ID specific, which means that they will overwrite
@@ -149,7 +146,7 @@ public class Commands {
 	              return "UPDATE VehicleType SET name = \"" + t.getName() +
 	              "\", price = " + t.getPrice() + " where id = " + t.getId() + ";";
 	    }
-	    /*
+	    /**
 	     * These methods are responsible for taking in ResultSets from the database and returning them as HashMaps, usable
 	     * in the Nexus and especially for further use in the controller. This stage of the 'translation' concludes the Nexus' 
 	     * usability when opening the program.
@@ -264,7 +261,7 @@ public class Commands {
 	        
 	    }
   	   
-	    /*
+	    /**
 	     * This method returns an integer when given a ResultSet containing an auto-generated key from an SQL
 	     * database. This will throw an exception when the ResultSet is either closed too soon or 
 	     * not valid for retrieving id's from it.

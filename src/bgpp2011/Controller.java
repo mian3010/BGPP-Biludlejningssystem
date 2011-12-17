@@ -14,26 +14,17 @@ import model.VehicleType;
 
 import database.Nexus;
 
-import testing.SetupSampleData;
+
 
 public class Controller
 {
 	private Nexus nexus;
 	private Model model;
 	/**
-<<<<<<< HEAD
-	 * Controlleren must execute operations given by the user. It must do all the checking and ordering.
-	 * The checkreservation() method checks if there is an overlap with another reservation. It takes a
-	 * reservation as a parameter. First, it checks whether the startdate is before the enddate. Second,
-=======
-	 * Controlleren must execute operations given by the user (as requested in the user interface).
+ 	 *
+	 * The controller must execute operations given by the user (as requested in the user interface).
 	 * It must do all the checking and ordering.
-	 * The CheckReservation() method checks if there is an overlap with another reservation. It takes a
-	 * reservation as a parameter. First, it checks whether the Start date is before the End date. Second,
->>>>>>> branch 'master' of ssh://git@github.com/mian3010/bgpp2011.git
-	 * It checks whether the Vehicle of the Reservations re is the same as i the ArrayList. Then it checks
-	 * whether the Start date is after the End date, or if the End date is before the Start date. If that is true,
-	 * the reservation is possible and it will return true.
+	 *
 	 */
 	public Controller()
 	{

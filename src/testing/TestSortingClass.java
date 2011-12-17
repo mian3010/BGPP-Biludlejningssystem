@@ -14,6 +14,13 @@ import org.junit.Test;
 
 import bgpp2011.Controller;
 
+/**
+ * Testing sorting of the different data types.
+ * Although it's never used in the program.
+ * @author STAHL7
+ *
+ */
+
 public class TestSortingClass {
 
 	
