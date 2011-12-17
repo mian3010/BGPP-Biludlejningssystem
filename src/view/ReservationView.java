@@ -38,8 +38,6 @@ public class ReservationView extends View {
     public ReservationView(Canvas canvas)
     {
     	super(canvas);
-        topText = "Reservations";
-        
     }
     public void updateReservations()
     {
@@ -59,6 +57,8 @@ public class ReservationView extends View {
         updateReservations();
         if (id != -1)
         	topText = "Reservations for customer: " + customers.get(id).toString();
+        else
+        	topText = "Reservations";
         JPanel contentPane = super.draw();
         if (!drawGraphical)
         {
@@ -216,7 +216,7 @@ public class ReservationView extends View {
     }
     public void drawSearchFrame()
     {
-    	addText = "Search available cars";
+    	addText = "Search available vehicles";
     	JLabel[] labels = new JLabel[2];
     	labels[0] = new JLabel("Start date: ", JLabel.TRAILING);
     	labels[1] = new JLabel("End date: ", JLabel.TRAILING);
@@ -283,7 +283,7 @@ public class ReservationView extends View {
     }
     public void drawSearchResultFrame(Object[] input)
     {
-    	addText = "Available cars";
+    	addText = "Available vehicles";
     	JLabel[] labels_left = new JLabel[vehicletypes.size()];
     	JLabel[] labels_right = new JLabel[vehicletypes.size()];
     	
@@ -394,7 +394,7 @@ public class ReservationView extends View {
 				JOptionPane.showMessageDialog(canvas.getFrame(), "Could not change vehicle type on the reservation - SQLException", "Error", JOptionPane.ERROR_MESSAGE);
     	}
     	else
-    		JOptionPane.showMessageDialog(canvas.getFrame(), "No available car of that type", "Error", JOptionPane.ERROR_MESSAGE);
+    		JOptionPane.showMessageDialog(canvas.getFrame(), "No available vehicles of that type", "Error", JOptionPane.ERROR_MESSAGE);
     }
     public void removeReservation(int rowID, JTable table)
     {
