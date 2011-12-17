@@ -5,14 +5,13 @@ import static org.junit.Assert.*;
 import java.util.Collection;
 import java.util.Iterator;
 
-import model.Customer;
 import model.Reservation;
 
 import org.junit.Test;
 
 import bgpp2011.Controller;
 
-/*
+/**
  * This test was made to test the link between customer and reservation in the map containing 
  * reservations. The test was created due to a problem occurring in the GUI.
  * @author Magnus Stahl

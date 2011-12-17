@@ -3,8 +3,6 @@ package testing;
 
 
 import java.sql.SQLException;
-import java.sql.Date;
-import java.util.ArrayList;
 import java.util.HashMap;
 
 import model.Customer;
@@ -18,7 +16,6 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
-import database.DataBaseCom;
 import database.Nexus;
 
 

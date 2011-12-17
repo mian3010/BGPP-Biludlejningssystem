@@ -1,6 +1,5 @@
 package testing;
 
-import static org.junit.Assert.*;
 
 import java.sql.Date;
 import java.sql.SQLException;
