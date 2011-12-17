@@ -13,14 +13,14 @@ import java.lang.reflect.Method;
 import java.util.*;
 
 /**
- *
- * @author Michael Søby Andersen
- * @mail msoa@itu.dk
  * 
  * This class is the abstract superclass of all the views. It implements TableModelListener
  * and MouseListener. The reason for this is that TableModelListener is used to add an action
  * when the table is changed. The MouseListener is used to add an action to when the table
  * is clicked on.
+ * 
+ * @author Michael Søby Andersen
+ * @mail msoa@itu.dk
  * 
  */
 public abstract class View implements TableModelListener, MouseListener

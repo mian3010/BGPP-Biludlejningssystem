@@ -10,12 +10,12 @@ import bgpp2011.Canvas;
 import java.util.*;
 
 /**
- *
- * @author Michael Søby Andersen
- * @mail msoa@itu.dk
  * 
  * This class is a subclass to view and draws the frontpage type of view.
  * It therefore extends View
+ * 
+ * @author Michael Søby Andersen
+ * @mail msoa@itu.dk
  * 
  */
 public class FrontPageView extends View {

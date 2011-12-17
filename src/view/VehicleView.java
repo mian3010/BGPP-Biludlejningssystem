@@ -14,12 +14,12 @@ import bgpp2011.Canvas;
 import bgpp2011.Controller;
 
 /**
- *
- * @author Michael Søby Andersen
- * @mail msoa@itu.dk
  * 
  * This class is a subclass to view and draws the vehicle type of view.
  * It therefore extends View
+ * 
+ * @author Michael Søby Andersen
+ * @mail msoa@itu.dk
  * 
  */
 public class VehicleView extends View {
