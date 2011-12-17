@@ -2,6 +2,11 @@ package view;
 import javax.swing.table.*;
 import java.util.*;
 
+/*
+ * This class is used to override the regular tablemodel. We have changed methods for 
+ * addRow and removeRow and isCellEditable
+ */
+@SuppressWarnings("serial")
 class TableModel extends AbstractTableModel {
     private String[] columnNames;
     private Object[][] data;
@@ -30,28 +35,35 @@ class TableModel extends AbstractTableModel {
         return data[row][col];
     }
 
-    public Class getColumnClass(int column){   
+    @SuppressWarnings({ "unchecked", "rawtypes" })
+	public Class getColumnClass(int column){   
     	Object value=this.getValueAt(0,column);   
     	return (value==null?Object.class:value.getClass());   
     }  
-
     /*
-     * Don't need to implement this method unless your table's
-     * editable.
+     * Method isCellEditable
+     * 
+     * This method sets the rows and columns editable in the table
+     * 
+     * @param row The row that is being queried
+     * @param col The column that is being queried
+     * @return boolean Whether or not the col/row is editable
      */
     public boolean isCellEditable(int row, int col) {
         return cellEditable.get(col);
     }
 
-    /*
-     * Don't need to implement this method unless your table's
-     * data can change.
-     */
     public void setValueAt(Object value, int row, int col) {
         data[row][col] = value;
         fireTableCellUpdated(row, col);
     }
-    
+    /*
+     * Method addRow
+     * 
+     * This method adds a row to the table
+     * 
+     * @param dataInsert
+     */
     public void addRow(Object[] dataInsert) {   
     	Object[][] temp = data;
         data = new Object[temp.length+1][temp[0].length];
@@ -64,6 +76,13 @@ class TableModel extends AbstractTableModel {
         data[data.length-1] = dataInsert;
         this.fireTableDataChanged();   
     }
+    /*
+     * Method removeRow
+     * 
+     * This method removes a row from the table
+     * 
+     * @param rowID
+     */
     public void removeRow(int rowID)
     {
     	Object[][] temp = data;

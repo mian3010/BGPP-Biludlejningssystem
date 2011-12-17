@@ -10,37 +10,53 @@ import bgpp2011.Controller;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
-import java.net.MalformedURLException;
-import java.net.URL;
 import java.util.*;
 
 /**
  *
  * @author Michael Søby Andersen
  * @mail msoa@itu.dk
- * @date 26/11-2011
- * @time 10:23
+ * 
+ * This class is the abstract superclass of all the views. It implements TableModelListener
+ * and MouseListener. The reason for this is that TableModelListener is used to add an action
+ * when the table is changed. The MouseListener is used to add an action to when the table
+ * is clicked on.
  * 
  */
 public abstract class View implements TableModelListener, MouseListener
 {
-	//Instance variables
+	/*
+	 * Instance variables.
+	 * topText, welcomText, copyrightText and addText are all used so that the subclasses can
+	 * set the different texts on the view.
+	 * canvas is used whenever the application needs to change view
+	 * controller is used to get all the data in hashmaps and to model the data
+	 * noChange is used to stop the program from checking the change in the table
+	 * when the program itself has changed it.
+	 */
     public String topText;
     public JLabel welcomeText;
     public JLabel copyrightText;
     public String addText;
     public Canvas canvas;
-    private JTable table;
     public Controller controller;
     public boolean noChange;
     
-    //Constructor
+    /*
+     * Constructor for class view
+     * The only thing the constructor does is to initiate canvas variable
+     * 
+     * @param canvas The canvas
+     */
     public View(Canvas canvas)
     {
         this.canvas = canvas;
-    }
-    
-    //Draw method
+    }   
+    /*
+     * Method draw
+     * This method draws the elements on the page that are the same for all the views
+     * welcomeText and copyrightText
+     */
     public JPanel draw()
     {
         JPanel contentPane = new JPanel();
@@ -60,6 +76,18 @@ public abstract class View implements TableModelListener, MouseListener
         
         return contentPane;
     }
+    /*
+     * Method createTable
+     * 
+     * This method creates a table, adds mouselistener and tablemodellistener and sets
+     * the custom tablemodel
+     * 
+     * @param columnNames The names of the columns in the table
+     * @param data The data that the table should contain
+     * @param cellEditable A hashmap containing true/false for the column ids to set them editable
+     * @param columnSizes An array containing the sizes of the columns
+     * @return JTable the created table
+     */
     public JTable createTable(String[] columnNames, Object[][] data, HashMap<Integer, Boolean> cellEditable, int[] columnSizes)
     {
         JTable table = new JTable(data, columnNames);
@@ -70,27 +98,65 @@ public abstract class View implements TableModelListener, MouseListener
         {
             table.getColumnModel().getColumn(i).setPreferredWidth(columnSizes[i]);
         }
-        this.table = table;
         return table;
     }
+    /*
+     * Method addToTable
+     * 
+     * This method calls the addToTable method with arguments for data and table
+     * 
+     * @param table The table to add to
+     */
     public void addToTable(JTable table)
     {
         addToTable(null, table);
     }
+    /*
+     * Method addToTable
+     * 
+     * This method adds some data to the table. It gets the tablemodel and uses the method
+     * in that to add row with the data.
+     * 
+     * @param data The data to add to the table
+     * @param table The table to add data to
+     */
     public void addToTable(Object[] data, JTable table)
     {
         TableModel model = (TableModel)table.getModel();
         model.addRow(data);
     }
+    /*
+     * Method removeFromTable
+     * 
+     * This method removes a row from the table. It uses the tablemodels method removeRow
+     * 
+     * @param rowID The id of the row to remove
+     * @param table The table to remove from
+     */
     public void removeFromTable(int rowID, JTable table)
     {
     	TableModel model = (TableModel)table.getModel();
     	model.removeRow(rowID);
     }
+    /*
+     * Method tableChanged
+     * 
+     * This is a super-method for when a table has changed. Overridden in subclasses
+     * 
+     * @param e The event
+     */
     public void tableChanged(TableModelEvent e)
     {
 
     }
+    /*
+     * Method createButtons
+     * 
+     * This method creates the buttons that are the same for all the views. It puts them in a 
+     * JPanel and return that. It also adds actionlisteners to them
+     * 
+     * @return JPanel The panel containing the buttons
+     */
     public JPanel createButtons()
     {
     	JPanel boxLayout = new JPanel();
@@ -120,19 +186,23 @@ public abstract class View implements TableModelListener, MouseListener
                 public void actionPerformed(ActionEvent e) {
                 	try
                 	{
+                		//Try to change view. If object is not a view ClassCastException is cast
+                    	//and it must be a method
                 		canvas.changeView((View)object);
                 	}
                 	catch (ClassCastException e1)
                 	{
+                		//The object is the name of a method, and reflection is used
+                		//to call the method
                 		try
                 		{
                 			Method m = view.getClass().getMethod(object.toString());
                 			m.invoke(view);
                 		}
+                		//Required catches for reflection
                 		catch (NoSuchMethodException e2){}
                 		catch (InvocationTargetException e2){}
                 		catch (IllegalAccessException e2) {}
-                		
                 	}
                     
                 }
@@ -140,10 +210,22 @@ public abstract class View implements TableModelListener, MouseListener
         }
         return boxLayout;
     }
+    /*
+     * Method drawAddFrame
+     * 
+     * Super method overridden in all the subclasses
+     */
     public void drawAddFrame()
     {
     	
     }
+    /*
+     * Method drawAddFrameHead
+     * 
+     * This method creates a panel containing the head of the frame for adding content
+     * 
+     * @return JPanel The panel with the head of add frame
+     */
     public JPanel drawAddFrameHead()
     {
     	JPanel contentPane = new JPanel();
@@ -155,6 +237,16 @@ public abstract class View implements TableModelListener, MouseListener
     	
     	return contentPane;
     }
+    /*
+     * Method drawAddFrameFoot
+     * 
+     * This method draws the foot for the frame to add content. It draws to buttons. One
+     * that adds content using addEntry, and one that closes window. 
+     * 
+     * @param frame The frame containing head and body
+     * @param input The input fields from body
+     * @return JPanel the panel with the foot in
+     */
     public JPanel drawAddFrameFoot(final JFrame frame, final Object[] input)
     {
     	
@@ -189,14 +281,27 @@ public abstract class View implements TableModelListener, MouseListener
     	
     	return buttonscont;
     }
+    /*
+     * Method addEntry
+     * 
+     * Overridden in all the subclasses
+     * 
+     * @param input An array with the inputfields
+     * @return boolean True if successfull, False if not
+     */
     public boolean addEntry(Object[] input)
     {
     	return false;
     }
-    public void paint(Graphics g)
-    {
-    	g.drawRect(0, 0, 100, 100);
-    }
+    /*
+     * Method generateIcon
+     * 
+     * This method returns an imageicon to put in the table where you can either update or 
+     * delete something
+     * 
+     * @param s The string selecting either delete or update icon
+     * @return ImageIcon The imageicon to put in the table
+     */
     public ImageIcon generateIcon(String s)
     {
     	if(s.equals("delete"))
@@ -206,27 +311,47 @@ public abstract class View implements TableModelListener, MouseListener
     	return new ImageIcon();
     
     }
+    /*
+     * Required when implementing MouseListener
+     * Overridden in subclasses
+     */
     @Override
 	public void mouseClicked(MouseEvent e) {
 		
 		
 	}
-	@Override
+    /*
+     * Required when implementing MouseListener
+     * Not used
+     */
+    @Override
 	public void mouseEntered(MouseEvent e) {
 		
 		
 	}
-	@Override
+    /*
+     * Required when implementing MouseListener
+     * Not used
+     */
+    @Override
 	public void mouseExited(MouseEvent e) {
 		
 		
 	}
-	@Override
+    /*
+     * Required when implementing MouseListener
+     * Not used
+     */
+    @Override
 	public void mousePressed(MouseEvent e) {
 		
 		
 	}
-	@Override
+    /*
+     * Required when implementing MouseListener
+     * Not used
+     */
+    @Override
 	public void mouseReleased(MouseEvent e) {
 		
 		

@@ -11,6 +11,7 @@ import java.util.*;
 import java.util.Map.Entry;
 
 
+@SuppressWarnings("serial")
 public class ReservationGraphical extends JPanel{
 	private Date startdate, enddate;
 	private Controller controller;

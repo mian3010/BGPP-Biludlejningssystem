@@ -1,8 +1,6 @@
 package view;
 import java.awt.*;
 import java.awt.event.*;
-import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
 import java.util.*;
 import java.util.Map.Entry;
 
@@ -17,27 +15,59 @@ import bgpp2011.Controller;
 
 /**
  *
- * @author Michael
+ * @author Michael Søby Andersen
+ * @mail msoa@itu.dk
+ * 
+ * This class is a subclass to view and draws the vehicle type of view.
+ * It therefore extends View
+ * 
  */
 public class VehicleView extends View {
 	
+	/*
+	 * Instance variables
+	 * vehicles & vehicletypes are used to store the vehicles and vehicletypes from the database
+	 * table is used to store all the tables created when the view is drawn
+	 * columnNames is used to store the names of the columns in the tables
+	 */
 	private HashMap<Integer, Vehicle> vehicles;
 	private HashMap<Integer, VehicleType> vehicletypes;
     private ArrayList<JTable> table;
     private String[] columnNames;
     
+    /*
+     * Constructor for VehicleView
+     * 
+     * The constructor initializes the canvas and sets the text on top of the page
+     * 
+     * @param canvas The canvas
+     */
     public VehicleView(Canvas canvas)
     {
         super(canvas);
         topText = "Vehicles";
         
     }
-    public void updateVehicles()
+    /*
+     * Method updateVehicles
+     * 
+     * This method updates the hashmaps containing vehicles and vehicletypes
+     * from the controller
+     */
+    private void updateVehicles()
     {
     	controller = new Controller();
     	vehicletypes = controller.getModel().getTypes();
         vehicles = controller.getModel().getVehicles();
     }
+    /*
+     * Method draw
+     * 
+     * This method draws the entire view for vehicles. It overrides the superclass draw
+     * but also calls this. It draws the table, the buttons and everything else
+     * 
+     * @return JPanel The panel containing the page
+     */
     @Override
     public JPanel draw()
     {
@@ -59,6 +89,8 @@ public class VehicleView extends View {
         cellEditable.put(4, false);
         cellEditable.put(5, false);
         ArrayList<JLabel> label = new ArrayList<JLabel>();
+        //We need to make several tables, therefore this is an arraylist.
+        //In the other views it is just a variable
         table = new ArrayList<JTable>();
         ArrayList<JPanel> panel = new ArrayList<JPanel>();
         Iterator<Entry<Integer, VehicleType>> i = vehicletypes.entrySet().iterator();
@@ -71,10 +103,12 @@ public class VehicleView extends View {
         	temp.removeMouseListener(temp.getMouseListeners()[0]);
         	final VehicleView view = this;
         	temp.addMouseListener(new MouseListener() {
+        		//In this view we need to pass the table along when we click the table
                 @Override
                 public void mouseClicked(MouseEvent e) {
                 	view.mouseClicked(e, temp);
                 }
+                //The rest of the mousemethods are required, but not used
 				@Override
 				public void mouseEntered(MouseEvent e) {}
 				@Override
@@ -120,7 +154,18 @@ public class VehicleView extends View {
         
         return contentPane;
     }
-    public Object[][] parseObjects(HashMap<Integer, Vehicle> dataObjects, VehicleType type)
+    /*
+     * Method parseObjects
+     * 
+     * This method takes a hashmap containing the vehicles, and converts it to
+     * a 2d-array that is required to make a table. It only takes the types
+     * specified by type in the 2d-array
+     * 
+     * @param dataObjects The hashmap containing the data to parse
+     * @param type The type to create 2d array with
+     * @return Object[][] The 2d-array for the table
+     */
+    private Object[][] parseObjects(HashMap<Integer, Vehicle> dataObjects, VehicleType type)
     {
     	HashMap<Integer, Vehicle> vehicle = new HashMap<Integer, Vehicle>();
     	Iterator<Entry<Integer, Vehicle>> i = dataObjects.entrySet().iterator();
@@ -147,6 +192,15 @@ public class VehicleView extends View {
         }
         return data;
     }
+    /*
+     * Method addEntry
+     * 
+     * This method adds an entry to the database, and if that was successfull adds it
+     * to the table as well. If it is not successsfull it prints a message, and returns false
+     * 
+     * @param input The input fields from the add-form
+     * @return boolean Whether or not the method was successful
+     */
     @Override
     public boolean addEntry(Object[] input)
     {
@@ -167,10 +221,18 @@ public class VehicleView extends View {
     	}
     	
     }
-    
+    /*
+     * Method tableChanged
+     * 
+     * This method is called whenever the table has changed. When it has the method
+     * changes the field in the database. If it is not successfull it prints a message
+     * and sets the field back to original.
+     * 
+     * @param e The event
+     */
     public void tableChanged(TableModelEvent e)
     {
-    	if (!noChange)
+    	if (!noChange) //The application has not changed the data, user must have
     	{
 	    	int row = e.getFirstRow();
 	    	int column = e.getColumn();
@@ -182,6 +244,14 @@ public class VehicleView extends View {
 	    		changeVehicle(row, column, table);
     	}
     }
+    /*
+     * Method makeChoices
+     * 
+     * This method makes an array from the vehiclestypes. The array is required to create a
+     * combobox with the vehicletypes
+     * 
+     * @return Object[] The array for the combobox
+     */
     private Object[] makeChoices()
     {
     	Object[] choices = new Object[vehicletypes.size()];
@@ -194,6 +264,16 @@ public class VehicleView extends View {
     	}
     	return choices;
     }
+    /*
+     * Method changeType
+     * 
+     * This method is called when the change type field in the table is clicked
+     * It changes the type of a vehicle
+     * 
+     * @param row The row that is trying to be changed
+     * @param prevType The id of the previous type
+     * @param newType The id of the new type
+     */
     private void changeType(int row, int prevType, int newType)
     {
     	Object[] data = new Object[columnNames.length];
@@ -206,6 +286,7 @@ public class VehicleView extends View {
     	boolean success = controller.editVehicle(newVehicle, oldVehicle);
     	if (success)
     	{
+    		//Move the entry to the table for the new type
     		removeFromTable(row, table.get(prevType));
     		addToTable(data, table.get(newType-1));
     	}
@@ -214,6 +295,11 @@ public class VehicleView extends View {
     		JOptionPane.showMessageDialog(canvas.getFrame(), "Could not change type", "Error", JOptionPane.ERROR_MESSAGE);
     	}
     }
+    /*
+     * Method drawAddFrame
+     * 
+     * This method draws the frame used to add vehicles
+     */
     public void drawAddFrame()
     {
     	addText = "Add vehicle";
@@ -233,17 +319,7 @@ public class VehicleView extends View {
     	input[0] = new JTextField();
     	input[1] = new JTextField();
     	input[2] = new JTextField();
-    	
-    	Object[] types = new Object[vehicletypes.size()];
-    	Iterator<Entry<Integer, VehicleType>> i = vehicletypes.entrySet().iterator();
-    	int j = 0;
-    	while (i.hasNext())
-    	{
-    		Map.Entry<Integer, VehicleType> type = (Map.Entry<Integer, VehicleType>)i.next();
-    		types[j] = type.getValue();
-    		j++;
-    	}
-    	input[3] = new JComboBox(types);
+    	input[3] = new JComboBox(makeChoices());
     	
    		panel.add(labels[0]);
     	panel.add((JTextField)input[0]);
@@ -265,6 +341,15 @@ public class VehicleView extends View {
     	frame.pack();
     	frame.setVisible(true);
     }
+    /*
+     * Method removeVehicle
+     * 
+     * This method removes a vehicle from the database. On success it also removes it 
+     * from the specific table. On fail it displays a messagebox
+     * 
+     * @param rowID The row to be removed
+     * @param table The table to remove from
+     */
     public void removeVehicle(int rowID, JTable table)
     {
     	boolean success = controller.deleteVehicle(vehicles.get(table.getValueAt(rowID, 0)));
@@ -273,6 +358,16 @@ public class VehicleView extends View {
     	else
     		JOptionPane.showMessageDialog(canvas.getFrame(), "Could not remove vehicle - SQLException", "Error", JOptionPane.ERROR_MESSAGE);
     }
+    /*
+     * Method changeVehicle
+     * 
+     * This method is called from the tableChanged method, and changes a vehicle. On fail
+     * it shows a messagebox, and reverts the field to the original content
+     * 
+     * @param rowID The row that has changed
+     * @param columnID The column that has changed
+     * @param table The table that has changed
+     */
     public void changeVehicle(int rowID, int columnID, JTable table)
     {
     	Vehicle oldVehicle = vehicles.get(table.getValueAt(rowID, 0));
@@ -318,6 +413,15 @@ public class VehicleView extends View {
     		noChange = false;
     	}
     }
+    /*
+     * Method mouseClicked
+     * 
+     * This method is called when the user clicks a table. It either tries to change type
+     * or to remove vehicles depending on what the user has clicked
+     * 
+     * @param e The event
+     * @param table The table that it has been fired from
+     */
     public void mouseClicked(MouseEvent e, JTable table) {
     	int column = table.columnAtPoint(e.getPoint());
     	int row = table.rowAtPoint(e.getPoint());
@@ -343,24 +447,44 @@ public class VehicleView extends View {
 		}
     	
 	}
+    /*
+     * Required when implementing MouseListener
+     * Not used
+     */
     public void mouseClicked(MouseEvent e) {
     	
 	}
+    /*
+     * Required when implementing MouseListener
+     * Not used
+     */
 	@Override
 	public void mouseEntered(MouseEvent e) {
 		
 		
 	}
+	/*
+     * Required when implementing MouseListener
+     * Not used
+     */
 	@Override
 	public void mouseExited(MouseEvent e) {
 		
 		
 	}
+	/*
+     * Required when implementing MouseListener
+     * Not used
+     */
 	@Override
 	public void mousePressed(MouseEvent e) {
 		
 		
 	}
+	/*
+     * Required when implementing MouseListener
+     * Not used
+     */
 	@Override
 	public void mouseReleased(MouseEvent e) {
 		

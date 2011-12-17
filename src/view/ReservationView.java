@@ -13,9 +13,6 @@ import model.VehicleType;
 import bgpp2011.Canvas;
 import bgpp2011.Controller;
 
-
-import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
 import java.sql.Date;
 import java.text.SimpleDateFormat;
 import java.util.*;
@@ -23,10 +20,25 @@ import java.util.Map.Entry;
 
 /**
  *
- * @author Michael
+ * @author Michael Søby Andersen
+ * @mail msoa@itu.dk
+ * 
+ * This class is a subclass to view and draws the reservation type of view.
+ * It therefore extends View
+ * 
  */
 public class ReservationView extends View {
 	
+	/*
+	 * Instance variables
+	 * 
+	 * reservations, vehicletypes and customers is used to store the data from the database
+	 * table is used to store the table
+	 * id is used to specify whether or not it should show for one customer or for all
+	 * drawGraphical is used to speficy whether or not to display graphical view
+	 * graphical is used to store the grapical jpanel
+	 * 
+	 */
 	private HashMap<Integer, Reservation> reservations;
 	private HashMap<Integer, VehicleType> vehicletypes;
 	private HashMap<Integer, Customer> customers;
@@ -35,10 +47,24 @@ public class ReservationView extends View {
     private boolean drawGraphical = false;
     private ReservationGraphical graphical; 
     
+    /*
+     * Constructor for class ReservationView
+     * 
+     * The constructor initializes the canvas
+     * 
+     * @param canvas The canvas
+     */
     public ReservationView(Canvas canvas)
     {
     	super(canvas);
     }
+    /*
+     * Method updateReservations
+     * 
+     * This method updates the hashmaps containing reservations, vehicletypes
+     * and customers from the controller
+     * 
+     */
     public void updateReservations()
     {
     	controller = new Controller();
@@ -46,6 +72,9 @@ public class ReservationView extends View {
     	vehicletypes = controller.getModel().getTypes();
     	customers = controller.getModel().getCustomers();
     }
+    /*
+     * 
+     */
     public void setID(int id)
     {
     	this.id = id;
@@ -412,14 +441,11 @@ public class ReservationView extends View {
     	Vehicle arg2 = oldReservation.getVehicle();
     	Date arg3 = oldReservation.getDateStart();
     	Date arg4 = oldReservation.getDateEnd();
-    	Date arg10 = null;
     	switch (columnID)
     	{
     	case 3:
     		System.out.println(Date.valueOf((String)table.getValueAt(rowID, 3)));
-    		arg10 = Date.valueOf((String)table.getValueAt(rowID, 3));
-    		
-    	break;
+    		break;
     	case 4:
     		arg4 = Date.valueOf((String)table.getValueAt(rowID, 4));
     	break;
@@ -477,7 +503,7 @@ public class ReservationView extends View {
     	else
     	{
 	    	JButton button1 = new JButton("Textual");
-	    	button1.setMaximumSize(new Dimension(200,30));
+	    	button1.setMaximumSize(new Dimension(130,30));
 	        boxLayout.add(button1);
 	        
 	        JPanel dummy = new JPanel();
