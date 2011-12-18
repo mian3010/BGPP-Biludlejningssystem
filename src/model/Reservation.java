@@ -27,7 +27,11 @@ public class Reservation implements Comparable<Reservation>
     /**
      * Standard constructor for the Reservation. Takes in the necessary parameters to create a valid
      * reservation for use in the program.
-     * @param id, Object Customer, Object Vehicle, Object Datestart, Object Dateend.
+     * @param id
+     * @param customer
+     * @param vehicle
+	 * @param start
+	 * @param end
      */
     public Reservation(int id, Customer customer, Vehicle vehicle, Date start, Date end)
     {

@@ -19,8 +19,7 @@ import java.util.Map.Entry;
  * This class is a subclass to view and draws the customer type of view.
  * It therefore extends View
  * 
- * @author Michael Søby Andersen
- * @mail msoa@itu.dk
+ * @author Michael Søby Andersen, msoa@itu.dk
  * 
  */
 public class CustomerView extends View {

@@ -11,10 +11,7 @@ import view.View;
 
 /**
  *
- * @author Michael
- * @mail msoa@itu.dk
- * @date 26/11-2011
- * @time 10:30
+ * @author Michael Søby Andersen, msoa@itu.dk
  * 
  */
 public class Canvas{

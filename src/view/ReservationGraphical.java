@@ -15,8 +15,7 @@ import java.util.Map.Entry;
 * This class is used to make a JPanel with the graphical view inside.
 * It therefore extends JPanel, and acts like a JPanel
 * 
-* @author Michael Søby Andersen
-* @mail msoa@itu.dk
+* @author Michael Søby Andersen, msoa@itu.dk
 * 
 */
 

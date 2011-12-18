@@ -19,8 +19,7 @@ import java.util.*;
  * when the table is changed. The MouseListener is used to add an action to when the table
  * is clicked on.
  * 
- * @author Michael Søby Andersen
- * @mail msoa@itu.dk
+ * @author Michael Søby Andersen, msoa@itu.dk
  * 
  */
 public abstract class View implements TableModelListener, MouseListener
@@ -34,13 +33,13 @@ public abstract class View implements TableModelListener, MouseListener
 	 * noChange is used to stop the program from checking the change in the table
 	 * when the program itself has changed it.
 	 */
-    public String topText;
-    public JLabel welcomeText;
-    public JLabel copyrightText;
-    public String addText;
-    public Canvas canvas;
-    public Controller controller;
-    public boolean noChange;
+    protected String topText;
+    protected JLabel welcomeText;
+    protected JLabel copyrightText;
+    protected String addText;
+    protected Canvas canvas;
+    protected Controller controller;
+    protected boolean noChange;
     
     /**
      * Constructor for class view

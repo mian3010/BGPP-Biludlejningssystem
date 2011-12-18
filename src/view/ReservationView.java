@@ -23,8 +23,7 @@ import java.util.Map.Entry;
  * This class is a subclass to view and draws the reservation type of view.
  * It therefore extends View
  * 
- * @author Michael Søby Andersen
- * @mail msoa@itu.dk
+ * @author Michael Søby Andersen, msoa@itu.dk
  * 
  */
 public class ReservationView extends View {

@@ -23,8 +23,8 @@ import model.VehicleType;
 /**
  * These first methods takes in objects of different kinds and creates a SQL-command that creates the post in the 
  * designated table. These commands are returned as strings to be used further in the Nexus.
- * @param Different objects used in the Javaprogram such as Vehicle, VehicleType, Customer and Reservation
- * @return String of valid SQL-syntax used to insert into SQL database.
+ * param Different objects used in the Javaprogram such as Vehicle, VehicleType, Customer and Reservation
+ * return String of valid SQL-syntax used to insert into SQL database.
  */
 public class Commands {
 		
@@ -76,7 +76,7 @@ public class Commands {
 	    /**
 	     * SQL-syntax for deleting a post in the table Vehicle with information corresponding to the
 	     * Vehicle.
-	     * @param Vehicle Vehicle object containing the information that should be deleted from the table.
+	     * @param v Vehicle object containing the information that should be deleted from the table.
 	     * @return String the corresponding SQL syntax.
 	     */
 	    public static String deleteVehicle(Vehicle v)
