@@ -33,7 +33,7 @@ public class Customer implements Comparable<Customer>
         	this.id = id;
     }
     
-    /* Returns the name of the customer.
+    /** Returns the name of the customer.
      * @return String
      */
     public String getName()
@@ -41,7 +41,7 @@ public class Customer implements Comparable<Customer>
         return name;
     }
     
-    /* Returns the number of the customer.
+    /** Returns the number of the customer.
      * @return integer
      */
     public int getNumber()
@@ -49,28 +49,31 @@ public class Customer implements Comparable<Customer>
         return phonenumber;
     }
     
-    /* Returns the customers address.
+    /** Returns the customers address.
      * @return String
      */
     public String getAddress()
     {
         return address;
     }
-    /* Returns the customers unique id.
+    
+    /** Returns the customers unique id.
      * @return id.
      */
     public int getId()
     {
         return id;
     }
-    /* Returns the customers bankaccount.
+    
+    /** Returns the customers bankaccount.
      * @return String
      */
     public String getBankAccount()
     {
         return bankaccount;
     }
-    /* Returns the customers name and phonenumber in a suitable way for a GUI.
+    
+    /** Returns the customers name and phonenumber in a suitable way for a GUI.
      * @return String name + phonenumber
      */
     public String toString()
@@ -78,6 +81,11 @@ public class Customer implements Comparable<Customer>
      return name + ": " + phonenumber; 
     }
     
+    /**
+     * Compares name to the name of Customer c. Returns 1,0 or-1 if the name is less, even or more.
+     * @param c Customer object
+     * @return int
+     */
     public int compareTo(Customer c)
     {
     	int i = name.compareTo(c.getName());

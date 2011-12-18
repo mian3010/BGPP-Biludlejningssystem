@@ -6,7 +6,7 @@ package model;
  * Vehicleclass contains information about a car. Make, model, year....ect.
  * It contains a vehicleType object in a field. This object specifies the price
  * and the type.
- * @author Toke Jensen
+ * @author tbrj
  */
 public class Vehicle implements Comparable<Vehicle>
 {
@@ -84,6 +84,12 @@ public class Vehicle implements Comparable<Vehicle>
      return vehicletype.toString() + ": " + year + " " + make + " " + model;
     }
     
+    /**
+     * Compares make to the make of Vehicle v. 
+     * Returns 1,0 or-1 if the name is less, even or more.
+     * @param v Vehicle object
+     * @return int
+     */
     public int compareTo(Vehicle v)
     {
     	int i = make.compareTo(v.getMake());

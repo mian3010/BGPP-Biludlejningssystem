@@ -11,6 +11,7 @@ public class SortingClass
 /**
  * This class contains static methods that returns sorted ArrayLists. 
  * It can be used by the GUI to get its data sorted.
+ * @author tbrj
  */
 
 {
@@ -19,7 +20,11 @@ public class SortingClass
 
 	}
 	
-	//Takes an HashMap of vehicles as parameter. Returns an ArrayList sorted by vehiclemake.
+	/**
+	 * Sorts a HashMap of Vehicles. Returns an ArrayList.
+	 * @param hm HashMap
+	 * @return ArrayList
+	 */
 	public static ArrayList<Vehicle> sortVehicles(HashMap<Integer, Vehicle> hm)
 	{
 		//Makes a collection.
@@ -30,7 +35,11 @@ public class SortingClass
 		return a;
 	}
 	
-	//Takes a HashMap as parameter. Returns a sorted ArrayList of reservations.
+	/**
+	 * Sorts a HashMap of Reservations. Returns an ArrayList.
+	 * @param hm HashMap
+	 * @return ArrayList
+	 */
 	public static ArrayList<Reservation> sortReservations(HashMap<Integer, Reservation> hm)
 	{
 		//Makes a Collection.
@@ -42,7 +51,11 @@ public class SortingClass
 	}
 	
 	
-	//Takes an HashMap of Customers as parameter. Returns a sorted ArrayList.
+	/**
+	 * Sorts a HashMap of Customers. Returns an ArrayList.
+	 * @param hm HashMap
+	 * @return ArrayList
+	 */
 	public static ArrayList<Customer> sortCustomers(HashMap<Integer, Customer> hm)
 	{
 		//Makes a Collection.
@@ -53,7 +66,11 @@ public class SortingClass
 		return a;
 	}
 	
-	//Takes an HashMap as parameter. Returns a sorted ArrayList.
+	/**
+	 * Sorts a HashMap of VehicleTypes. Returns an ArrayList.
+	 * @param hm; HashMap
+	 * @return ArrayList
+	 */
 	public static ArrayList<VehicleType> sortTypes(HashMap<Integer, VehicleType> hm)
 	{
 		//Makes a Collection.

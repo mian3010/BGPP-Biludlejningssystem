@@ -5,7 +5,7 @@ package model;
  * The class used to represent groups of vehicles, here known as VehicleTypes.
  * This class contains a unique id for the type of vehicle, then a name to describe it
  * and a decimal number containing the supposed price per day.
- * @author Toke Jensen
+ * @author tbrj
  */
 public class VehicleType implements Comparable<VehicleType>
 {
@@ -48,7 +48,8 @@ public class VehicleType implements Comparable<VehicleType>
     {
     	return getName();
     }
-	/* 
+    
+	/** 
 	 * This method returns the value of the price field.
 	 * @return double containing the price field.
 	 */
@@ -64,6 +65,12 @@ public class VehicleType implements Comparable<VehicleType>
     {
         return id;
     }
+    /**
+     * Compares name to the name of VehicleType vt.
+     *  Returns 1,0 or-1 if the name is less, even or more.
+     * @param vt VehicleType object
+     * @return int
+     */
     
     public int compareTo(VehicleType vt)
     {

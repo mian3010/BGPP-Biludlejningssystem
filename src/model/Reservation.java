@@ -13,7 +13,7 @@ import java.sql.Date;
  * This class contains information about a reservation. It contains two Date objects
  * as well as a Customer object and a Vehicle object. The purpose of this class 
  * is to contain all information about a reservation.
- * @author tokejensen.
+ * @author tbrj
  */
 public class Reservation implements Comparable<Reservation>
 {
@@ -76,14 +76,24 @@ public class Reservation implements Comparable<Reservation>
         return enddate.toString();
     }
     
+    /**
+     * Returns startdate.
+     * @return Date object
+     */
     public Date getDateStart()
     {
     	return startdate;
     }
+    
+    /**
+     * Returns enddate.
+     * @return Date object
+     */
     public Date getDateEnd()
     {
     	return enddate;
     }
+    
     /**
      * Returns the unique id of the reservation.
      * @return id
@@ -93,6 +103,12 @@ public class Reservation implements Comparable<Reservation>
         return id;
     }
     
+    /**
+     * Compares startdate to the stardate of Reservation r. 
+     * Returns 1,0 or-1 if the startdate is less, even or more.
+     * @param r Reservation object
+     * @return int
+     */
     public int compareTo(Reservation r)
     {
     	int i = startdate.compareTo(r.getDateStart());

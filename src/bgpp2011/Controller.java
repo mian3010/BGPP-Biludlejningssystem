@@ -14,18 +14,20 @@ import model.VehicleType;
 
 import database.Nexus;
 
-
+/**
+ * The controller class is the class that does all the checks and calculations requested by the GUI.
+ * It is the class that makes the calls for changes in the database, and the class that holds both
+ * the Model and the Nexus. 
+ * @author tbrj
+ *
+ */
 
 public class Controller
 {
 	private Nexus nexus;
 	private Model model;
-	/**
- 	 *
-	 * The controller must execute operations given by the user (as requested in the user interface).
-	 * It must do all the checking and ordering.
-	 *
-	 */
+
+	
 	public Controller()
 	{
 		
@@ -37,10 +39,20 @@ public class Controller
 	//Method that loads the HashMaps with data from the database. Uses the getMethods() from the nexus.
 	
 	/**
+	 *
 	 * This method check if a reservation overlaps another reservation. It compares the dates of the
 	 * reservation given in the parameter with the dates from all reservations in the HashMap reservations.
 	 * It uses the String-types compare method to check if the dates are overlapping.
 	 *
+	 */
+	
+	/**
+	 *  This method check if a reservation overlaps another reservation. It compares the dates of the
+	 * reservation given in the parameter with the dates from all reservations in the HashMap reservations.
+	 * It uses the String-types compare method to check if the dates are overlapping.
+	 * @param re
+	 * @return boolean; returns true if the reservation in not overlapping any reservations in the
+	 * collection: reservations.
 	 */
 	public boolean checkReservation(Reservation re)
 	{
@@ -159,7 +171,15 @@ public class Controller
 				return tmp1; // Returns the first vehicle that was added to the map
 }
 	
-	//This method simply calls the findcar() method and returns the first given vehicle.
+	/**
+	 * Makes a list of free vehicles using the vacantVehicles()-method. Returns the first vehicle in
+	 * that list. Else it returns null.
+	 * @param v a VehivleType object
+	 * @param start A Date object containing the startdate
+	 * @param end a Date object containing the eddate
+	 * @return Vehivle returns a vehicle of the type v, that is free between the start and enddate.
+	 * 		   If there is no such car, it returns null.	
+	 */
 	public Vehicle searchVehicles(VehicleType v, Date start, Date end)
 	{
 			ArrayList<Vehicle> vlist = vacantVehicles(v,start,end);
@@ -169,11 +189,17 @@ public class Controller
 					return null;
 	}
 
-	/**
-
-	 * This method is called by the GUI and it checks if a reservation is avaliable, and return it 
-	 * if it is. Else it returns null.
-	 */
+	
+	 /**
+	  * Creates a reservation. It checks if there is a free vehicle of
+	  * the type t, between the start and end Date. If there is, it sends the reservation to the
+	  * database, and gets the reservation back with a valid id. Then it returns the reservation.
+	  * @param c a Customer object
+	  * @param t a VehivleType Object
+	  * @param start a Date object
+	  * @param end a Date object
+	  * @return Reservation object returns null if creation was unsuccesful.
+	  */
 	public Reservation createReservation(Customer c, VehicleType t, Date start, Date end)
 	{
 		
@@ -214,7 +240,14 @@ public class Controller
 	}
 	
 	/**
-	 * This method creates a new customer. It checks whether the customer is already in the system. 
+	 * Creates a new customer. It checks if a customer with the same name and phonenumber
+	 * is already in the system. If he is not, the system will send the customer to the database, and get
+	 * the same customer with a valid id back.
+	 * @param name String
+	 * @param phonenumber int
+	 * @param address String
+	 * @param bankaccount String
+	 * @return Customer object returns null if creations was unsuccessful.
 	 */
 	public Customer createCustomer(String name, int phonenumber, String address, String bankaccount)
 	{
@@ -247,8 +280,13 @@ public class Controller
 					}				
 	}
 	/**
-	 * Creates a new vehicle. It check if the type is correct and already in the system.
-	 * It sends a vehicle to the database which deligates an id to it. 
+	 * Creates a new vehicle. Checks if v is a valid VehivleType. If it is, it sends the vehicle to
+	 * the database, which returns the vehicle with a valid id. 
+	 * @param make String
+	 * @param vmodel String
+	 * @param year int
+	 * @param v VehicleType object
+	 * @return Vehicle object null if v is not a valid VehicleType.
 	 */
 	public Vehicle createVehicle(String make, String vmodel, int year, VehicleType v)
 	{
@@ -283,8 +321,11 @@ public class Controller
 		
 	}
 	/**
-	 * Method that creates a new vehicletype. It sends a type to Nexus, witch deligates an id to it.
-	 * It checks whether there is already a type with the same name in the system.
+	 * Creates a new VehicleType. Checks if a type with the same name already exists. If not,
+	 * it sends the type to the database, which sends it back with a valid id.
+	 * @param name String
+	 * @param price double
+	 * @return boolean false if the name already exists.
 	 */
 	public boolean createVehicleType(String name, double price)
 	{
@@ -315,7 +356,12 @@ public class Controller
 			}
 	}
 	
-	//Deletes a reservation.
+	/**
+	 * Deletes a Reservation. It deletes a reservation from the database. Returns true of the deletion
+	 * was successful, else it returns false.
+	 * @param r Reservation object.
+	 * @return boolean
+	 */
 	public boolean deleteReservation(Reservation r)
 
 	{
@@ -335,7 +381,12 @@ public class Controller
 	
 		
 	}
-	//Deletes a Customer
+	/**
+	 * Deletes a Customer. If the deletion was successful, it runs trough all reservations, and
+	 * deletes the reservations made by the deleted customer. Returns true if deletion was success.
+	 * @param c Customer object
+	 * @return boolean
+	 */
 	public boolean deleteCustomer(Customer c)
 
 	{
@@ -386,8 +437,14 @@ public class Controller
 		}
 	}
 	
-	//Deletes a Vehicle.
+	/**
+	 * Deletes a vehicle. If deletion was successful, it runs through all reservations, and deletes
+	 * the reservations of the deleted vehicle. Returns true if deletion was successful.
+	 * @param v Vehivle object
+	 * @return boolean
+	 */
 	public boolean deleteVehicle(Vehicle v)
+
 	{
 		try 
 		{
@@ -435,6 +492,11 @@ public class Controller
 				return false;
 		}
 		}
+	/**
+	 * Deletes a VehicleType. Returns true of deletion was successful.
+	 * @param vt VehicleType object
+	 * @return boolean
+	 */
 	public boolean deleteVehicleType(VehicleType vt)
 	{
 		try
@@ -451,11 +513,14 @@ public class Controller
 				return false;
 		}
 	}
+	
 	/**
-	 * This method takes a new reservation as a parameter and puts it in HashMap, with a key equal to
-	 * the id of the reservation. 
+	 * Edits a Reservation. Takes the id from the oldR and attaches it to the newR. Returns true
+	 * if edition was successful.
+	 * @param newR Reservation Object
+	 * @param oldR Reservation object
+	 * @return boolean
 	 */
- 	
 	public boolean editReservation(Reservation newR, Reservation oldR)
 	{
 		try
@@ -490,7 +555,13 @@ public class Controller
 		}
 	}
 	
-	//Edits a vehicle in the database. Returns a boolean.
+	/**
+	 * Edits a vehicle. Takes the id from oldV and attaches it to newV. Returns true if edition
+	 * was successful.
+	 * @param newV Vehicle object
+	 * @param oldV Vehicle object
+	 * @return boolean
+	 */
 	public boolean editVehicle(Vehicle newV, Vehicle oldV)
 	{
 		
@@ -514,7 +585,13 @@ public class Controller
 		 
 	}
 	
-	//Edits a VehicleType. Returns a boolean.
+	/**
+	 * Edits a VehicleType. Takes the id from vtold and attaches it to vtnew. Returns true if edition
+	 * was successful.
+	 * @param vtnew VehicleType object
+	 * @param vtold VehivleType object
+	 * @return boolean
+	 */
 	public boolean editVehicleType(VehicleType vtnew, VehicleType vtold)
 	{
 		
@@ -537,7 +614,13 @@ public class Controller
 		}
 	}
 	
-	//Edits a customer in the database. Returns a boolean.
+	/**
+	 * Edits a Customer. Takes the id of oldC and attaches it to newC. Returns true if edition was
+	 * successful.
+	 * @param newC Customer object
+	 * @param oldC Customer object
+	 * @return boolean
+	 */
 	public boolean editCustomer(Customer newC, Customer oldC)
 	{
 		try
@@ -560,12 +643,17 @@ public class Controller
 
 	
 	/**
-	 * Closes the connection to the database. Uses the close database method from the NexusClass.
+	 * Returns the model field.
+	 * @return Model object
 	 */
 	public Model getModel()
 	{
 		return model;
 	}
+	
+	/**
+	 * Closes the connection to the database.
+	 */
 	public void close()
 	{
 		nexus.closeDatabase();
